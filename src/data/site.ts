@@ -1,6 +1,8 @@
 export const BOOKING_URL = "https://saloncitrineindy.glossgenius.com/booking-flow";
 export const FULL_MENU_PATH = "/menu";
 export const SHOP_URL = "https://saloncitrineindy.myshopify.com/";
+export const GIFT_CARDS_URL =
+  "https://saloncitrineindy.glossgenius.com/shop/gift-cards";
 export const GLOSSGENIUS_SERVICES_URL =
   "https://saloncitrineindy.glossgenius.com/services";
 

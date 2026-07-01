@@ -59,14 +59,30 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
   <main id="main">
     <section class="hero" aria-label="Salon Citrine in Irvington">
       <div class="hero__media">
-        <img
-          class="hero__image"
-          src="/images/hero.jpg"
-          alt="Salon Citrine storefront in historic Irvington, Indianapolis"
-          width="1600"
-          height="1200"
-          fetchpriority="high"
-        />
+        <div
+          class="hero__slideshow"
+          role="img"
+          aria-label="Salon Citrine storefront in historic Irvington, Indianapolis, alternating with the salon interior"
+        >
+          <img
+            class="hero__image hero__image--slide"
+            src="/images/hero.jpg"
+            alt=""
+            width="1600"
+            height="1200"
+            fetchpriority="high"
+            aria-hidden="true"
+          />
+          <img
+            class="hero__image hero__image--slide"
+            src="/images/irvington-slideshow-2.png"
+            alt=""
+            width="1600"
+            height="1200"
+            loading="lazy"
+            aria-hidden="true"
+          />
+        </div>
         <div class="hero__overlay" aria-hidden="true"></div>
         <h1 class="hero__title">Irvington</h1>
       </div>
@@ -89,14 +105,30 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
         </ul>
       </div>
       <figure class="about-image">
-        <img
-          class="about-image__photo"
-          src="/images/about-team.png"
-          alt="Salon Citrine owners and team seated together in the salon"
-          width="1024"
-          height="988"
-          loading="lazy"
-        />
+        <div
+          class="about-image__slideshow"
+          role="img"
+          aria-label="Salon Citrine hair styling and color services"
+        >
+          <img
+            class="about-image__photo about-image__photo--slide"
+            src="/images/services-slideshow-1.png"
+            alt=""
+            width="1024"
+            height="890"
+            loading="lazy"
+            aria-hidden="true"
+          />
+          <img
+            class="about-image__photo about-image__photo--slide"
+            src="/images/services-slideshow-2.png"
+            alt=""
+            width="1024"
+            height="890"
+            loading="lazy"
+            aria-hidden="true"
+          />
+        </div>
         <div class="about-image__overlay" aria-hidden="true"></div>
         <p class="about-image__title" aria-hidden="true">Services</p>
       </figure>
@@ -209,14 +241,39 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
     </section>
 
     <figure class="connect-image">
-      <img
-        class="connect-image__photo"
-        src="/images/connect-salon.png"
-        alt="Salon Citrine waiting area with plum sofa, colorful mural, and retail display"
-        width="1024"
-        height="890"
-        loading="lazy"
-      />
+      <div
+        class="connect-image__slideshow"
+        role="img"
+        aria-label="Salon Citrine team slideshow: owners seated together, stylists at work in the Irvington salon, and staff in creative costumes"
+      >
+        <img
+          class="connect-image__photo connect-image__photo--slide"
+          src="/images/about-team.png"
+          alt=""
+          width="1024"
+          height="988"
+          loading="lazy"
+          aria-hidden="true"
+        />
+        <img
+          class="connect-image__photo connect-image__photo--slide"
+          src="/images/connect-slideshow-2.png"
+          alt=""
+          width="1024"
+          height="988"
+          loading="lazy"
+          aria-hidden="true"
+        />
+        <img
+          class="connect-image__photo connect-image__photo--slide"
+          src="/images/connect-slideshow-3.png"
+          alt=""
+          width="1024"
+          height="988"
+          loading="lazy"
+          aria-hidden="true"
+        />
+      </div>
       <div class="connect-image__overlay" aria-hidden="true"></div>
       <p class="connect-image__title" aria-hidden="true">Connect</p>
     </figure>
