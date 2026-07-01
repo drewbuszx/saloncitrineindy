@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
+import ReviewsSection from "../components/ReviewsSection.astro";
 import {
   site,
   serviceGroups,
@@ -389,6 +390,8 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
           ></iframe>
         </div>
       </div>
+
+      <ReviewsSection />
 
       <div class="connect-extra">
         <p class="connect-extra__text">

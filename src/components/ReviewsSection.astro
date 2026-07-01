@@ -1,0 +1,174 @@
+---
+import reviewsData from "../data/reviews.json";
+
+export type Review = {
+  name: string;
+  rating: number | null;
+  text: string;
+  stylist?: string;
+};
+
+const EXCLUDED_STYLISTS = ["Haley Clayton", "Caitlin Bondi"];
+
+function isExcludedStylist(stylist: string | undefined) {
+  if (!stylist) return false;
+  const normalized = stylist.toLowerCase().trim();
+  return EXCLUDED_STYLISTS.some((name) => {
+    const lower = name.toLowerCase();
+    if (normalized.includes(lower)) return true;
+    const [first, last] = lower.split(/\s+/);
+    return Boolean(first && last && normalized.includes(first) && normalized.includes(last));
+  });
+}
+
+const reviews = (reviewsData as Review[])
+  .filter((review) => review.text)
+  .filter((review) => !isExcludedStylist(review.stylist));
+
+function stars(rating: number | null) {
+  if (!rating) return null;
+  return "★".repeat(rating) + "☆".repeat(Math.max(0, 5 - rating));
+}
+---
+
+<section class="reviews-section" aria-labelledby="reviews-heading">
+  <div class="reviews-section__inner">
+    <header class="reviews-section__header">
+      <h2 class="reviews-section__title" id="reviews-heading">reviews</h2>
+    </header>
+
+    <div
+      class="reviews-carousel"
+      data-reviews-carousel
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <div class="reviews-carousel__viewport">
+        <div class="reviews-carousel__track" data-reviews-track>
+          {
+            reviews.map((review) => (
+              <article class="review-card" data-review-card>
+                {review.rating && (
+                  <p class="review-card__rating" aria-label={`${review.rating} out of 5 stars`}>
+                    <span aria-hidden="true">{stars(review.rating)}</span>
+                  </p>
+                )}
+                <blockquote class="review-card__quote">
+                  <p>{review.text}</p>
+                </blockquote>
+                <footer class="review-card__footer">
+                  <cite class="review-card__name">{review.name}</cite>
+                  {review.stylist && (
+                    <p class="review-card__stylist">with {review.stylist}</p>
+                  )}
+                </footer>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initReviewsCarousel(root: HTMLElement) {
+    const cards = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-review-card]")
+    );
+    const track = root.querySelector<HTMLElement>("[data-reviews-track]");
+    if (!track || cards.length === 0) return;
+
+    let currentPage = 0;
+    let cardsPerPage = 1;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    function getCardsPerPage() {
+      const width = root.clientWidth;
+      if (width >= 1024) return Math.min(3, cards.length);
+      if (width >= 640) return Math.min(2, cards.length);
+      return 1;
+    }
+
+    function getPageCount() {
+      return Math.max(1, Math.ceil(cards.length / cardsPerPage));
+    }
+
+    function layoutCards() {
+      const gap = 24;
+      const viewportWidth = root.clientWidth;
+      cardsPerPage = getCardsPerPage();
+      const pageCount = getPageCount();
+
+      if (currentPage >= pageCount) {
+        currentPage = 0;
+      }
+
+      const cardWidth =
+        cardsPerPage === 1
+          ? Math.min(viewportWidth, 420)
+          : (viewportWidth - gap * (cardsPerPage - 1)) / cardsPerPage;
+
+      track.style.setProperty("--review-card-width", `${cardWidth}px`);
+      track.style.setProperty("--review-gap", `${gap}px`);
+      track.style.width = `${pageCount * viewportWidth}px`;
+
+      cards.forEach((card, index) => {
+        const page = Math.floor(index / cardsPerPage);
+        const indexInPage = index % cardsPerPage;
+        const visibleInPage = Math.min(
+          cardsPerPage,
+          cards.length - page * cardsPerPage
+        );
+        const groupWidth =
+          visibleInPage * cardWidth + gap * Math.max(0, visibleInPage - 1);
+        const offsetWithinPage =
+          (viewportWidth - groupWidth) / 2 + indexInPage * (cardWidth + gap);
+
+        card.style.width = `${cardWidth}px`;
+        card.style.left = `${page * viewportWidth + offsetWithinPage}px`;
+      });
+
+      track.style.transform = `translateX(${-currentPage * viewportWidth}px)`;
+
+      const pageStart = currentPage * cardsPerPage;
+      const pageEnd = Math.min(pageStart + cardsPerPage, cards.length);
+      let maxHeight = 0;
+      for (let i = pageStart; i < pageEnd; i++) {
+        maxHeight = Math.max(maxHeight, cards[i].offsetHeight);
+      }
+      track.style.height = `${Math.max(maxHeight, 192)}px`;
+    }
+
+    function goToPage(page: number) {
+      currentPage = page;
+      layoutCards();
+    }
+
+    function nextPage() {
+      goToPage((currentPage + 1) % getPageCount());
+    }
+
+    function startAutoplay() {
+      if (timer) clearInterval(timer);
+      if (getPageCount() <= 1) return;
+      timer = setInterval(nextPage, 6000);
+    }
+
+    layoutCards();
+    startAutoplay();
+
+    const resizeObserver = new ResizeObserver(() => {
+      layoutCards();
+      startAutoplay();
+    });
+    resizeObserver.observe(root);
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (timer) clearInterval(timer);
+      goToPage(0);
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-reviews-carousel]").forEach(initReviewsCarousel);
+</script>
