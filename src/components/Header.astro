@@ -28,6 +28,12 @@ const navLinks: NavLink[] = [
   { href: "/#connect", label: "Connect" },
 ];
 
+const mobileNavLinks: NavLink[] = navLinks.flatMap((link) =>
+  link.href === "/#connect"
+    ? [link, { href: "/#reviews", label: "Reviews" }]
+    : [link]
+);
+
 const externalLinkAttrs = (external?: boolean) =>
   external ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
@@ -174,7 +180,7 @@ const shopMenuId = "shop-submenu";
       data-mobile-nav
     >
       {
-        navLinks.map((link) =>
+        mobileNavLinks.map((link) =>
           link.children ? (
             <div class="site-header__dropdown site-header__dropdown--mobile" data-nav-dropdown>
               <button
