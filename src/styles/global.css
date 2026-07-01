@@ -1045,7 +1045,7 @@ button {
 }
 
 .menu-page__header {
-  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
   text-align: left;
 }
 
@@ -1103,6 +1103,10 @@ button {
   margin-bottom: clamp(2.5rem, 6vw, 4rem);
   padding-top: clamp(1.5rem, 4vw, 2.5rem);
   border-top: 1px solid var(--color-border);
+}
+
+.menu-page__header + .menu-category {
+  padding-top: clamp(1rem, 2.5vw, 1.75rem);
 }
 
 .menu-category__title {
