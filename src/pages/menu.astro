@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import { site, BOOKING_URL } from "../data/site";
+import menuCategories from "../data/menu-services.json";
+
+const pageTitle = `Full Service Menu | ${site.name}`;
+const pageDescription =
+  "Browse the complete Salon Citrine service menu with descriptions and starting prices for hair, color, treatments, skin, and waxing.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+
+  <main id="main" class="menu-page">
+    <section class="section section--editorial" aria-labelledby="menu-heading">
+      <div class="section__inner section__inner--wide">
+        <header class="menu-page__header">
+          <a class="menu-page__back" href="/#services">← Services overview</a>
+          <h1 class="editorial-section__title" id="menu-heading">full menu</h1>
+          <p class="menu-page__intro">
+            Prices with a + are starting rates and may vary based on hair length,
+            density, and stylist level. Fixed prices (such as consultations and
+            skin services) are shown without a +. Descriptions reflect our current
+            online booking menu.
+          </p>
+        </header>
+
+        {
+          menuCategories.map((category) => (
+            <div class="menu-category">
+              <h2 class="menu-category__title">{category.name}</h2>
+              <div class="menu-category__list">
+                {category.services.map((service) => (
+                  <article class="service-item service-item--full">
+                    <p class="service-item__name">{service.name}</p>
+                    <p class="service-item__price">{service.price}</p>
+                    {service.description && (
+                      <p class="service-item__description">
+                        {service.description}
+                      </p>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+
+        <footer class="menu-page__footer">
+          <a
+            class="menu-page__book-cta menu-page__book-cta--large"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Book Now
+          </a>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; {new Date().getFullYear()} {site.name}. All Rights Reserved.</p>
+  </footer>
+</BaseLayout>

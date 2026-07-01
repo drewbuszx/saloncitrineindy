@@ -1,0 +1,163 @@
+---
+import { site, SHOP_URL } from "../data/site";
+
+const navLinks = [
+  { href: "/#about", label: "About" },
+  { href: "/#services", label: "Services" },
+  { href: SHOP_URL, label: "Shop", external: true },
+  { href: "/#team", label: "Team" },
+  { href: "/#connect", label: "Connect" },
+];
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <nav class="site-header__nav site-header__nav--left" aria-label="Primary">
+      {
+        navLinks.slice(0, 2).map((link) => (
+          <a
+            class="site-header__link"
+            href={link.href}
+            {...(link.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a class="site-header__logo" href="/" aria-label={site.name}>
+      <img
+        class="site-header__logo-image site-header__logo-image--light"
+        src="/images/salon-citrine-logo.png"
+        alt={site.name}
+        width="320"
+        height="80"
+        fetchpriority="high"
+      />
+      <img
+        class="site-header__logo-image site-header__logo-image--dark"
+        src="/images/salon-citrine-banner-dark.png"
+        alt=""
+        width="320"
+        height="80"
+        fetchpriority="high"
+        aria-hidden="true"
+      />
+    </a>
+
+    <div class="site-header__aside site-header__aside--right">
+      <nav class="site-header__nav site-header__nav--right" aria-label="Secondary">
+        {
+          navLinks.slice(2).map((link) => (
+            <a
+              class="site-header__link"
+              href={link.href}
+              {...(link.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <button
+        class="site-header__theme-toggle"
+        type="button"
+        aria-label="Switch to dark mode"
+        data-theme-toggle
+      >
+        <svg
+          class="theme-toggle__icon theme-toggle__icon--moon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg
+          class="theme-toggle__icon theme-toggle__icon--sun"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="site-header__controls">
+      <button
+        class="site-header__theme-toggle"
+        type="button"
+        aria-label="Switch to dark mode"
+        data-theme-toggle
+      >
+        <svg
+          class="theme-toggle__icon theme-toggle__icon--moon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg
+          class="theme-toggle__icon theme-toggle__icon--sun"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+
+      <button
+        class="site-header__menu-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        data-menu-toggle
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <nav
+      class="site-header__nav site-header__nav--mobile"
+      aria-label="Mobile"
+      data-mobile-nav
+    >
+      {
+        navLinks.map((link) => (
+          <a
+            class="site-header__link"
+            href={link.href}
+            {...(link.external
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

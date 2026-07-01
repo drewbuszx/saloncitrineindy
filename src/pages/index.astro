@@ -1,0 +1,325 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import {
+  site,
+  serviceGroups,
+  teamGroups,
+  policies,
+  FULL_MENU_PATH,
+} from "../data/site";
+
+type HoursGroup = { label: string; time: string };
+
+function groupHours(
+  hours: { day: string; time: string }[]
+): HoursGroup[] {
+  const open = hours.filter((entry) => entry.time !== "Closed");
+  if (open.length === 0) return [];
+
+  const groups: HoursGroup[] = [];
+  let start = open[0].day;
+  let end = open[0].day;
+  let time = open[0].time;
+
+  for (let i = 1; i < open.length; i++) {
+    const entry = open[i];
+    if (entry.time === time) {
+      end = entry.day;
+      continue;
+    }
+
+    groups.push({
+      label: start === end ? start : `${start} – ${end}`,
+      time,
+    });
+    start = entry.day;
+    end = entry.day;
+    time = entry.time;
+  }
+
+  groups.push({
+    label: start === end ? start : `${start} – ${end}`,
+    time,
+  });
+
+  return groups;
+}
+
+const hoursGroups = groupHours(site.hours);
+const mapQuery = encodeURIComponent(
+  `${site.address.street}, ${site.address.city}, ${site.address.state} ${site.address.zip}`
+);
+const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed`;
+---
+
+<BaseLayout>
+  <Header />
+
+  <main id="main">
+    <section class="hero" aria-label="Salon Citrine in Irvington">
+      <div class="hero__media">
+        <img
+          class="hero__image"
+          src="/images/hero.jpg"
+          alt="Salon Citrine storefront in historic Irvington, Indianapolis"
+          width="1600"
+          height="1200"
+          fetchpriority="high"
+        />
+        <div class="hero__overlay" aria-hidden="true"></div>
+        <h1 class="hero__title">Irvington</h1>
+      </div>
+    </section>
+
+    <span id="about" class="scroll-target"></span>
+
+    <section class="section" aria-labelledby="about-heading">
+      <div class="section__inner intro">
+        <div class="intro-split">
+          <h2 class="section__title intro-split__tagline" id="about-heading">
+            {site.tagline}
+          </h2>
+          <div class="intro__text intro-split__body">
+            {site.about.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </div>
+        <ul class="intro__values">
+          {site.values.map((value) => <li>{value}</li>)}
+        </ul>
+      </div>
+      <figure class="about-image">
+        <img
+          class="about-image__photo"
+          src="/images/about-team.png"
+          alt="Salon Citrine owners and team seated together in the salon"
+          width="1024"
+          height="988"
+          loading="lazy"
+        />
+        <div class="about-image__overlay" aria-hidden="true"></div>
+        <p class="about-image__title" aria-hidden="true">Services</p>
+      </figure>
+    </section>
+
+    <section class="section section--editorial" aria-labelledby="services-heading">
+      <div class="section__inner section__inner--wide">
+        <span id="services" class="scroll-target"></span>
+        {
+          serviceGroups.map((group) => (
+            <div class="services-group">
+              <header class="services-group__header">
+                <h2
+                  class="services-group__title"
+                  id={group.id === "haircuts" ? "services-heading" : undefined}
+                >
+                  {group.title}
+                </h2>
+              </header>
+              <div class="services-columns">
+                {group.columns.map((column) => (
+                  <div class="services-column">
+                    <h3 class="services-column__header">{column.header}</h3>
+                    {column.items?.map((item) => (
+                      <article class="service-item">
+                        <p class="service-item__name">{item.name}</p>
+                        <p class="service-item__price">{item.price}</p>
+                      </article>
+                    ))}
+                    {column.text && (
+                      <p class="services-column__text">{column.text}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+        <div class="services-cta">
+          <a
+            class="services-cta__link"
+            href={FULL_MENU_PATH}
+          >
+            View Full Detailed Menu
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="team-heading">
+      <div class="section__inner section__inner--wide">
+        <span id="team" class="scroll-target"></span>
+        <header class="editorial-section__header">
+          <h2 class="editorial-section__title" id="team-heading">team</h2>
+        </header>
+        {
+          teamGroups.map((group) => (
+            <div class="team-group">
+              <h3 class="team-group__title">{group.title}</h3>
+              <div class="team-grid">
+                {group.members.map((member) => (
+                  <article class="team-member">
+                    <a
+                      class="team-member__photo-link"
+                      href={member.bookingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Book with ${member.firstName}`}
+                    >
+                      <img
+                        class="team-member__photo"
+                        src={member.image}
+                        alt={member.name}
+                        width="360"
+                        height="480"
+                        loading="lazy"
+                      />
+                      <span class="team-member__book-overlay">
+                        Book with {member.firstName}
+                      </span>
+                    </a>
+                    <h4 class="team-member__name">{member.name}</h4>
+                    <p class="team-member__role">{member.role}</p>
+                    {member.bio && <p class="team-member__bio">{member.bio}</p>}
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="section section--editorial" aria-labelledby="policies-heading">
+      <div class="section__inner section__inner--wide">
+        <header class="editorial-section__header">
+          <h2 class="editorial-section__title" id="policies-heading">policies</h2>
+        </header>
+        <div class="editorial-columns">
+          {
+            policies.map((policy) => (
+              <article class="editorial-column">
+                <h3 class="editorial-column__header">{policy.title}</h3>
+                <p class="editorial-column__text">{policy.text}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <figure class="connect-image">
+      <img
+        class="connect-image__photo"
+        src="/images/connect-salon.png"
+        alt="Salon Citrine waiting area with plum sofa, colorful mural, and retail display"
+        width="1024"
+        height="890"
+        loading="lazy"
+      />
+      <div class="connect-image__overlay" aria-hidden="true"></div>
+      <p class="connect-image__title" aria-hidden="true">Connect</p>
+    </figure>
+
+    <span id="connect" class="scroll-target"></span>
+
+    <section class="connect-section" aria-labelledby="connect-heading">
+      <h2 class="visually-hidden" id="connect-heading">Connect</h2>
+      <div class="connect-split">
+        <div class="connect-info">
+          <div class="connect-info__layout">
+            <div class="connect-info__logo">
+              <img
+                class="connect-info__logo-image connect-info__logo-image--light"
+                src="/images/salon-citrine-logo-contact.png"
+                alt={site.name}
+                width="640"
+                height="160"
+                loading="lazy"
+              />
+              <img
+                class="connect-info__logo-image connect-info__logo-image--dark"
+                src="/images/salon-citrine-logo-dark.png"
+                alt=""
+                width="640"
+                height="160"
+                loading="lazy"
+                aria-hidden="true"
+              />
+            </div>
+            <div class="connect-info__content">
+            <address class="connect-address">
+              <a
+                class="connect-address__link"
+                href={site.address.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {site.address.street}<br />
+                {site.address.city}, {site.address.state} {site.address.zip}
+              </a>
+            </address>
+
+            <div class="connect-hours" aria-label="Salon hours">
+              {
+                hoursGroups.map((group) => (
+                  <p class="connect-hours__group">
+                    <span class="connect-hours__days">{group.label}</span>
+                    <span class="connect-hours__time">{group.time}</span>
+                  </p>
+                ))
+              }
+            </div>
+
+            <div class="connect-contact">
+              <a class="connect-contact__link" href={site.phoneHref}>
+                {site.phone}
+              </a>
+              <a
+                class="connect-contact__link"
+                href={`mailto:${site.email}`}
+              >
+                {site.email}
+              </a>
+              <a
+                class="connect-contact__link"
+                href={site.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram
+              </a>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="connect-map">
+          <iframe
+            class="connect-map__iframe"
+            src={mapEmbedUrl}
+            title="Salon Citrine location on Google Maps"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="connect-extra">
+        <p class="connect-extra__text">
+          We're always looking for creative, enthusiastic people to join Salon
+          Citrine. If you're interested in growing with us, reach out at{" "}
+          <a class="connect-extra__link" href={`mailto:${site.email}`}>
+            {site.email}
+          </a>
+          .
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; {new Date().getFullYear()} {site.name}. All Rights Reserved.</p>
+  </footer>
+</BaseLayout>

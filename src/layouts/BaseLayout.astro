@@ -1,0 +1,98 @@
+---
+import "../styles/global.css";
+import { site, BOOKING_URL } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${site.name} | Hair Salon in Indianapolis, IN`,
+  description = site.tagline,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={`https://${site.domain}/`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`https://${site.domain}/`} />
+    <meta property="og:image" content={`https://${site.domain}/images/hero.jpg`} />
+    <title>{title}</title>
+    <script is:inline>
+      (function () {
+        var storageKey = "theme";
+        var stored = localStorage.getItem(storageKey);
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme =
+          stored === "dark" || stored === "light"
+            ? stored
+            : prefersDark
+              ? "dark"
+              : "light";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to Content</a>
+    <slot />
+    <aside class="book-bar">
+      <a class="book-bar__link" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+        Book Now
+      </a>
+    </aside>
+    <script>
+      const themeToggles = document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]");
+      const storageKey = "theme";
+
+      function getTheme() {
+        return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      }
+
+      function updateToggleLabels(theme: "light" | "dark") {
+        const label =
+          theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+        themeToggles.forEach((toggle) => toggle.setAttribute("aria-label", label));
+      }
+
+      function setTheme(theme: "light" | "dark") {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem(storageKey, theme);
+        updateToggleLabels(theme);
+      }
+
+      updateToggleLabels(getTheme());
+
+      themeToggles.forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+          setTheme(getTheme() === "dark" ? "light" : "dark");
+        });
+      });
+
+      const menuToggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+      const nav = document.querySelector<HTMLElement>("[data-mobile-nav]");
+
+      menuToggle?.addEventListener("click", () => {
+        const isOpen = nav?.classList.toggle("is-open");
+        menuToggle.setAttribute("aria-expanded", String(!!isOpen));
+      });
+
+      nav?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          nav.classList.remove("is-open");
+          menuToggle?.setAttribute("aria-expanded", "false");
+        });
+      });
+    </script>
+  </body>
+</html>
