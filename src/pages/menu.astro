@@ -1,8 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
-import { site, BOOKING_URL } from "../data/site";
+import { site, BOOKING_URL, policies } from "../data/site";
 import menuCategories from "../data/menu-services.json";
+
+const cancellationPolicy = policies.find(
+  (policy) => policy.title === "CANCELLATION POLICY"
+)!;
 
 const pageTitle = `Full Service Menu | ${site.name}`;
 const pageDescription =
@@ -23,6 +27,13 @@ const pageDescription =
             density, and stylist.
           </p>
         </header>
+
+        <aside
+          class="services-cancellation services-cancellation--menu"
+          aria-label="Cancellation policy"
+        >
+          <p class="services-cancellation__text">{`** ${cancellationPolicy.text}`}</p>
+        </aside>
 
         {
           menuCategories.map((category) => (

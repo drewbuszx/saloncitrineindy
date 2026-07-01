@@ -47,6 +47,9 @@ function groupHours(
 }
 
 const hoursGroups = groupHours(site.hours);
+const cancellationPolicy = policies.find(
+  (policy) => policy.title === "CANCELLATION POLICY"
+)!;
 const mapQuery = encodeURIComponent(
   `${site.address.street}, ${site.address.city}, ${site.address.state} ${site.address.zip}`
 );
@@ -155,6 +158,9 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
     <section class="section section--editorial" aria-labelledby="services-heading">
       <div class="section__inner section__inner--wide">
         <span id="services" class="scroll-target"></span>
+        <aside class="services-cancellation" aria-label="Cancellation policy">
+          <p class="services-cancellation__text">{`** ${cancellationPolicy.text}`}</p>
+        </aside>
         {
           serviceGroups.map((group) => (
             <div class="services-group">
