@@ -7,6 +7,7 @@ import {
   teamGroups,
   policies,
   FULL_MENU_PATH,
+  formatCancellationPolicyText,
 } from "../data/site";
 
 type HoursGroup = { label: string; time: string };
@@ -159,7 +160,7 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
       <div class="section__inner section__inner--wide">
         <span id="services" class="scroll-target"></span>
         <aside class="services-cancellation" aria-label="Cancellation policy">
-          <p class="services-cancellation__text">{`** ${cancellationPolicy.text}`}</p>
+          <p class="services-cancellation__text">{formatCancellationPolicyText(cancellationPolicy.text)}</p>
         </aside>
         {
           serviceGroups.map((group) => (

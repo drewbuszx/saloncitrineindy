@@ -1,7 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
-import { site, BOOKING_URL, policies } from "../data/site";
+import {
+  site,
+  BOOKING_URL,
+  policies,
+  formatCancellationPolicyText,
+} from "../data/site";
 import menuCategories from "../data/menu-services.json";
 
 const cancellationPolicy = policies.find(
@@ -32,7 +37,7 @@ const pageDescription =
           class="services-cancellation services-cancellation--menu"
           aria-label="Cancellation policy"
         >
-          <p class="services-cancellation__text">{`** ${cancellationPolicy.text}`}</p>
+          <p class="services-cancellation__text">{formatCancellationPolicyText(cancellationPolicy.text)}</p>
         </aside>
 
         {

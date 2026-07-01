@@ -10,6 +10,10 @@ export function memberBookingUrl(teamMemberToken: string): string {
   return `${GLOSSGENIUS_SERVICES_URL}?team_member_token=${teamMemberToken}`;
 }
 
+export function formatCancellationPolicyText(text: string): string {
+  return `**CANCELLATION POLICY: ${text}**`;
+}
+
 export const site = {
   name: "Salon Citrine",
   shortName: "Salon Citrine",
