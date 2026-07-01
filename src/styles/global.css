@@ -240,6 +240,14 @@ button {
   transition: opacity 0.2s ease;
 }
 
+.site-header__theme-toggle--desktop {
+  display: inline-flex;
+}
+
+.site-header__mobile-theme {
+  display: none;
+}
+
 .site-header__theme-toggle:hover,
 .site-header__theme-toggle:focus-visible {
   opacity: 0.65;
@@ -1154,12 +1162,6 @@ button {
   }
 }
 
-@media (max-width: 860px) {
-  .site-header__aside {
-    display: none;
-  }
-}
-
 @media (max-width: 768px) {
   .connect-info {
     order: 1;
@@ -1194,7 +1196,7 @@ button {
   color: var(--color-gray);
 }
 
-/* Mobile nav */
+/* Mobile nav — hamburger + slide-out menu at max-width 860px */
 @media (max-width: 860px) {
   .site-header__inner {
     display: flex;
@@ -1217,6 +1219,14 @@ button {
 
   .site-header__logo-image {
     max-width: min(896px, calc(100vw - 4.5rem));
+  }
+
+  .site-header__aside {
+    display: none;
+  }
+
+  .site-header__theme-toggle--desktop {
+    display: none;
   }
 
   .site-header__menu-toggle {
@@ -1263,10 +1273,21 @@ button {
   .site-header__link {
     font-size: 1.125rem;
   }
+
+  .site-header__mobile-theme {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: clamp(2rem, 8vh, 4rem);
+    display: flex;
+    justify-content: center;
+  }
 }
 
 @media (min-width: 861px) {
-  .site-header__nav--mobile {
+  .site-header__nav--mobile,
+  .site-header__mobile-theme,
+  .site-header__theme-toggle--mobile {
     display: none !important;
   }
 }
