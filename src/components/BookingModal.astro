@@ -1,0 +1,150 @@
+---
+import { policies, formatCancellationPolicyText } from "../data/site";
+
+const cancellationPolicy = policies.find(
+  (policy) => policy.title === "CANCELLATION POLICY",
+)!;
+const policyText = formatCancellationPolicyText(cancellationPolicy.text);
+---
+
+<div
+  class="booking-modal"
+  data-booking-modal
+  hidden
+  aria-hidden="true"
+>
+  <div class="booking-modal__backdrop" data-booking-modal-backdrop></div>
+  <div
+    class="booking-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="booking-modal-title"
+    tabindex="-1"
+    data-booking-modal-dialog
+  >
+    <h2 id="booking-modal-title" class="visually-hidden">Cancellation Policy</h2>
+    <p class="booking-modal__text">{policyText}</p>
+    <div class="booking-modal__actions">
+      <button
+        class="booking-modal__btn booking-modal__btn--secondary"
+        type="button"
+        data-booking-modal-back
+      >
+        Go Back
+      </button>
+      <button
+        class="booking-modal__btn booking-modal__btn--primary"
+        type="button"
+        data-booking-modal-confirm
+      >
+        Understood!
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.querySelector<HTMLElement>("[data-booking-modal]");
+  const dialog = document.querySelector<HTMLElement>("[data-booking-modal-dialog]");
+  const backBtn = document.querySelector<HTMLButtonElement>("[data-booking-modal-back]");
+  const confirmBtn = document.querySelector<HTMLButtonElement>("[data-booking-modal-confirm]");
+  const backdrop = document.querySelector<HTMLElement>("[data-booking-modal-backdrop]");
+
+  if (modal && dialog && backBtn && confirmBtn && backdrop) {
+    let pendingUrl: string | null = null;
+    let pendingTarget: string | null = null;
+    let triggerLink: HTMLAnchorElement | null = null;
+
+    const focusableSelector =
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    function getFocusableElements(container: HTMLElement) {
+      return Array.from(container.querySelectorAll<HTMLElement>(focusableSelector)).filter(
+        (el) => !el.hasAttribute("disabled"),
+      );
+    }
+
+    function openModal(link: HTMLAnchorElement) {
+      pendingUrl = link.href;
+      pendingTarget = link.target || "_self";
+      triggerLink = link;
+
+      modal.removeAttribute("hidden");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("booking-modal-open");
+
+      backBtn.focus();
+    }
+
+    function closeModal() {
+      modal.setAttribute("hidden", "");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("booking-modal-open");
+      pendingUrl = null;
+      pendingTarget = null;
+
+      triggerLink?.focus();
+      triggerLink = null;
+    }
+
+    function goBack() {
+      closeModal();
+    }
+
+    function confirmBooking() {
+      const url = pendingUrl;
+      const target = pendingTarget;
+      closeModal();
+
+      if (url) {
+        if (target === "_blank") {
+          window.open(url, "_blank", "noopener,noreferrer");
+        } else {
+          window.location.href = url;
+        }
+      }
+    }
+
+    document.addEventListener("click", (event) => {
+      const link = (event.target as Element).closest<HTMLAnchorElement>("[data-booking-link]");
+      if (!link) {
+        return;
+      }
+
+      event.preventDefault();
+      openModal(link);
+    });
+
+    backBtn.addEventListener("click", goBack);
+    confirmBtn.addEventListener("click", confirmBooking);
+    backdrop.addEventListener("click", goBack);
+
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        goBack();
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusable = getFocusableElements(dialog);
+      if (focusable.length === 0) {
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+  }
+</script>

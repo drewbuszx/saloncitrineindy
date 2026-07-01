@@ -222,6 +222,7 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Book with ${member.firstName}`}
+                      data-booking-link
                     >
                       <img
                         class="team-member__photo"
@@ -249,6 +250,7 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
 
     <section class="section section--editorial" aria-labelledby="policies-heading">
       <div class="section__inner section__inner--wide">
+        <span id="policies" class="scroll-target"></span>
         <header class="editorial-section__header">
           <h2 class="editorial-section__title" id="policies-heading">policies</h2>
         </header>

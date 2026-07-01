@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import BookingModal from "../components/BookingModal.astro";
 import { site, BOOKING_URL } from "../data/site";
 
 interface Props {
@@ -46,8 +47,15 @@ const {
   <body>
     <a class="skip-link" href="#main">Skip to Content</a>
     <slot />
+    <BookingModal />
     <aside class="book-bar">
-      <a class="book-bar__link" href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+      <a
+        class="book-bar__link"
+        href={BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-booking-link
+      >
         Book Now
       </a>
     </aside>

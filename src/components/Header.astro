@@ -22,8 +22,9 @@ const shopLinks: NavChild[] = [
 const navLinks: NavLink[] = [
   { href: "/#about", label: "About" },
   { href: "/#services", label: "Services" },
-  { label: "Shop", children: shopLinks },
   { href: "/#team", label: "Team" },
+  { label: "Shop", children: shopLinks },
+  { href: "/#policies", label: "Policies" },
   { href: "/#connect", label: "Connect" },
 ];
 
@@ -37,7 +38,7 @@ const shopMenuId = "shop-submenu";
   <div class="site-header__inner">
     <nav class="site-header__nav site-header__nav--left" aria-label="Primary">
       {
-        navLinks.slice(0, 2).map((link) => (
+        navLinks.slice(0, 3).map((link) => (
           <a class="site-header__link" href={link.href} {...externalLinkAttrs(link.external)}>
             {link.label}
           </a>
@@ -65,95 +66,93 @@ const shopMenuId = "shop-submenu";
       />
     </a>
 
-    <div class="site-header__aside site-header__aside--right">
-      <nav class="site-header__nav site-header__nav--right" aria-label="Secondary">
-        {
-          navLinks.slice(2).map((link) =>
-            link.children ? (
-              <div class="site-header__dropdown" data-nav-dropdown>
-                <button
-                  class="site-header__link site-header__dropdown-trigger"
-                  type="button"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  aria-controls={shopMenuId}
-                  data-dropdown-trigger
-                >
-                  {link.label}
-                  <svg
-                    class="site-header__dropdown-chevron"
-                    viewBox="0 0 12 12"
-                    aria-hidden="true"
-                  >
-                    <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
-                  </svg>
-                </button>
-                <ul
-                  id={shopMenuId}
-                  class="site-header__dropdown-menu"
-                  role="menu"
-                  aria-label="Shop"
-                  data-dropdown-menu
-                >
-                  {
-                    link.children.map((child) => (
-                      <li role="none">
-                        <a
-                          class="site-header__dropdown-item"
-                          href={child.href}
-                          role="menuitem"
-                          {...externalLinkAttrs(child.external)}
-                        >
-                          {child.label}
-                        </a>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </div>
-            ) : (
-              <a
-                class="site-header__link"
-                href={link.href}
-                {...externalLinkAttrs(link.external)}
+    <nav class="site-header__nav site-header__nav--right" aria-label="Secondary">
+      {
+        navLinks.slice(3).map((link) =>
+          link.children ? (
+            <div class="site-header__dropdown" data-nav-dropdown>
+              <button
+                class="site-header__link site-header__dropdown-trigger"
+                type="button"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls={shopMenuId}
+                data-dropdown-trigger
               >
                 {link.label}
-              </a>
-            )
+                <svg
+                  class="site-header__dropdown-chevron"
+                  viewBox="0 0 12 12"
+                  aria-hidden="true"
+                >
+                  <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </button>
+              <ul
+                id={shopMenuId}
+                class="site-header__dropdown-menu"
+                role="menu"
+                aria-label="Shop"
+                data-dropdown-menu
+              >
+                {
+                  link.children.map((child) => (
+                    <li role="none">
+                      <a
+                        class="site-header__dropdown-item"
+                        href={child.href}
+                        role="menuitem"
+                        {...externalLinkAttrs(child.external)}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          ) : (
+            <a
+              class="site-header__link"
+              href={link.href}
+              {...externalLinkAttrs(link.external)}
+            >
+              {link.label}
+            </a>
           )
-        }
-      </nav>
+        )
+      }
+    </nav>
 
-      <button
-        class="site-header__theme-toggle site-header__theme-toggle--desktop"
-        type="button"
-        aria-label="Switch to dark mode"
-        data-theme-toggle
+    <button
+      class="site-header__theme-toggle site-header__theme-toggle--desktop"
+      type="button"
+      aria-label="Switch to dark mode"
+      data-theme-toggle
+    >
+      <svg
+        class="theme-toggle__icon theme-toggle__icon--moon"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
       >
-        <svg
-          class="theme-toggle__icon theme-toggle__icon--moon"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <svg
-          class="theme-toggle__icon theme-toggle__icon--sun"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-      </button>
-    </div>
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <svg
+        class="theme-toggle__icon theme-toggle__icon--sun"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
 
     <div class="site-header__controls">
       <button
