@@ -8,6 +8,7 @@ import {
   teamGroups,
   policies,
   FULL_MENU_PATH,
+  BOOKING_URL,
   formatCancellationPolicyText,
 } from "../data/site";
 
@@ -129,7 +130,7 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
             src="/images/services-slideshow-1.png"
             alt=""
             width="1024"
-            height="614"
+            height="668"
             loading="lazy"
             aria-hidden="true"
           />
@@ -138,7 +139,7 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
             src="/images/services-slideshow-2.png"
             alt=""
             width="1024"
-            height="682"
+            height="668"
             loading="lazy"
             aria-hidden="true"
           />
@@ -147,7 +148,7 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
             src="/images/services-slideshow-3.png"
             alt=""
             width="1024"
-            height="682"
+            height="668"
             loading="lazy"
             aria-hidden="true"
           />
@@ -199,6 +200,15 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
             href={FULL_MENU_PATH}
           >
             View Full Detailed Menu
+          </a>
+          <a
+            class="services-cta__book"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-booking-link
+          >
+            Book Now
           </a>
         </div>
       </div>
