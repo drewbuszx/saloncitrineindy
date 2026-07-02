@@ -188,6 +188,12 @@ const {
         });
       });
 
+      function closeMobileMenu() {
+        nav?.classList.remove("is-open");
+        menuToggle?.setAttribute("aria-expanded", "false");
+        dropdowns.forEach((dropdown) => closeDropdown(dropdown));
+      }
+
       menuToggle?.addEventListener("click", () => {
         const isOpen = nav?.classList.toggle("is-open");
         menuToggle.setAttribute("aria-expanded", String(!!isOpen));
@@ -197,12 +203,12 @@ const {
         }
       });
 
+      document
+        .querySelector<HTMLButtonElement>("[data-menu-close]")
+        ?.addEventListener("click", closeMobileMenu);
+
       nav?.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          nav.classList.remove("is-open");
-          menuToggle?.setAttribute("aria-expanded", "false");
-          dropdowns.forEach((dropdown) => closeDropdown(dropdown));
-        });
+        link.addEventListener("click", closeMobileMenu);
       });
     </script>
   </body>

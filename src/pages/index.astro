@@ -328,16 +328,16 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
                 class="connect-info__logo-image connect-info__logo-image--light"
                 src="/images/salon-citrine-logo-contact.png"
                 alt={site.name}
-                width="640"
-                height="160"
+                width="1000"
+                height="1200"
                 loading="lazy"
               />
               <img
                 class="connect-info__logo-image connect-info__logo-image--dark"
                 src="/images/salon-citrine-logo-dark.png"
                 alt=""
-                width="640"
-                height="160"
+                width="1000"
+                height="1200"
                 loading="lazy"
                 aria-hidden="true"
               />
@@ -400,7 +400,9 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
           ></iframe>
         </div>
       </div>
+    </section>
 
+    <div class="page-dark-zone">
       <span id="reviews" class="scroll-target"></span>
       <ReviewsSection />
 
@@ -414,10 +416,10 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
           .
         </p>
       </div>
-    </section>
-  </main>
 
-  <footer class="site-footer">
-    <p>&copy; {new Date().getFullYear()} {site.name}. All Rights Reserved.</p>
-  </footer>
+      <footer class="site-footer">
+        <p>&copy; {new Date().getFullYear()} {site.name}. All Rights Reserved.</p>
+      </footer>
+    </div>
+  </main>
 </BaseLayout>

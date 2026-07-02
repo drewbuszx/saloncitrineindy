@@ -258,7 +258,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         firstName: "Shelby",
         role: "Stylist",
         image: "/images/shelby-craft.jpg",
-        bio: "Specializes in alternative, vivid, and edgy styles — and low-maintenance natural looks too.",
+        bio: "Specializes in alternative, vivid, and edgy styles... and low-maintenance natural looks too!",
         bookingUrl: memberBookingUrl(
           "10001-6a29adda-3651-43d9-8899-3ace37524a1e"
         ),

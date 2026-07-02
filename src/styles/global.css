@@ -8,6 +8,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Basic Title";
+  src: url("/fonts/BasicTitle.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root,
 [data-theme="light"] {
   --color-black: #0a0a0a;
@@ -19,8 +27,17 @@
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-subtle: rgba(0, 0, 0, 0.06);
   --color-header-border: var(--color-text);
-  --color-citrine: #e8a317;
-  --color-citrine-dark: #d4a017;
+  --color-citrine: #e7ac46;
+  --color-citrine-dark: #d3a946;
+  --color-dusty-rose: #ae948f;
+  --color-sage: #8d9e88;
+  --color-on-brand-section: #ffffff;
+  --color-on-brand-section-muted: rgba(255, 255, 255, 0.68);
+  --color-charcoal: #3c3d3c;
+  --color-charcoal-muted: rgba(255, 255, 255, 0.68);
+  --color-charcoal-border: rgba(255, 255, 255, 0.14);
+  --color-charcoal-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-charcoal-card: rgba(255, 255, 255, 0.06);
   --color-book-bar-bg: var(--color-citrine);
   --color-book-bar-text: var(--color-black);
   --color-book-bar-border: var(--color-header-border);
@@ -30,8 +47,10 @@
   --font-sans: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
   --font-serif: "Cormorant Garamond", "Times New Roman", serif;
   --font-nav: "Serling Galleria", var(--font-serif);
-  --header-logo-height: clamp(5.5rem, 14vw, 7.5rem);
-  --header-height: calc(var(--header-logo-height) - 0.35rem);
+  --font-basic-title: "Basic Title", var(--font-sans);
+  --header-logo-height: clamp(4.7rem, 12vw, 6.4rem);
+  --header-logo-padding-bottom: 0.225rem;
+  --header-height: calc(var(--header-logo-height) + var(--header-logo-padding-bottom));
   --book-bar-height: 56px;
   --max-width: 1200px;
   --section-padding: clamp(2rem, 5.5vw, 4rem);
@@ -144,14 +163,14 @@ button {
 .site-header__nav--left {
   grid-column: 1;
   justify-content: space-evenly;
-  align-self: center;
+  align-self: flex-start;
   padding-right: clamp(1rem, 2.5vw, 2rem);
 }
 
 .site-header__nav--right {
   grid-column: 3;
   justify-content: space-evenly;
-  align-self: center;
+  align-self: flex-start;
   padding-left: clamp(1rem, 2.5vw, 2rem);
 }
 
@@ -161,6 +180,7 @@ button {
   align-items: center;
   justify-content: center;
   align-self: flex-start;
+  padding-bottom: var(--header-logo-padding-bottom);
   line-height: 0;
   justify-self: center;
 }
@@ -168,9 +188,12 @@ button {
 .site-header__link {
   display: inline-flex;
   align-items: center;
-  font-family: var(--font-nav);
-  font-size: clamp(1rem, 1.6vw, 1.2rem);
-  font-weight: 500;
+  font-family: var(--font-basic-title);
+  font-size: calc(clamp(1rem, 1.6vw, 1.2rem) + 2pt);
+  font-weight: 700;
+  font-synthesis: weight;
+  -webkit-text-stroke: 0.3px currentColor;
+  paint-order: stroke fill;
   line-height: 1;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -240,9 +263,12 @@ button {
 .site-header__dropdown-item {
   display: block;
   padding: 0.55rem 1.25rem;
-  font-family: var(--font-nav);
+  font-family: var(--font-basic-title);
   font-size: clamp(0.85rem, 1.4vw, 1rem);
-  font-weight: 500;
+  font-weight: 700;
+  font-synthesis: weight;
+  -webkit-text-stroke: 0.3px currentColor;
+  paint-order: stroke fill;
   line-height: 1;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -254,6 +280,14 @@ button {
 .site-header__dropdown-item:focus-visible {
   opacity: 0.55;
   outline: none;
+}
+
+.book-bar__link,
+.menu-page__book-cta,
+.team-member__book-overlay {
+  font-synthesis: weight;
+  -webkit-text-stroke: 0.3px currentColor;
+  paint-order: stroke fill;
 }
 
 @media (min-width: 1101px) {
@@ -273,7 +307,7 @@ button {
   display: block;
   width: auto;
   height: var(--header-logo-height);
-  max-width: min(896px, 90vw);
+  max-width: min(762px, 90vw);
   object-fit: contain;
   object-position: top center;
 }
@@ -334,6 +368,33 @@ button {
 
 .site-header__mobile-theme {
   display: none;
+}
+
+.site-header__menu-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  color: var(--color-text);
+  font-family: var(--font-basic-title);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.site-header__menu-close:hover,
+.site-header__menu-close:focus-visible {
+  opacity: 0.65;
+  outline: none;
+}
+
+.site-header__menu-close:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-text);
 }
 
 .site-header__theme-toggle:hover,
@@ -561,7 +622,7 @@ button {
   width: 100%;
   height: 100%;
   color: var(--color-book-bar-text);
-  font-family: var(--font-nav);
+  font-family: var(--font-basic-title);
   font-size: clamp(1.3rem, 2.5vw, 1.4rem);
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -609,6 +670,29 @@ button {
 
 .section--editorial {
   background: var(--color-bg);
+}
+
+/* Team — dusty rose + white text in light; sage + page-bg text in dark */
+.section:has(#team) {
+  --color-bg: var(--color-dusty-rose);
+  --color-text: var(--color-on-brand-section);
+  --color-gray: var(--color-on-brand-section-muted);
+  background: var(--color-dusty-rose);
+  color: var(--color-text);
+  border-top: 1px solid var(--color-black);
+  border-bottom: 1px solid var(--color-black);
+}
+
+[data-theme="dark"] .section:has(#team) {
+  --color-bg: var(--color-sage);
+  --color-text: #181818;
+  --color-gray: rgba(24, 24, 24, 0.68);
+  background: var(--color-sage);
+}
+
+/* Policies — half spacing into Connect bleed */
+.section:has(#policies) {
+  padding-bottom: calc(var(--section-padding) / 2);
 }
 
 .section__inner {
@@ -1111,8 +1195,8 @@ button {
 .services-cta__book {
   background: var(--color-text);
   color: var(--color-bg);
-  font-family: var(--font-nav);
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-weight: 500;
 }
 
 .services-cta__book:hover,
@@ -1163,9 +1247,9 @@ button {
   border: 1px solid var(--color-text);
   background: var(--color-text);
   color: var(--color-bg);
-  font-family: var(--font-sans);
+  font-family: var(--font-basic-title);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   transition: background 0.2s ease, color 0.2s ease;
@@ -1308,12 +1392,13 @@ button {
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  font-family: var(--font-nav);
+  font-family: var(--font-basic-title);
   font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 700;
   line-height: 1.2;
   color: var(--color-white);
   text-align: center;
-  background: rgb(0 0 0 / 35%);
+  background: rgb(0 0 0 / 45%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -1365,7 +1450,7 @@ button {
 }
 
 .connect-section {
-  padding-bottom: var(--book-bar-height);
+  padding-bottom: 0;
 }
 
 .connect-split {
@@ -1643,6 +1728,69 @@ button {
   opacity: 0.65;
 }
 
+.connect-image {
+  margin-top: clamp(1.25rem, 3vw, 2.25rem);
+}
+/* Charcoal zone — reviews through footer (both themes) */
+.page-dark-zone {
+  --color-bg: var(--color-charcoal);
+  --color-text: var(--color-white);
+  --color-gray: var(--color-charcoal-muted);
+  --color-light: rgba(255, 255, 255, 0.1);
+  --color-border: var(--color-charcoal-border);
+  --color-border-subtle: var(--color-charcoal-border-subtle);
+  background: var(--color-charcoal);
+  color: var(--color-white);
+}
+
+.page-dark-zone .reviews-section {
+  background: var(--color-charcoal);
+  border-top-color: var(--color-charcoal-border-subtle);
+}
+
+.page-dark-zone .reviews-section__title {
+  color: var(--color-white);
+}
+
+.page-dark-zone .review-card {
+  background: var(--color-charcoal-card);
+  border-color: var(--color-charcoal-border);
+}
+
+.page-dark-zone .review-card__rating {
+  color: var(--color-citrine);
+}
+
+.page-dark-zone .review-card__quote p,
+.page-dark-zone .review-card__name {
+  color: var(--color-white);
+}
+
+.page-dark-zone .review-card__stylist {
+  color: var(--color-charcoal-muted);
+}
+
+.page-dark-zone .connect-extra {
+  border-top-color: var(--color-charcoal-border-subtle);
+}
+
+.page-dark-zone .connect-extra__text {
+  color: var(--color-charcoal-muted);
+}
+
+.page-dark-zone .connect-extra__link {
+  color: var(--color-white);
+}
+
+.page-dark-zone .site-footer {
+  background: var(--color-charcoal);
+  border-top-color: var(--color-charcoal-border);
+}
+
+.page-dark-zone .site-footer p {
+  color: var(--color-charcoal-muted);
+}
+
 @media (min-width: 640px) {
   .services-columns,
   .editorial-columns {
@@ -1742,7 +1890,7 @@ button {
   }
 
   .site-header__logo-image {
-    max-width: min(896px, calc(100vw - 4.5rem));
+    max-width: min(762px, calc(100vw - 4.5rem));
   }
 
   .site-header__theme-toggle--desktop {
@@ -1788,10 +1936,13 @@ button {
 
   .site-header__nav--mobile {
     display: flex;
+    justify-content: flex-start;
+    padding-top: clamp(2.5rem, 10vh, 4.75rem);
+    padding-bottom: clamp(8rem, 22vh, 12rem);
   }
 
   .site-header__link {
-    font-size: 1.125rem;
+    font-size: calc(1.125rem + 2pt);
   }
 
   .site-header__dropdown--mobile {
@@ -1840,7 +1991,13 @@ button {
     right: 0;
     bottom: clamp(2rem, 8vh, 4rem);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .site-header__menu-close {
+    display: inline-flex;
   }
 }
 
@@ -1848,6 +2005,33 @@ button {
   .site-header__inner {
     /* Reserve space for the pinned theme toggle */
     padding-right: calc(clamp(1rem, 3vw, 2.5rem) + 2.25rem + 0.75rem);
+  }
+
+  .site-header__nav--left,
+  .site-header__nav--right {
+    height: var(--header-logo-height);
+    align-items: flex-end;
+    padding-top: 0;
+    padding-bottom: calc(var(--header-logo-height) * 0.22);
+  }
+
+  .site-header__nav--left > *,
+  .site-header__nav--right > * {
+    align-self: flex-end;
+  }
+
+  .site-header__dropdown {
+    display: inline-flex;
+    align-items: flex-end;
+  }
+
+  .site-header__link,
+  .site-header__dropdown-trigger {
+    line-height: 0.92;
+  }
+
+  .site-header__dropdown-chevron {
+    align-self: center;
   }
 
   .site-header__theme-toggle--desktop {
@@ -1860,7 +2044,8 @@ button {
 
   .site-header__nav--mobile,
   .site-header__mobile-theme,
-  .site-header__theme-toggle--mobile {
+  .site-header__theme-toggle--mobile,
+  .site-header__menu-close {
     display: none !important;
   }
 }
