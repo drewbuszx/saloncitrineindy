@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import {
   site,
   BOOKING_URL,
@@ -76,7 +77,5 @@ const pageDescription =
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>&copy; {new Date().getFullYear()} {site.name}. All Rights Reserved.</p>
-  </footer>
+  <SiteFooter />
 </BaseLayout>

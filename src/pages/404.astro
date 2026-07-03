@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { site, BOOKING_URL } from "../data/site";
+
+const pageTitle = `Page Not Found | ${site.name}`;
+const pageDescription = "The page you're looking for doesn't exist.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} path="/404/">
+  <Header />
+
+  <main id="main" class="not-found-page">
+    <section class="section section--editorial" aria-labelledby="not-found-heading">
+      <div class="section__inner not-found-page__inner">
+        <p class="not-found-page__code" aria-hidden="true">404</p>
+        <h1 class="editorial-section__title" id="not-found-heading">Page not found</h1>
+        <p class="not-found-page__text">
+          That link may be out of date, or the page may have moved. Head back home or
+          book your next appointment.
+        </p>
+        <div class="not-found-page__actions">
+          <a class="not-found-page__cta not-found-page__cta--primary" href="/">
+            Back to Home
+          </a>
+          <a
+            class="not-found-page__cta"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-booking-link
+          >
+            Book Now
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

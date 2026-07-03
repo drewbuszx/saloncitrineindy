@@ -1,0 +1,19 @@
+---
+import { site, PRIVACY_PATH } from "../data/site";
+
+interface Props {
+  /** Profile pages use a narrower centered footer. */
+  profile?: boolean;
+}
+
+const { profile = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class:list={["site-footer", profile && "site-footer--profile"]}>
+  <p>
+    &copy; {year} {site.name}. All Rights Reserved.
+    <span class="site-footer__sep" aria-hidden="true"> · </span>
+    <a class="site-footer__link" href={PRIVACY_PATH}>Privacy Policy</a>
+  </p>
+</footer>

@@ -1,5 +1,6 @@
 export const BOOKING_URL = "https://saloncitrineindy.glossgenius.com/booking-flow";
-export const FULL_MENU_PATH = "/menu";
+export const FULL_MENU_PATH = "/menu/";
+export const PRIVACY_PATH = "/privacy/";
 export const SHOP_URL = "https://saloncitrineindy.myshopify.com/";
 export const GIFT_CARDS_URL =
   "https://saloncitrineindy.glossgenius.com/shop/gift-cards";
@@ -23,6 +24,17 @@ export function teamMemberPath(name: string): string {
 
 export function formatCancellationPolicyText(text: string): string {
   return `**CANCELLATION POLICY: ${text}**`;
+}
+
+/** Display handle from a social URL or handle (strips leading @). */
+export function socialDisplayHandle(urlOrHandle: string): string {
+  const trimmed = urlOrHandle.trim();
+  if (trimmed.startsWith("http")) {
+    const segment =
+      new URL(trimmed).pathname.split("/").filter(Boolean).pop() ?? trimmed;
+    return segment.replace(/^@/, "");
+  }
+  return trimmed.replace(/^@/, "");
 }
 
 export const site = {
@@ -93,6 +105,77 @@ export const site = {
     },
   ] as const,
 };
+
+/** Schema.org OpeningHoursSpecification for JSON-LD. */
+export function schemaOpeningHours(): {
+  "@type": "OpeningHoursSpecification";
+  dayOfWeek: string[];
+  opens: string;
+  closes: string;
+}[] {
+  const openDays = site.hours.filter((entry) => entry.time !== "Closed");
+  const groups: {
+    days: string[];
+    opens: string;
+    closes: string;
+  }[] = [];
+
+  for (const entry of openDays) {
+    const [opens, closes] = entry.time.split(" – ").map((part) => {
+      const match = part.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+      if (!match) return part.trim();
+      let hours = Number.parseInt(match[1], 10);
+      const minutes = match[2];
+      const meridiem = match[3].toUpperCase();
+      if (meridiem === "PM" && hours !== 12) hours += 12;
+      if (meridiem === "AM" && hours === 12) hours = 0;
+      return `${String(hours).padStart(2, "0")}:${minutes}`;
+    });
+
+    const last = groups[groups.length - 1];
+    if (last && last.opens === opens && last.closes === closes) {
+      last.days.push(entry.day);
+    } else {
+      groups.push({ days: [entry.day], opens, closes });
+    }
+  }
+
+  return groups.map((group) => ({
+    "@type": "OpeningHoursSpecification" as const,
+    dayOfWeek: group.days,
+    opens: group.opens,
+    closes: group.closes,
+  }));
+}
+
+export function localBusinessJsonLd() {
+  const siteUrl = `https://${site.domain}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "HairSalon",
+    name: site.name,
+    description: site.tagline,
+    url: siteUrl,
+    telephone: site.phone,
+    email: site.email,
+    image: `${siteUrl}/images/salon-citrine-logo.png`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: site.address.street,
+      addressLocality: site.address.city,
+      addressRegion: site.address.state,
+      postalCode: site.address.zip,
+      addressCountry: "US",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: site.address.lat,
+      longitude: site.address.lng,
+    },
+    openingHoursSpecification: schemaOpeningHours(),
+    sameAs: [site.instagram],
+  };
+}
 
 export type ServiceItem = {
   name: string;
@@ -268,6 +351,8 @@ export type TeamMember = {
   about?: string;
   /** Instagram handle without @ (e.g. "Saloncitrineindy"). */
   instagram?: string;
+  /** Full Threads profile URL. */
+  threads?: string;
   featuredServices?: FeaturedService[];
   bookingUrl: string;
   /** When false, profile shows a notice beside the book CTA. Defaults to true. */
@@ -405,6 +490,8 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
           "10001-d788dd27-3f49-452f-af8e-c87bb31e94c3"
         ),
         instagram: "julieapowers",
+        threads:
+          "https://www.threads.com/@julieapowers?xmt=AQG0jfH4ZkjxsZB5WMhnNcu9-Vqomm45LbhfkCcUZxWC0Hk",
         featuredServices: [
           { name: "BESPOKE KOREAN FACIAL — 60 MIN", price: "$125" },
           { name: "BRAZILIAN WAX", price: "$80" },

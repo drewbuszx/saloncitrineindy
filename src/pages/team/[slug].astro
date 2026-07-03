@@ -3,11 +3,13 @@ import fs from "node:fs";
 import path from "node:path";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
 import {
   site,
   teamGroups,
   teamMemberSlug,
   teamMemberPath,
+  socialDisplayHandle,
   type TeamMember,
 } from "../../data/site";
 
@@ -136,15 +138,49 @@ const pageDescription = member.bio
           </div>
 
           {
-            member.instagram && (
-              <a
-                class="profile__book-instagram"
-                href={`https://www.instagram.com/${member.instagram}/`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                @{member.instagram}
-              </a>
+            (member.instagram || member.threads) && (
+              <div class="profile__social">
+                {
+                  member.instagram && (
+                    <a
+                      class="social-link profile__book-instagram"
+                      href={`https://www.instagram.com/${member.instagram}/`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        class="social-link__icon"
+                        src="/icons/instagram.png"
+                        alt=""
+                        width="16"
+                        height="16"
+                        decoding="async"
+                      />
+                      {socialDisplayHandle(member.instagram)}
+                    </a>
+                  )
+                }
+                {
+                  member.threads && (
+                    <a
+                      class="social-link profile__book-instagram"
+                      href={member.threads}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        class="social-link__icon"
+                        src="/icons/threads.png"
+                        alt=""
+                        width="16"
+                        height="16"
+                        decoding="async"
+                      />
+                      {socialDisplayHandle(member.threads)}
+                    </a>
+                  )
+                }
+              </div>
             )
           }
 
@@ -156,9 +192,7 @@ const pageDescription = member.bio
           </footer>
         </div>
 
-        <footer class="site-footer site-footer--profile">
-          <p>&copy; {new Date().getFullYear()} {site.name}. All Rights Reserved.</p>
-        </footer>
+        <SiteFooter profile />
       </div>
 
       <figure class="profile__media">

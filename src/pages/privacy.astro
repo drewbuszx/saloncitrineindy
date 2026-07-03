@@ -1,0 +1,156 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { site } from "../data/site";
+
+const pageTitle = `Privacy Policy | ${site.name}`;
+const pageDescription =
+  "How Salon Citrine collects, uses, and protects information when you visit our website or book appointments.";
+const lastUpdated = "July 3, 2026";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} path="/privacy/">
+  <Header />
+
+  <main id="main" class="legal-page">
+    <section class="section section--editorial" aria-labelledby="privacy-heading">
+      <div class="section__inner section__inner--wide legal-page__inner">
+        <header class="legal-page__header">
+          <a class="legal-page__back" href="/">← Home</a>
+          <h1 class="editorial-section__title" id="privacy-heading">Privacy Policy</h1>
+          <p class="legal-page__updated">Last updated: {lastUpdated}</p>
+        </header>
+
+        <div class="legal-page__content">
+          <p>
+            Salon Citrine ("we," "us," or "our") operates saloncitrineindy.com (the
+            "Site"). This Privacy Policy explains how we handle information when you
+            visit the Site, contact us, or book an appointment through our third-party
+            scheduling partner.
+          </p>
+
+          <h2>Information We Collect</h2>
+          <p>
+            When you browse the Site, we may automatically receive technical
+            information such as your browser type, device type, pages viewed, and
+            approximate location derived from your IP address. If you enable analytics
+            on the Site (see below), that service may collect similar usage data on our
+            behalf.
+          </p>
+          <p>
+            If you email us at{" "}
+            <a href={`mailto:${site.email}`}>{site.email}</a> or call{" "}
+            <a href={site.phoneHref}>{site.phone}</a>, we receive the information you
+            choose to share (for example, your name, email address, phone number, and
+            message content) so we can respond to your inquiry.
+          </p>
+          <p>
+            The Site does not include a contact form that submits data directly to us.
+            Appointment booking is handled by GlossGenius, a third-party platform. When
+            you book online, GlossGenius collects the information required to schedule
+            and manage your appointment (such as name, contact details, payment card
+            information if required, and appointment preferences) under its own privacy
+            practices.
+          </p>
+
+          <h2>How We Use Information</h2>
+          <p>We use information to:</p>
+          <ul>
+            <li>Operate and improve the Site</li>
+            <li>Respond to questions, hiring inquiries, and other messages you send us</li>
+            <li>Understand general Site traffic and performance when analytics are enabled</li>
+            <li>Comply with applicable legal obligations</li>
+          </ul>
+          <p>
+            We do not sell your personal information. We do not share your information
+            with third parties for their own marketing purposes.
+          </p>
+
+          <h2>Third-Party Services</h2>
+          <p>
+            The Site links to or embeds services operated by third parties, including:
+          </p>
+          <ul>
+            <li>
+              <strong>GlossGenius</strong> — online booking, gift cards, and related
+              salon scheduling features
+            </li>
+            <li>
+              <strong>Shopify</strong> — retail shop purchases
+            </li>
+            <li>
+              <strong>OpenStreetMap</strong> — map tiles in our Connect section
+            </li>
+            <li>
+              <strong>Instagram</strong> — social links
+            </li>
+          </ul>
+          <p>
+            Each third-party service has its own privacy policy and data practices. We
+            encourage you to review those policies before providing information on
+            those platforms.
+          </p>
+
+          <h2>Analytics</h2>
+          <p>
+            We may use a privacy-friendly analytics service (such as Google Analytics
+            or Plausible) to understand how visitors use the Site. Analytics is only
+            loaded when configured for the Site. You can limit tracking through your
+            browser settings, ad blockers, or the opt-out tools provided by the
+            analytics provider you choose.
+          </p>
+
+          <h2>Cookies and Local Storage</h2>
+          <p>
+            The Site stores your light/dark theme preference in your browser's local
+            storage so your choice persists between visits. Third-party booking,
+            shop, and analytics services may use their own cookies or similar
+            technologies when you interact with them.
+          </p>
+
+          <h2>Data Retention</h2>
+          <p>
+            We retain messages you send us only as long as needed to respond and for
+            reasonable business record-keeping. Analytics providers retain data according
+            to their own policies and our configuration.
+          </p>
+
+          <h2>Children's Privacy</h2>
+          <p>
+            The Site is intended for a general audience and is not directed at children
+            under 13. We do not knowingly collect personal information from children.
+          </p>
+
+          <h2>Your Choices</h2>
+          <p>
+            You may contact us to ask questions about this policy or to request access,
+            correction, or deletion of information you have provided to us directly by
+            email or phone. Appointment data held by GlossGenius should be requested
+            through GlossGenius or by contacting us so we can help coordinate.
+          </p>
+
+          <h2>Changes to This Policy</h2>
+          <p>
+            We may update this Privacy Policy from time to time. The "Last updated" date
+            at the top of this page will reflect the most recent revision.
+          </p>
+
+          <h2>Contact Us</h2>
+          <p>
+            Questions about this Privacy Policy? Reach us at{" "}
+            <a href={`mailto:${site.email}`}>{site.email}</a> or{" "}
+            <a href={site.phoneHref}>{site.phone}</a>.
+          </p>
+          <address class="legal-page__address">
+            {site.name}<br />
+            {site.address.street}<br />
+            {site.address.city}, {site.address.state} {site.address.zip}
+          </address>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

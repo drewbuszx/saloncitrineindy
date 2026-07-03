@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import ReviewsSection from "../components/ReviewsSection.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import {
   site,
   serviceGroups,
@@ -11,6 +12,7 @@ import {
   BOOKING_URL,
   formatCancellationPolicyText,
   teamMemberPath,
+  socialDisplayHandle,
 } from "../data/site";
 
 type HoursGroup = { label: string; time: string };
@@ -540,12 +542,20 @@ const connectMap = getConnectMapTiles(
                 {site.email}
               </a>
               <a
-                class="connect-contact__link"
+                class="connect-contact__link social-link"
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Instagram
+                <img
+                  class="social-link__icon"
+                  src="/icons/instagram.png"
+                  alt=""
+                  width="16"
+                  height="16"
+                  decoding="async"
+                />
+                {socialDisplayHandle(site.instagram)}
               </a>
             </div>
           </div>
@@ -589,6 +599,15 @@ const connectMap = getConnectMapTiles(
                 stroke-width="1.5"></path>
             </svg>
           </div>
+          <p class="connect-map__attribution">
+            <a
+              href="https://www.openstreetmap.org/copyright"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              © OpenStreetMap contributors
+            </a>
+          </p>
         </div>
       </div>
     </section>
@@ -608,9 +627,7 @@ const connectMap = getConnectMapTiles(
         </p>
       </div>
 
-      <footer class="site-footer">
-        <p>&copy; {new Date().getFullYear()} {site.name}. All Rights Reserved.</p>
-      </footer>
+      <SiteFooter />
     </div>
   </main>
 </BaseLayout>

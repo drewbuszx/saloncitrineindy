@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://saloncitrineindy.com/sitemap-index.xml

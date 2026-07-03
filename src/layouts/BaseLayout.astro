@@ -1,7 +1,11 @@
 ---
 import "../styles/global.css";
 import BookingModal from "../components/BookingModal.astro";
-import { site, BOOKING_URL } from "../data/site";
+import { site, BOOKING_URL, localBusinessJsonLd } from "../data/site";
+
+const gaId = import.meta.env.PUBLIC_GA_ID;
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
+const businessSchema = JSON.stringify(localBusinessJsonLd());
 
 interface Props {
   title?: string;
@@ -33,8 +37,37 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalUrl} />
+    <script type="application/ld+json" set:html={businessSchema} />
+    {
+      gaId && (
+        <>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          />
+          <script is:inline define:vars={{ gaId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId);
+          </script>
+        </>
+      )
+    }
+    {
+      !gaId && plausibleDomain && (
+        <script
+          defer
+          data-domain={plausibleDomain}
+          src="https://plausible.io/js/script.js"
+        />
+      )
+    }
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
