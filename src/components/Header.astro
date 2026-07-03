@@ -1,10 +1,11 @@
 ---
-import { site, SHOP_URL, GIFT_CARDS_URL } from "../data/site";
+import { site, GIFT_CARDS_URL } from "../data/site";
 
 type NavChild = {
-  href: string;
+  href?: string;
   label: string;
   external?: boolean;
+  comingSoon?: boolean;
 };
 
 type NavLink = {
@@ -15,7 +16,7 @@ type NavLink = {
 };
 
 const shopLinks: NavChild[] = [
-  { href: SHOP_URL, label: "Shop Citrine", external: true },
+  { label: "Shop Citrine — Coming Soon", comingSoon: true },
   { href: GIFT_CARDS_URL, label: "Gift Cards", external: true },
 ];
 
@@ -104,14 +105,24 @@ const shopMenuId = "shop-submenu";
                 {
                   link.children.map((child) => (
                     <li role="none">
-                      <a
-                        class="site-header__dropdown-item"
-                        href={child.href}
-                        role="menuitem"
-                        {...externalLinkAttrs(child.external)}
-                      >
-                        {child.label}
-                      </a>
+                      {child.comingSoon ? (
+                        <span
+                          class="site-header__dropdown-item site-header__dropdown-item--coming-soon"
+                          role="menuitem"
+                          aria-disabled="true"
+                        >
+                          {child.label}
+                        </span>
+                      ) : (
+                        <a
+                          class="site-header__dropdown-item"
+                          href={child.href}
+                          role="menuitem"
+                          {...externalLinkAttrs(child.external)}
+                        >
+                          {child.label}
+                        </a>
+                      )}
                     </li>
                   ))
                 }
@@ -210,14 +221,24 @@ const shopMenuId = "shop-submenu";
                 {
                   link.children.map((child) => (
                     <li role="none">
-                      <a
-                        class="site-header__dropdown-item"
-                        href={child.href}
-                        role="menuitem"
-                        {...externalLinkAttrs(child.external)}
-                      >
-                        {child.label}
-                      </a>
+                      {child.comingSoon ? (
+                        <span
+                          class="site-header__dropdown-item site-header__dropdown-item--coming-soon"
+                          role="menuitem"
+                          aria-disabled="true"
+                        >
+                          {child.label}
+                        </span>
+                      ) : (
+                        <a
+                          class="site-header__dropdown-item"
+                          href={child.href}
+                          role="menuitem"
+                          {...externalLinkAttrs(child.external)}
+                        >
+                          {child.label}
+                        </a>
+                      )}
                     </li>
                   ))
                 }

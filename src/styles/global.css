@@ -277,6 +277,16 @@ button {
   outline: none;
 }
 
+.site-header__dropdown-item--coming-soon {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.site-header__dropdown-item--coming-soon:hover,
+.site-header__dropdown-item--coming-soon:focus-visible {
+  opacity: 0.55;
+}
+
 .book-bar__link,
 .menu-page__book-cta,
 .team-member__book-overlay {
@@ -358,7 +368,7 @@ button {
 }
 
 .site-header__theme-toggle--desktop {
-  display: inline-flex;
+  display: none;
 }
 
 .site-header__theme-toggle--mobile {
@@ -2615,11 +2625,6 @@ button {
 }
 
 @media (min-width: 1101px) {
-  .site-header__inner {
-    /* Reserve space for the pinned theme toggle */
-    padding-right: calc(clamp(1rem, 3vw, 2.5rem) + 2.25rem + 0.75rem);
-  }
-
   .site-header__nav--left,
   .site-header__nav--right {
     height: var(--header-logo-height);
@@ -2645,14 +2650,6 @@ button {
 
   .site-header__dropdown-chevron {
     align-self: center;
-  }
-
-  .site-header__theme-toggle--desktop {
-    position: absolute;
-    right: clamp(1rem, 3vw, 2.5rem);
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
   }
 
   .site-header__nav--mobile,

@@ -77,14 +77,22 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
     <script is:inline>
       (function () {
         var storageKey = "theme";
-        var stored = localStorage.getItem(storageKey);
-        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var theme =
-          stored === "dark" || stored === "light"
-            ? stored
-            : prefersDark
-              ? "dark"
-              : "light";
+        var desktopMq = window.matchMedia("(min-width: 1101px)");
+        var prefersDarkMq = window.matchMedia("(prefers-color-scheme: dark)");
+        var theme;
+
+        if (desktopMq.matches) {
+          theme = prefersDarkMq.matches ? "dark" : "light";
+        } else {
+          var stored = localStorage.getItem(storageKey);
+          theme =
+            stored === "dark" || stored === "light"
+              ? stored
+              : prefersDarkMq.matches
+                ? "dark"
+                : "light";
+        }
+
         document.documentElement.setAttribute("data-theme", theme);
       })();
     </script>
@@ -105,31 +113,62 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
       </a>
     </aside>
     <script>
-      const themeToggles = document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]");
+      const desktopMq = window.matchMedia("(min-width: 1101px)");
+      const prefersDarkMq = window.matchMedia("(prefers-color-scheme: dark)");
+      const mobileThemeToggle = document.querySelector<HTMLButtonElement>(
+        ".site-header__theme-toggle--mobile[data-theme-toggle]",
+      );
       const storageKey = "theme";
 
-      function getTheme() {
-        return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      function systemTheme(): "light" | "dark" {
+        return prefersDarkMq.matches ? "dark" : "light";
+      }
+
+      function getStoredTheme(): "light" | "dark" | null {
+        const stored = localStorage.getItem(storageKey);
+        return stored === "dark" || stored === "light" ? stored : null;
+      }
+
+      function resolveTheme(): "light" | "dark" {
+        if (desktopMq.matches) {
+          return systemTheme();
+        }
+        return getStoredTheme() ?? systemTheme();
       }
 
       function updateToggleLabels(theme: "light" | "dark") {
         const label =
           theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
-        themeToggles.forEach((toggle) => toggle.setAttribute("aria-label", label));
+        mobileThemeToggle?.setAttribute("aria-label", label);
       }
 
-      function setTheme(theme: "light" | "dark") {
+      function applyTheme(theme: "light" | "dark") {
         document.documentElement.setAttribute("data-theme", theme);
-        localStorage.setItem(storageKey, theme);
         updateToggleLabels(theme);
       }
 
-      updateToggleLabels(getTheme());
+      function syncTheme() {
+        applyTheme(resolveTheme());
+      }
 
-      themeToggles.forEach((toggle) => {
-        toggle.addEventListener("click", () => {
-          setTheme(getTheme() === "dark" ? "light" : "dark");
-        });
+      syncTheme();
+
+      mobileThemeToggle?.addEventListener("click", () => {
+        const current =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "dark"
+            : "light";
+        const next = current === "dark" ? "light" : "dark";
+        localStorage.setItem(storageKey, next);
+        applyTheme(next);
+      });
+
+      desktopMq.addEventListener("change", syncTheme);
+
+      prefersDarkMq.addEventListener("change", () => {
+        if (desktopMq.matches || !getStoredTheme()) {
+          syncTheme();
+        }
       });
 
       const menuToggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
