@@ -784,11 +784,11 @@ button {
   flex-shrink: 0;
 }
 
-.intro__values-row {
+.intro__values-row--desktop {
   display: contents;
 }
 
-.intro__values-separator--mobile-only {
+.intro__values-grid--mobile {
   display: none;
 }
 
@@ -798,26 +798,56 @@ button {
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 0.625rem;
-    font-size: clamp(0.75rem, 2.8vw, 0.8125rem);
-    letter-spacing: 0.1em;
+    gap: 0.5rem;
+    font-size: clamp(0.625rem, 2.2vw, 0.7rem);
+    letter-spacing: 0.08em;
   }
 
-  .intro__values-row {
+  .intro__values-row--desktop {
+    display: none;
+  }
+
+  .intro__values-grid--mobile {
+    --values-spacer-size: 1em;
+    display: grid;
+    grid-template-columns:
+      auto
+      var(--values-spacer-size)
+      max-content
+      var(--values-spacer-size)
+      auto
+      var(--values-spacer-size)
+      max-content
+      var(--values-spacer-size)
+      auto;
+    width: max-content;
+    max-width: 100%;
+    margin-inline: auto;
+    align-items: center;
+  }
+
+  .intro__values-column {
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--values-spacer-size);
+  }
+
+  .intro__values-spacer {
+    align-self: stretch;
+  }
+
+  .intro__values-cell {
+    display: flex;
+    justify-content: center;
     align-items: center;
     width: 100%;
   }
 
-  .intro__values-row--top {
-    justify-content: space-evenly;
-    gap: 0.45rem 0.55rem;
-  }
-
-  .intro__values-row--bottom {
-    justify-content: center;
-    gap: 0.45rem 0.55rem;
+  .intro__values-tag {
+    text-align: center;
+    white-space: nowrap;
   }
 
   .intro__values-separator {
@@ -826,10 +856,6 @@ button {
 
   .intro__values-separator--hat {
     height: calc(1em + 5pt);
-  }
-
-  .intro__values-separator--mobile-only {
-    display: block;
   }
 }
 

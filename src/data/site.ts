@@ -70,14 +70,16 @@ export const site = {
     "gay",
     "wierd",
   ] as const,
-  // Mobile line 1: 4 seps; line 2: mushroom · tag · wierd
-  valuesSeparatorsMobile: [
-    "women",
-    "hat",
-    "trans",
-    "gay",
-    "mushroom",
-    "wierd",
+  // Mobile: two rows of sep · tag · sep · tag · sep (2 tags, 3 images each)
+  valuesMobileRows: [
+    {
+      separators: ["women", "hat", "trans"] as const,
+      valueIndices: [0, 1],
+    },
+    {
+      separators: ["gay", "wierd", "mushroom"] as const,
+      valueIndices: [2, 3],
+    },
   ] as const,
 };
 

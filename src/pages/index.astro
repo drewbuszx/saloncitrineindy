@@ -17,58 +17,67 @@ type HoursGroup = { label: string; time: string };
 type ValuesSeparatorKey = keyof typeof site.valuesSeparatorImages;
 
 type ValuesItem =
-  | { kind: "sep"; desktopKey: ValuesSeparatorKey; mobileKey: ValuesSeparatorKey }
-  | { kind: "mobile-sep"; mobileKey: ValuesSeparatorKey }
-  | { kind: "break" }
+  | { kind: "sep"; key: ValuesSeparatorKey }
   | { kind: "tag"; label: string };
 
-function buildValuesItems(): ValuesItem[] {
+function buildDesktopValuesItems(): ValuesItem[] {
   const items: ValuesItem[] = [
-    {
-      kind: "sep",
-      desktopKey: site.valuesSeparatorsDesktop[0],
-      mobileKey: site.valuesSeparatorsMobile[0],
-    },
+    { kind: "sep", key: site.valuesSeparatorsDesktop[0] },
   ];
-  let sepIndex = 1;
 
   site.values.forEach((label, index) => {
-    if (index === site.values.length - 1) {
-      items.push({ kind: "break" });
+    items.push({ kind: "tag", label });
+    if (index < site.valuesSeparatorsDesktop.length - 1) {
       items.push({
-        kind: "mobile-sep",
-        mobileKey: site.valuesSeparatorsMobile[4],
+        kind: "sep",
+        key: site.valuesSeparatorsDesktop[index + 1],
       });
     }
-
-    items.push({ kind: "tag", label });
-
-    const desktopKey = site.valuesSeparatorsDesktop[sepIndex];
-    const mobileKey =
-      sepIndex === site.valuesSeparatorsDesktop.length - 1
-        ? site.valuesSeparatorsMobile[5]
-        : site.valuesSeparatorsMobile[sepIndex];
-
-    items.push({ kind: "sep", desktopKey, mobileKey });
-    sepIndex++;
   });
 
   return items;
 }
 
-const valuesItems = buildValuesItems();
+function buildMobileValuesRowItems(
+  row: (typeof site.valuesMobileRows)[number]
+): ValuesItem[] {
+  const items: ValuesItem[] = [];
 
-const valuesRows: ValuesItem[][] = [];
-let valuesRow: ValuesItem[] = [];
-for (const item of valuesItems) {
-  if (item.kind === "break") {
-    if (valuesRow.length) valuesRows.push(valuesRow);
-    valuesRow = [];
-    continue;
-  }
-  valuesRow.push(item);
+  row.valueIndices.forEach((valueIndex, index) => {
+    items.push({ kind: "sep", key: row.separators[index] });
+    items.push({ kind: "tag", label: site.values[valueIndex] });
+  });
+
+  items.push({
+    kind: "sep",
+    key: row.separators[row.separators.length - 1],
+  });
+
+  return items;
 }
-if (valuesRow.length) valuesRows.push(valuesRow);
+
+const desktopValuesItems = buildDesktopValuesItems();
+const mobileValuesRows = site.valuesMobileRows.map(buildMobileValuesRowItems);
+
+type MobileValuesGridColumn =
+  | { kind: "spacer" }
+  | { kind: "content"; top: ValuesItem; bottom: ValuesItem };
+
+function buildMobileValuesGridColumns(): MobileValuesGridColumn[] {
+  const [row1, row2] = mobileValuesRows;
+  const columns: MobileValuesGridColumn[] = [];
+
+  row1.forEach((top, index) => {
+    columns.push({ kind: "content", top, bottom: row2[index] });
+    if (index < row1.length - 1) {
+      columns.push({ kind: "spacer" });
+    }
+  });
+
+  return columns;
+}
+
+const mobileValuesGridColumns = buildMobileValuesGridColumns();
 
 function groupHours(
   hours: { day: string; time: string }[]
@@ -211,81 +220,69 @@ const connectMap = getConnectMapTiles(
           </div>
         </div>
         <div class="intro__values">
-          {
-            valuesRows.map((row, rowIndex) => (
-              <div
-                class:list={[
-                  "intro__values-row",
-                  rowIndex === 0
-                    ? "intro__values-row--top"
-                    : "intro__values-row--bottom",
-                ]}
-              >
-                {row.map((item) => {
-                  if (item.kind === "sep") {
-                    const desktopSrc =
-                      site.valuesSeparatorImages[item.desktopKey];
-                    const mobileSrc =
-                      site.valuesSeparatorImages[item.mobileKey];
+          <div class="intro__values-row intro__values-row--desktop">
+            {
+              desktopValuesItems.map((item) => {
+                if (item.kind === "sep") {
+                  const isHat = item.key === "hat";
+                  return (
+                    <img
+                      src={site.valuesSeparatorImages[item.key]}
+                      alt=""
+                      class:list={[
+                        "intro__values-separator",
+                        isHat && "intro__values-separator--hat",
+                      ]}
+                      width="14"
+                      height="14"
+                      loading="lazy"
+                    />
+                  );
+                }
 
-                    const isHat =
-                      item.desktopKey === "hat" || item.mobileKey === "hat";
+                return <span class="intro__values-tag">{item.label}</span>;
+              })
+            }
+          </div>
+          <div class="intro__values-grid intro__values-grid--mobile">
+            {
+              mobileValuesGridColumns.map((column) => {
+                if (column.kind === "spacer") {
+                  return (
+                    <div
+                      class="intro__values-spacer"
+                      aria-hidden="true"
+                    />
+                  );
+                }
 
-                    if (desktopSrc === mobileSrc) {
-                      return (
-                        <img
-                          src={desktopSrc}
-                          alt=""
-                          class:list={[
-                            "intro__values-separator",
-                            isHat && "intro__values-separator--hat",
-                          ]}
-                          width="14"
-                          height="14"
-                          loading="lazy"
-                        />
-                      );
-                    }
-
-                    return (
-                      <picture>
-                        <source
-                          media="(max-width: 767px)"
-                          srcset={mobileSrc}
-                        />
-                        <img
-                          src={desktopSrc}
-                          alt=""
-                          class:list={[
-                            "intro__values-separator",
-                            isHat && "intro__values-separator--hat",
-                          ]}
-                          width="14"
-                          height="14"
-                          loading="lazy"
-                        />
-                      </picture>
-                    );
-                  }
-
-                  if (item.kind === "mobile-sep") {
-                    return (
-                      <img
-                        src={site.valuesSeparatorImages[item.mobileKey]}
-                        alt=""
-                        class="intro__values-separator intro__values-separator--mobile-only"
-                        width="14"
-                        height="14"
-                        loading="lazy"
-                      />
-                    );
-                  }
-
-                  return <span class="intro__values-tag">{item.label}</span>;
-                })}
-              </div>
-            ))
-          }
+                return (
+                  <div class="intro__values-column">
+                    {[column.top, column.bottom].map((item) => (
+                      <div class="intro__values-cell">
+                        {item.kind === "sep" ? (
+                          <img
+                            src={site.valuesSeparatorImages[item.key]}
+                            alt=""
+                            class:list={[
+                              "intro__values-separator",
+                              item.key === "hat" &&
+                                "intro__values-separator--hat",
+                            ]}
+                            width="14"
+                            height="14"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <span class="intro__values-tag">{item.label}</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })
+            }
+          </div>
         </div>
       </div>
       <figure class="about-image">
