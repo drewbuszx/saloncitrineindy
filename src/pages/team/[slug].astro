@@ -1,0 +1,231 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import {
+  site,
+  teamGroups,
+  teamMemberSlug,
+  teamMemberPath,
+  type TeamMember,
+} from "../../data/site";
+
+export function getStaticPaths() {
+  const members = teamGroups.flatMap((group) =>
+    group.members.map((member) => ({ member, groupTitle: group.title }))
+  );
+
+  return members.map(({ member, groupTitle }, index) => {
+    const nextEntry = members[(index + 1) % members.length];
+
+    return {
+      params: { slug: teamMemberSlug(member.name) },
+      props: {
+        member,
+        groupTitle,
+        nextMember: nextEntry.member,
+      },
+    };
+  });
+}
+
+interface Props {
+  member: TeamMember;
+  groupTitle: string;
+  nextMember: TeamMember;
+}
+
+const { member, nextMember } = Astro.props;
+
+const hasPhoto = fs.existsSync(
+  path.join(process.cwd(), "public", ...member.image.split("/").filter(Boolean))
+);
+
+const desktopImage = member.profileImage ?? member.image;
+const hasDesktopPhoto =
+  desktopImage !== member.image
+    ? fs.existsSync(
+        path.join(process.cwd(), "public", ...desktopImage.split("/").filter(Boolean))
+      )
+    : hasPhoto;
+
+const placeholderParagraphs = [64, 48, 56, 32].map((count) =>
+  Array(count).fill("bio").join(" ")
+);
+
+const aboutParagraphs = member.about
+  ? member.about
+      .split(/\n\s*\n/)
+      .map((paragraph) => paragraph.trim())
+      .filter(Boolean)
+  : placeholderParagraphs;
+
+const placeholderFeaturedServices = [
+  { name: "BASE", price: "$200" },
+  { name: "FULL TINT", price: "$300" },
+  { name: "PARTIAL HIGHLIGHT", price: "$475" },
+];
+
+const featuredServices =
+  member.featuredServices && member.featuredServices.length > 0
+    ? member.featuredServices
+    : placeholderFeaturedServices;
+
+const profilePath = teamMemberPath(member.name);
+const pageTitle = `${member.name} — ${member.role} | ${site.name}`;
+const pageDescription = member.bio
+  ? `Meet ${member.name}, ${member.role.toLowerCase()} at ${site.name} in historic Irvington, Indianapolis. ${member.bio}`
+  : `Meet ${member.name}, ${member.role.toLowerCase()} at ${site.name} in historic Irvington, Indianapolis. Book your next appointment with ${member.firstName} online.`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  path={profilePath}
+  ogImage={hasPhoto ? member.image : undefined}
+  bookBarUrl={member.bookingUrl}
+>
+  <Header />
+
+  <main id="main" class="profile-page">
+    <section class="profile" aria-labelledby="profile-heading">
+      <div class="profile__content">
+        <div class="profile__content-inner">
+          <a class="profile-page__back" href="/#team">← Back to the team</a>
+
+          <div class="profile__bio">
+            {aboutParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+
+          <div class="profile__meta">
+            <p class="profile__meta-title">{member.role.toUpperCase()}</p>
+
+            <hr class="profile__meta-divider" />
+
+            <div class="profile__services">
+              <h2 class="profile__services-heading">Services</h2>
+              <ul class="profile__services-list">
+                {featuredServices.map((service) => (
+                  <li class="profile__service">
+                    <span class="profile__service-name">{service.name}</span>
+                    <span class="profile__service-price">{service.price}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <a
+            class="profile__book-cta"
+            href={member.bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-booking-link
+          >
+            Book with {member.firstName}
+          </a>
+
+          {
+            member.instagram && (
+              <a
+                class="profile__book-instagram"
+                href={`https://www.instagram.com/${member.instagram}/`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                @{member.instagram}
+              </a>
+            )
+          }
+
+          <footer class="profile__footer">
+            <a class="profile__next" href={teamMemberPath(nextMember.name)}>
+              <span class="profile__next-label">Next up</span>
+              <span class="profile__next-name">{nextMember.name} →</span>
+            </a>
+          </footer>
+        </div>
+
+        <footer class="site-footer site-footer--profile">
+          <p>&copy; {new Date().getFullYear()} {site.name}. All Rights Reserved.</p>
+        </footer>
+      </div>
+
+      <figure class="profile__media">
+        {
+          hasPhoto ? (
+            <picture class="profile__picture">
+              {hasDesktopPhoto && (
+                <source media="(min-width: 900px)" srcset={desktopImage} />
+              )}
+              <img
+                class="profile__photo"
+                src={member.image}
+                alt=""
+                width="720"
+                height="960"
+                fetchpriority="high"
+              />
+            </picture>
+          ) : (
+            <span class="profile__photo profile__photo--placeholder" aria-hidden="true"></span>
+          )
+        }
+        <div class="profile__media-overlay" aria-hidden="true"></div>
+        <h1 class="profile__name" id="profile-heading">{member.name}</h1>
+      </figure>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  function measureProfileNameText(name: HTMLElement): number {
+    const range = document.createRange();
+    range.selectNodeContents(name);
+    return range.getBoundingClientRect().width;
+  }
+
+  function fitProfileName() {
+    const name = document.querySelector<HTMLElement>(".profile__name");
+    if (!name) return;
+
+    name.style.fontSize = "";
+
+    const styles = getComputedStyle(name);
+    const targetWidth =
+      name.clientWidth -
+      parseFloat(styles.paddingLeft) -
+      parseFloat(styles.paddingRight);
+
+    if (targetWidth <= 0) return;
+
+    let lo = 14;
+    let hi = targetWidth;
+
+    while (hi - lo > 0.25) {
+      const mid = (lo + hi) / 2;
+      name.style.fontSize = `${mid}px`;
+
+      if (measureProfileNameText(name) > targetWidth) {
+        hi = mid;
+      } else {
+        lo = mid;
+      }
+    }
+
+    name.style.fontSize = `${lo}px`;
+  }
+
+  fitProfileName();
+  window.addEventListener("resize", fitProfileName, { passive: true });
+  window.addEventListener("orientationchange", fitProfileName, {
+    passive: true,
+  });
+  document.fonts?.ready.then(fitProfileName);
+
+  const media = document.querySelector(".profile__media");
+  if (media) {
+    new ResizeObserver(fitProfileName).observe(media);
+  }
+</script>

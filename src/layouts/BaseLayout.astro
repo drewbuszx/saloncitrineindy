@@ -6,12 +6,24 @@ import { site, BOOKING_URL } from "../data/site";
 interface Props {
   title?: string;
   description?: string;
+  path?: string;
+  ogImage?: string;
+  /** Overrides the fixed bottom book bar link (e.g. per-stylist GlossGenius URL). */
+  bookBarUrl?: string;
 }
 
 const {
   title = `${site.name} | Hair Salon in Indianapolis, IN`,
   description = site.tagline,
+  path = "/",
+  ogImage = "/images/background.png",
+  bookBarUrl,
 } = Astro.props;
+
+const resolvedBookBarUrl = bookBarUrl ?? BOOKING_URL;
+
+const canonicalUrl = `https://${site.domain}${path}`;
+const ogImageUrl = `https://${site.domain}${ogImage}`;
 ---
 
 <!doctype html>
@@ -22,12 +34,12 @@ const {
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={`https://${site.domain}/`} />
+    <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={`https://${site.domain}/`} />
-    <meta property="og:image" content={`https://${site.domain}/images/background.png`} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
     <title>{title}</title>
     <script is:inline>
       (function () {
@@ -51,7 +63,7 @@ const {
     <aside class="book-bar">
       <a
         class="book-bar__link"
-        href={BOOKING_URL}
+        href={resolvedBookBarUrl}
         target="_blank"
         rel="noopener noreferrer"
         data-booking-link

@@ -10,6 +10,17 @@ export function memberBookingUrl(teamMemberToken: string): string {
   return `${GLOSSGENIUS_SERVICES_URL}?team_member_token=${teamMemberToken}`;
 }
 
+export function teamMemberSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function teamMemberPath(name: string): string {
+  return `/team/${teamMemberSlug(name)}/`;
+}
+
 export function formatCancellationPolicyText(text: string): string {
   return `**CANCELLATION POLICY: ${text}**`;
 }
@@ -237,14 +248,30 @@ export const serviceGroups: ServiceGroup[] = [
   },
 ];
 
+export type FeaturedService = {
+  name: string;
+  price: string;
+};
+
 export type TeamMember = {
   name: string;
   firstName: string;
   role: string;
   image: string;
+  /** Cropped desktop portrait for the fixed right column on profile pages. */
+  profileImage?: string;
   bio?: string;
+  /**
+   * Longer "about me" text for the member's profile page.
+   * Paste paragraphs here separated by blank lines.
+   */
+  about?: string;
+  /** Instagram handle without @ (e.g. "Saloncitrineindy"). */
+  instagram?: string;
+  featuredServices?: FeaturedService[];
   bookingUrl: string;
 };
+
 
 export const teamGroups: { title: string; members: TeamMember[] }[] = [
   {
@@ -255,27 +282,51 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         firstName: "Lily",
         role: "Owner/Stylist",
         image: "/images/lily-gleitsman.jpg",
+        profileImage: "/images/lily-gleitsman2.jpg",
         bookingUrl: memberBookingUrl(
           "10001-f5bd9a7b-3e2f-4255-951d-ca4881f88678"
         ),
+        instagram: "lilylovve.hair",
+        featuredServices: [
+          { name: "HAIRCUT", price: "$55+" },
+          { name: "BLOWOUT", price: "$50+" },
+          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
+          { name: "PARTIAL DIMENSIONAL COLOR & BLOWOUT", price: "$90+" },
+        ],
       },
       {
         name: "Miriam Zhukov",
         firstName: "Miriam",
         role: "Owner/Stylist",
         image: "/images/miriam-zhukov.jpg",
+        profileImage: "/images/miriam-zhukov2.jpg",
         bookingUrl: memberBookingUrl(
           "10001-690e87a4-3d1b-44db-a449-08c9d40b5dff"
         ),
+        instagram: "miriambusz_hair",
+        featuredServices: [
+          { name: "HAIRCUT", price: "$55+" },
+          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
+          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$100+" },
+          { name: "PARTIAL DIMENSIONAL COLOR & BLOWOUT", price: "$90+" },
+        ],
       },
       {
         name: "Andra Kramer",
         firstName: "Andra",
         role: "Owner/Stylist",
         image: "/images/andra-kramer.jpg",
+        profileImage: "/images/andra-kramer2.jpg",
         bookingUrl: memberBookingUrl(
           "10001-7e4b7dd5-f741-4f6f-b71d-ed5cc3b638ec"
         ),
+        instagram: "hair_by_andra",
+        featuredServices: [
+          { name: "HAIRCUT", price: "$55+" },
+          { name: "BLOWOUT", price: "$50+" },
+          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
+          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$100+" },
+        ],
       },
     ],
   },
@@ -287,29 +338,53 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         firstName: "Shelby",
         role: "Stylist",
         image: "/images/shelby-craft.jpg",
+        profileImage: "/images/shelby-craft2.jpg",
         bio: "Specializes in alternative, vivid, and edgy styles... and low-maintenance natural looks too!",
         bookingUrl: memberBookingUrl(
           "10001-6a29adda-3651-43d9-8899-3ace37524a1e"
         ),
+        instagram: "hairxcraft",
+        featuredServices: [
+          { name: "HAIRCUT", price: "$55+" },
+          { name: "VIVID TRANSFORMATION", price: "$250+" },
+          { name: "BLOWOUT", price: "$50+" },
+          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
+        ],
       },
       {
         name: "Jules Hoffman",
         firstName: "Jules",
         role: "Emerging Stylist",
         image: "/images/jules-hoffman.jpg",
+        profileImage: "/images/jules-hoffman2.jpg",
         bio: "Helping you feel like the star you are, one appointment at a time.",
         bookingUrl: memberBookingUrl(
           "10001-40fac3c0-b13b-47c2-86da-6e1c3452329f"
         ),
+        instagram: "julie.tology",
+        featuredServices: [
+          { name: "HAIRCUT", price: "$55+" },
+          { name: "BLOWOUT", price: "$50+" },
+          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
+          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$100+" },
+        ],
       },
       {
         name: "Brie Crowe",
         firstName: "Brie",
         role: "Stylist",
         image: "/images/brie-crowe.jpg",
+        profileImage: "/images/brie-crowe2.jpg",
         bookingUrl: memberBookingUrl(
           "10001-32abe5c0-3025-48ed-8516-850b1fc5783f"
         ),
+        instagram: "ez.breezy.mua",
+        featuredServices: [
+          { name: "HAIRCUT", price: "$55+" },
+          { name: "BLOWOUT", price: "$50+" },
+          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
+          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$100+" },
+        ],
       },
     ],
   },
@@ -321,10 +396,18 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         firstName: "Julie",
         role: "Esthetician",
         image: "/images/julie-powers.jpg",
+        profileImage: "/images/julie-powers2.jpg",
         bio: "Korean-inspired facials, peels, waxing, and makeup artistry.",
         bookingUrl: memberBookingUrl(
           "10001-d788dd27-3f49-452f-af8e-c87bb31e94c3"
         ),
+        instagram: "julieapowers",
+        featuredServices: [
+          { name: "BESPOKE KOREAN FACIAL — 60 MIN", price: "$125" },
+          { name: "BRAZILIAN WAX", price: "$80" },
+          { name: "BROW SHAPING", price: "$20" },
+          { name: "GLOW PEEL", price: "$125" },
+        ],
       },
     ],
   },

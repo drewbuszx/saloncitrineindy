@@ -10,6 +10,7 @@ import {
   FULL_MENU_PATH,
   BOOKING_URL,
   formatCancellationPolicyText,
+  teamMemberPath,
 } from "../data/site";
 
 type HoursGroup = { label: string; time: string };
@@ -395,11 +396,8 @@ const connectMap = getConnectMapTiles(
                   <article class="team-member">
                     <a
                       class="team-member__photo-link"
-                      href={member.bookingUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Book with ${member.firstName}`}
-                      data-booking-link
+                      href={teamMemberPath(member.name)}
+                      aria-label={`Open ${member.name} bio`}
                     >
                       <img
                         class="team-member__photo"
@@ -410,12 +408,11 @@ const connectMap = getConnectMapTiles(
                         loading="lazy"
                       />
                       <span class="team-member__book-overlay">
-                        Book with {member.firstName}
+                        Open Bio
                       </span>
                     </a>
                     <h4 class="team-member__name">{member.name}</h4>
                     <p class="team-member__role">{member.role}</p>
-                    {member.bio && <p class="team-member__bio">{member.bio}</p>}
                   </article>
                 ))}
               </div>
