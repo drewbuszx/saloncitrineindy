@@ -58,6 +58,18 @@ function buildValuesItems(): ValuesItem[] {
 
 const valuesItems = buildValuesItems();
 
+const valuesRows: ValuesItem[][] = [];
+let valuesRow: ValuesItem[] = [];
+for (const item of valuesItems) {
+  if (item.kind === "break") {
+    if (valuesRow.length) valuesRows.push(valuesRow);
+    valuesRow = [];
+    continue;
+  }
+  valuesRow.push(item);
+}
+if (valuesRow.length) valuesRows.push(valuesRow);
+
 function groupHours(
   hours: { day: string; time: string }[]
 ): HoursGroup[] {
@@ -200,61 +212,79 @@ const connectMap = getConnectMapTiles(
         </div>
         <div class="intro__values">
           {
-            valuesItems.map((item) => {
-              if (item.kind === "sep") {
-                const desktopSrc = site.valuesSeparatorImages[item.desktopKey];
-                const mobileSrc = site.valuesSeparatorImages[item.mobileKey];
+            valuesRows.map((row, rowIndex) => (
+              <div
+                class:list={[
+                  "intro__values-row",
+                  rowIndex === 0
+                    ? "intro__values-row--top"
+                    : "intro__values-row--bottom",
+                ]}
+              >
+                {row.map((item) => {
+                  if (item.kind === "sep") {
+                    const desktopSrc =
+                      site.valuesSeparatorImages[item.desktopKey];
+                    const mobileSrc =
+                      site.valuesSeparatorImages[item.mobileKey];
 
-                if (desktopSrc === mobileSrc) {
-                  return (
-                    <img
-                      src={desktopSrc}
-                      alt=""
-                      class="intro__values-separator"
-                      width="14"
-                      height="14"
-                      loading="lazy"
-                    />
-                  );
-                }
+                    const isHat =
+                      item.desktopKey === "hat" || item.mobileKey === "hat";
 
-                return (
-                  <picture>
-                    <source
-                      media="(max-width: 767px)"
-                      srcset={mobileSrc}
-                    />
-                    <img
-                      src={desktopSrc}
-                      alt=""
-                      class="intro__values-separator"
-                      width="14"
-                      height="14"
-                      loading="lazy"
-                    />
-                  </picture>
-                );
-              }
+                    if (desktopSrc === mobileSrc) {
+                      return (
+                        <img
+                          src={desktopSrc}
+                          alt=""
+                          class:list={[
+                            "intro__values-separator",
+                            isHat && "intro__values-separator--hat",
+                          ]}
+                          width="14"
+                          height="14"
+                          loading="lazy"
+                        />
+                      );
+                    }
 
-              if (item.kind === "mobile-sep") {
-                return (
-                  <img
-                    src={site.valuesSeparatorImages[item.mobileKey]}
-                    alt=""
-                    class="intro__values-separator intro__values-separator--mobile-only"
-                    width="14"
-                    height="14"
-                    loading="lazy"
-                  />
-                );
-              }
+                    return (
+                      <picture>
+                        <source
+                          media="(max-width: 767px)"
+                          srcset={mobileSrc}
+                        />
+                        <img
+                          src={desktopSrc}
+                          alt=""
+                          class:list={[
+                            "intro__values-separator",
+                            isHat && "intro__values-separator--hat",
+                          ]}
+                          width="14"
+                          height="14"
+                          loading="lazy"
+                        />
+                      </picture>
+                    );
+                  }
 
-              if (item.kind === "break") {
-                return <span class="intro__values-break" aria-hidden="true" />;
-              }
+                  if (item.kind === "mobile-sep") {
+                    return (
+                      <img
+                        src={site.valuesSeparatorImages[item.mobileKey]}
+                        alt=""
+                        class="intro__values-separator intro__values-separator--mobile-only"
+                        width="14"
+                        height="14"
+                        loading="lazy"
+                      />
+                    );
+                  }
 
-              return <span class="intro__values-tag">{item.label}</span>;
-            })
+                  return <span class="intro__values-tag">{item.label}</span>;
+                })}
+              </div>
+            ))
           }
         </div>
       </div>
