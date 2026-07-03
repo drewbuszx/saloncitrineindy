@@ -1,14 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Oswald:wght@400;500;600;700&display=swap");
 
 @font-face {
-  font-family: "Serling Galleria";
-  src: url("/fonts/SerlingGalleria-Medium.otf") format("opentype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "Basic Title";
   src: url("/fonts/BasicTitle.ttf") format("truetype");
   font-weight: 400;
@@ -46,7 +38,6 @@
   --color-book-bar-hover-border: var(--color-citrine);
   --font-sans: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
   --font-serif: "Cormorant Garamond", "Times New Roman", serif;
-  --font-nav: "Serling Galleria", var(--font-serif);
   --font-basic-title: "Basic Title", var(--font-sans);
   --header-logo-height: clamp(4.7rem, 12vw, 6.4rem);
   --header-logo-padding-bottom: 0.225rem;
@@ -2074,44 +2065,133 @@ button {
   position: absolute;
   inset: 0;
   overflow: visible;
+  z-index: 0;
 }
 
-.connect-map__tiles {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
+.connect-map__viewport .leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: var(--color-light);
+  font-family: var(--font-sans);
 }
 
-.connect-map__grid {
-  position: absolute;
-  display: grid;
-  grid-template-columns: repeat(var(--map-tile-columns), 256px);
-  width: var(--map-grid-size);
-  height: var(--map-grid-size);
-  left: calc(50% - var(--map-offset-x));
-  top: calc(50% - var(--map-offset-y));
+.connect-map__viewport .leaflet-tile-pane {
   filter: grayscale(100%) contrast(1.08);
 }
 
-[data-theme="dark"] .connect-map__grid {
+[data-theme="dark"] .connect-map__viewport .leaflet-tile-pane {
   filter: grayscale(100%) contrast(1.08) brightness(0.82);
 }
 
-.connect-map__tile {
-  display: block;
-  width: 256px;
-  height: 256px;
+.connect-map__viewport .leaflet-control-zoom {
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
 }
 
-.connect-map__marker {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-  width: 22px;
-  height: 29px;
-  transform: translate(-50%, -100%);
-  pointer-events: none;
+.connect-map__viewport .leaflet-control-zoom a {
+  color: var(--color-text);
+  background: var(--color-bg);
+  border-color: var(--color-border-subtle);
+  line-height: 26px;
+}
+
+.connect-map__viewport .leaflet-control-zoom a:hover,
+.connect-map__viewport .leaflet-control-zoom a:focus-visible {
+  background: var(--color-light);
+}
+
+.connect-map__marker-icon {
+  background: none;
+  border: none;
+  overflow: visible;
+}
+
+.connect-map__marker-svg {
+  display: block;
+  width: 26px;
+  height: 34px;
+  overflow: visible;
+}
+
+.connect-map__popup-wrapper .leaflet-popup-content-wrapper {
+  border-radius: 4px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16);
+  padding: 0;
+}
+
+.connect-map__popup-wrapper .leaflet-popup-tip {
+  background: var(--color-bg);
+}
+
+.connect-map__popup-wrapper .leaflet-popup-content {
+  margin: 0.45rem 0.65rem 0.5rem;
+  padding: 0 1.1rem 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.2;
+}
+
+.connect-map__popup-wrapper .leaflet-popup-content p {
+  margin: 0;
+}
+
+.connect-map__popup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.connect-map__popup-name {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.connect-map__popup-address {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  color: var(--color-text-muted, var(--color-text));
+}
+
+.connect-map__popup-phone {
+  margin: 0;
+}
+
+.connect-map__popup-phone a {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+  color: var(--color-text);
+}
+
+.connect-map__popup a:hover,
+.connect-map__popup a:focus-visible {
+  opacity: 0.85;
+}
+
+.connect-map__popup-directions {
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.connect-map__popup-directions a {
+  font-family: var(--font-sans);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+  color: var(--color-text);
 }
 
 .connect-map__attribution {

@@ -331,6 +331,21 @@
         "name": "FULL FACE WAX",
         "price": "$40",
         "description": "A full face wax can include brow, lip, chin as well as the sides of the face, and under the jawline."
+      },
+      {
+        "name": "BROW TINT",
+        "price": "$30",
+        "description": null
+      },
+      {
+        "name": "LASH TINT",
+        "price": "$30",
+        "description": null
+      },
+      {
+        "name": "BROW WAX & TINT",
+        "price": "Complimentary",
+        "description": null
       }
     ]
   },

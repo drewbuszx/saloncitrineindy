@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ConnectMap from "../components/ConnectMap.astro";
 import Header from "../components/Header.astro";
 import ReviewsSection from "../components/ReviewsSection.astro";
 import SiteFooter from "../components/SiteFooter.astro";
@@ -121,49 +122,6 @@ const hoursGroups = groupHours(site.hours);
 const cancellationPolicy = policies.find(
   (policy) => policy.title === "CANCELLATION POLICY"
 )!;
-const MAP_ZOOM = 15;
-const MAP_TILE_RADIUS = 1;
-
-function latLonToFractionalTile(lat: number, lon: number, zoom: number) {
-  const scale = 2 ** zoom;
-  const x = ((lon + 180) / 360) * scale;
-  const latRad = (lat * Math.PI) / 180;
-  const y =
-    ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) *
-    scale;
-  return { x, y };
-}
-
-function getConnectMapTiles(lat: number, lon: number, zoom: number, radius: number) {
-  const { x, y } = latLonToFractionalTile(lat, lon, zoom);
-  const centerTileX = Math.floor(x);
-  const centerTileY = Math.floor(y);
-  const markerX = (x - centerTileX) * 256;
-  const markerY = (y - centerTileY) * 256;
-  const gridSize = radius * 2 + 1;
-  const gridWidth = gridSize * 256;
-  const markerGridX = radius * 256 + markerX;
-  const markerGridY = radius * 256 + markerY;
-  const tiles: { x: number; y: number }[] = [];
-
-  for (let row = -radius; row <= radius; row++) {
-    for (let column = -radius; column <= radius; column++) {
-      tiles.push({
-        x: centerTileX + column,
-        y: centerTileY + row,
-      });
-    }
-  }
-
-  return { tiles, gridWidth, markerGridX, markerGridY, zoom };
-}
-
-const connectMap = getConnectMapTiles(
-  site.address.lat,
-  site.address.lng,
-  MAP_ZOOM,
-  MAP_TILE_RADIUS
-);
 ---
 
 <BaseLayout>
@@ -404,7 +362,7 @@ const connectMap = getConnectMapTiles(
                       <img
                         class="team-member__photo"
                         src={member.image}
-                        alt={member.name}
+                        alt={`${member.name}, ${member.role} at Salon Citrine`}
                         width="360"
                         height="480"
                         loading="lazy"
@@ -562,53 +520,7 @@ const connectMap = getConnectMapTiles(
           </div>
         </div>
 
-        <div class="connect-map">
-          <div
-            class="connect-map__viewport"
-            style={`--map-offset-x: ${connectMap.markerGridX}px; --map-offset-y: ${connectMap.markerGridY}px; --map-grid-size: ${connectMap.gridWidth}px; --map-tile-columns: ${MAP_TILE_RADIUS * 2 + 1};`}
-            role="img"
-            aria-label={`Map showing ${site.name} at ${site.address.street}, ${site.address.city}`}
-          >
-            <div class="connect-map__tiles">
-              <div class="connect-map__grid">
-                {
-                  connectMap.tiles.map((tile) => (
-                    <img
-                      class="connect-map__tile"
-                      src={`https://tile.openstreetmap.org/${connectMap.zoom}/${tile.x}/${tile.y}.png`}
-                      alt=""
-                      width="256"
-                      height="256"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ))
-                }
-              </div>
-            </div>
-            <svg
-              class="connect-map__marker"
-              viewBox="0 0 24 32"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path
-                d="M12 0C5.373 0 0 5.373 0 12c0 8.25 12 20 12 20s12-11.75 12-20C24 5.373 18.627 0 12 0z"
-                fill="var(--color-citrine)"
-                stroke="#000"
-                stroke-width="1.5"></path>
-            </svg>
-          </div>
-          <p class="connect-map__attribution">
-            <a
-              href="https://www.openstreetmap.org/copyright"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              © OpenStreetMap contributors
-            </a>
-          </p>
-        </div>
+        <ConnectMap />
       </div>
     </section>
 

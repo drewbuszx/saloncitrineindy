@@ -1,0 +1,97 @@
+---
+import "leaflet/dist/leaflet.css";
+import { site } from "../data/site";
+
+const addressLine = `${site.address.street}, ${site.address.city}, ${site.address.state} ${site.address.zip}`;
+---
+
+<div class="connect-map">
+  <div
+    class="connect-map__viewport"
+    id="connect-map"
+    data-lat={site.address.lat}
+    data-lng={site.address.lng}
+    data-name={site.name}
+    data-address={addressLine}
+    data-phone={site.phone}
+    data-phone-href={site.phoneHref}
+    data-maps-url={site.address.mapsUrl}
+    role="region"
+    aria-label={`Interactive map showing ${site.name} at ${addressLine}`}
+  >
+  </div>
+  <p class="connect-map__attribution">
+    <a
+      href="https://www.openstreetmap.org/copyright"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      © OpenStreetMap contributors
+    </a>
+  </p>
+</div>
+
+<script>
+  import L from "leaflet";
+
+  function initConnectMap() {
+    const container = document.getElementById("connect-map");
+    if (!container || container.dataset.mapReady === "true") return;
+
+    const lat = Number(container.dataset.lat);
+    const lng = Number(container.dataset.lng);
+    const name = container.dataset.name ?? "";
+    const address = container.dataset.address ?? "";
+    const phone = container.dataset.phone ?? "";
+    const phoneHref = container.dataset.phoneHref ?? "";
+    const mapsUrl = container.dataset.mapsUrl ?? "";
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+
+    const map = L.map(container, {
+      center: [lat, lng],
+      zoom: 15,
+      scrollWheelZoom: false,
+      zoomControl: true,
+      attributionControl: false,
+    });
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+    }).addTo(map);
+
+    const markerIcon = L.divIcon({
+      className: "connect-map__marker-icon",
+      html: `<svg class="connect-map__marker-svg" viewBox="-2 -1 28 36" aria-hidden="true" focusable="false"><path d="M12 0C5.373 0 0 5.373 0 12c0 8.25 12 20 12 20s12-11.75 12-20C24 5.373 18.627 0 12 0z" fill="var(--color-citrine)" stroke="#000" stroke-width="1.5"></path></svg>`,
+      iconSize: [26, 34],
+      iconAnchor: [13, 34],
+      popupAnchor: [0, -36],
+    });
+
+    const marker = L.marker([lat, lng], { icon: markerIcon }).addTo(map);
+
+    marker.bindPopup(
+      `<div class="connect-map__popup">
+        <p class="connect-map__popup-name">${name}</p>
+        <p class="connect-map__popup-address">${address}</p>
+        <p class="connect-map__popup-phone"><a href="${phoneHref}">${phone}</a></p>
+        <p class="connect-map__popup-directions"><a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">Get directions</a></p>
+      </div>`,
+      {
+        closeButton: true,
+        className: "connect-map__popup-wrapper",
+        minWidth: 200,
+        maxWidth: 280,
+      }
+    );
+
+    container.dataset.mapReady = "true";
+
+    requestAnimationFrame(() => {
+      map.invalidateSize();
+    });
+  }
+
+  initConnectMap();
+  document.addEventListener("astro:page-load", initConnectMap);
+</script>
