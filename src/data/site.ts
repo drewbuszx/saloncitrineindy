@@ -52,7 +52,7 @@ export const site = {
     "Women-Owned",
     "Gender-Affirming",
     "Welcomes All",
-    "Encourages Weirdness",
+    "weirdos & misfits",
   ],
   valuesSeparatorImages: {
     women: "/images/values/women.png",

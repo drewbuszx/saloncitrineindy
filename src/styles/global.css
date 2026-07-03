@@ -799,8 +799,7 @@ button {
     justify-content: center;
     width: 100%;
     gap: 0.5rem;
-    font-size: clamp(0.625rem, 2.2vw, 0.7rem);
-    letter-spacing: 0.08em;
+    font-size: 0.6875rem;
   }
 
   .intro__values-row--desktop {
@@ -808,7 +807,7 @@ button {
   }
 
   .intro__values-grid--mobile {
-    --values-spacer-size: 1em;
+    --values-spacer-size: 0.4em;
     display: grid;
     grid-template-columns:
       auto
@@ -848,14 +847,6 @@ button {
   .intro__values-tag {
     text-align: center;
     white-space: nowrap;
-  }
-
-  .intro__values-separator {
-    height: calc(1em + 4pt);
-  }
-
-  .intro__values-separator--hat {
-    height: calc(1em + 5pt);
   }
 }
 
