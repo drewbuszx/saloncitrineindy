@@ -104,7 +104,7 @@ const pageDescription = member.bio
             <hr class="profile__meta-divider" />
 
             <div class="profile__services">
-              <h2 class="profile__services-heading">Services</h2>
+              <h2 class="profile__services-heading">Top Services</h2>
               <ul class="profile__services-list">
                 {featuredServices.map((service) => (
                   <li class="profile__service">
@@ -116,15 +116,24 @@ const pageDescription = member.bio
             </div>
           </div>
 
-          <a
-            class="profile__book-cta"
-            href={member.bookingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-booking-link
-          >
-            Book with {member.firstName}
-          </a>
+          <div class="profile__book-row">
+            <a
+              class="profile__book-cta"
+              href={member.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-booking-link
+            >
+              Book with {member.firstName}
+            </a>
+            {
+              member.acceptingNewClients === false && (
+                <p class="profile__book-notice">
+                  (currently not accepting new clients)
+                </p>
+              )
+            }
+          </div>
 
           {
             member.instagram && (

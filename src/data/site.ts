@@ -270,6 +270,8 @@ export type TeamMember = {
   instagram?: string;
   featuredServices?: FeaturedService[];
   bookingUrl: string;
+  /** When false, profile shows a notice beside the book CTA. Defaults to true. */
+  acceptingNewClients?: boolean;
 };
 
 
@@ -317,6 +319,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         role: "Owner/Stylist",
         image: "/images/andra-kramer.jpg",
         profileImage: "/images/andra-kramer2.jpg",
+        acceptingNewClients: false,
         bookingUrl: memberBookingUrl(
           "10001-7e4b7dd5-f741-4f6f-b71d-ed5cc3b638ec"
         ),
