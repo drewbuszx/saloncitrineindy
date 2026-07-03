@@ -53,10 +53,49 @@ const hoursGroups = groupHours(site.hours);
 const cancellationPolicy = policies.find(
   (policy) => policy.title === "CANCELLATION POLICY"
 )!;
-const mapQuery = encodeURIComponent(
-  `${site.address.street}, ${site.address.city}, ${site.address.state} ${site.address.zip}`
+const MAP_ZOOM = 15;
+const MAP_TILE_RADIUS = 1;
+
+function latLonToFractionalTile(lat: number, lon: number, zoom: number) {
+  const scale = 2 ** zoom;
+  const x = ((lon + 180) / 360) * scale;
+  const latRad = (lat * Math.PI) / 180;
+  const y =
+    ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) *
+    scale;
+  return { x, y };
+}
+
+function getConnectMapTiles(lat: number, lon: number, zoom: number, radius: number) {
+  const { x, y } = latLonToFractionalTile(lat, lon, zoom);
+  const centerTileX = Math.floor(x);
+  const centerTileY = Math.floor(y);
+  const markerX = (x - centerTileX) * 256;
+  const markerY = (y - centerTileY) * 256;
+  const gridSize = radius * 2 + 1;
+  const gridWidth = gridSize * 256;
+  const markerGridX = radius * 256 + markerX;
+  const markerGridY = radius * 256 + markerY;
+  const tiles: { x: number; y: number }[] = [];
+
+  for (let row = -radius; row <= radius; row++) {
+    for (let column = -radius; column <= radius; column++) {
+      tiles.push({
+        x: centerTileX + column,
+        y: centerTileY + row,
+      });
+    }
+  }
+
+  return { tiles, gridWidth, markerGridX, markerGridY, zoom };
+}
+
+const connectMap = getConnectMapTiles(
+  site.address.lat,
+  site.address.lng,
+  MAP_ZOOM,
+  MAP_TILE_RADIUS
 );
-const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed`;
 ---
 
 <BaseLayout>
@@ -390,14 +429,42 @@ const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=15&output=embe
         </div>
 
         <div class="connect-map">
-          <iframe
-            class="connect-map__iframe"
-            src={mapEmbedUrl}
-            title="Salon Citrine location on Google Maps"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            allowfullscreen
-          ></iframe>
+          <div
+            class="connect-map__viewport"
+            style={`--map-offset-x: ${connectMap.markerGridX}px; --map-offset-y: ${connectMap.markerGridY}px; --map-grid-size: ${connectMap.gridWidth}px; --map-tile-columns: ${MAP_TILE_RADIUS * 2 + 1};`}
+            role="img"
+            aria-label={`Map showing ${site.name} at ${site.address.street}, ${site.address.city}`}
+          >
+            <div class="connect-map__tiles">
+              <div class="connect-map__grid">
+                {
+                  connectMap.tiles.map((tile) => (
+                    <img
+                      class="connect-map__tile"
+                      src={`https://tile.openstreetmap.org/${connectMap.zoom}/${tile.x}/${tile.y}.png`}
+                      alt=""
+                      width="256"
+                      height="256"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ))
+                }
+              </div>
+            </div>
+            <svg
+              class="connect-map__marker"
+              viewBox="0 0 24 32"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M12 0C5.373 0 0 5.373 0 12c0 8.25 12 20 12 20s12-11.75 12-20C24 5.373 18.627 0 12 0z"
+                fill="var(--color-citrine)"
+                stroke="#000"
+                stroke-width="1.5"></path>
+            </svg>
+          </div>
         </div>
       </div>
     </section>

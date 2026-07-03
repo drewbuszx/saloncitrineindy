@@ -29,6 +29,8 @@ export const site = {
     city: "Indianapolis",
     state: "IN",
     zip: "46219",
+    lat: 39.7677018,
+    lng: -86.070018,
     mapsUrl:
       "https://maps.google.com/?q=203+S+Audubon+Rd,+Indianapolis,+IN+46219",
   },
