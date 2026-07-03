@@ -54,6 +54,31 @@ export const site = {
     "Welcomes All",
     "Encourages Weirdness",
   ],
+  valuesSeparatorImages: {
+    women: "/images/values/women.png",
+    gay: "/images/values/gay.png",
+    trans: "/images/values/trans.png",
+    witch: "/images/values/witch.png",
+    wierd: "/images/values/wierd.png",
+    mushroom: "/images/values/mushroom.png",
+  },
+  // Desktop: sep · tag · sep · tag · sep · tag · sep · tag · sep
+  valuesSeparatorsDesktop: [
+    "women",
+    "gay",
+    "trans",
+    "witch",
+    "wierd",
+  ] as const,
+  // Mobile line 1: 4 seps; line 2: mushroom · tag · wierd
+  valuesSeparatorsMobile: [
+    "women",
+    "gay",
+    "trans",
+    "witch",
+    "mushroom",
+    "wierd",
+  ] as const,
 };
 
 export type ServiceItem = {

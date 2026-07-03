@@ -14,6 +14,50 @@ import {
 
 type HoursGroup = { label: string; time: string };
 
+type ValuesSeparatorKey = keyof typeof site.valuesSeparatorImages;
+
+type ValuesItem =
+  | { kind: "sep"; desktopKey: ValuesSeparatorKey; mobileKey: ValuesSeparatorKey }
+  | { kind: "mobile-sep"; mobileKey: ValuesSeparatorKey }
+  | { kind: "break" }
+  | { kind: "tag"; label: string };
+
+function buildValuesItems(): ValuesItem[] {
+  const items: ValuesItem[] = [
+    {
+      kind: "sep",
+      desktopKey: site.valuesSeparatorsDesktop[0],
+      mobileKey: site.valuesSeparatorsMobile[0],
+    },
+  ];
+  let sepIndex = 1;
+
+  site.values.forEach((label, index) => {
+    if (index === site.values.length - 1) {
+      items.push({ kind: "break" });
+      items.push({
+        kind: "mobile-sep",
+        mobileKey: site.valuesSeparatorsMobile[4],
+      });
+    }
+
+    items.push({ kind: "tag", label });
+
+    const desktopKey = site.valuesSeparatorsDesktop[sepIndex];
+    const mobileKey =
+      sepIndex === site.valuesSeparatorsDesktop.length - 1
+        ? site.valuesSeparatorsMobile[5]
+        : site.valuesSeparatorsMobile[sepIndex];
+
+    items.push({ kind: "sep", desktopKey, mobileKey });
+    sepIndex++;
+  });
+
+  return items;
+}
+
+const valuesItems = buildValuesItems();
+
 function groupHours(
   hours: { day: string; time: string }[]
 ): HoursGroup[] {
@@ -154,9 +198,65 @@ const connectMap = getConnectMapTiles(
             {site.about.map((paragraph) => <p>{paragraph}</p>)}
           </div>
         </div>
-        <ul class="intro__values">
-          {site.values.map((value) => <li>{value}</li>)}
-        </ul>
+        <div class="intro__values">
+          {
+            valuesItems.map((item) => {
+              if (item.kind === "sep") {
+                const desktopSrc = site.valuesSeparatorImages[item.desktopKey];
+                const mobileSrc = site.valuesSeparatorImages[item.mobileKey];
+
+                if (desktopSrc === mobileSrc) {
+                  return (
+                    <img
+                      src={desktopSrc}
+                      alt=""
+                      class="intro__values-separator"
+                      width="14"
+                      height="14"
+                      loading="lazy"
+                    />
+                  );
+                }
+
+                return (
+                  <picture>
+                    <source
+                      media="(max-width: 767px)"
+                      srcset={mobileSrc}
+                    />
+                    <img
+                      src={desktopSrc}
+                      alt=""
+                      class="intro__values-separator"
+                      width="14"
+                      height="14"
+                      loading="lazy"
+                    />
+                  </picture>
+                );
+              }
+
+              if (item.kind === "mobile-sep") {
+                return (
+                  <img
+                    src={site.valuesSeparatorImages[item.mobileKey]}
+                    alt=""
+                    class="intro__values-separator intro__values-separator--mobile-only"
+                    width="14"
+                    height="14"
+                    loading="lazy"
+                  />
+                );
+              }
+
+              if (item.kind === "break") {
+                return <span class="intro__values-break" aria-hidden="true" />;
+              }
+
+              return <span class="intro__values-tag">{item.label}</span>;
+            })
+          }
+        </div>
       </div>
       <figure class="about-image">
         <div
