@@ -55,7 +55,7 @@ export const site = {
     "weirdos & misfits",
   ],
   valuesSeparatorImages: {
-    women: "/images/values/women.png",
+    rose: "/images/values/rose.png",
     gay: "/images/values/gay.png",
     trans: "/images/values/trans.png",
     hat: "/images/values/hat.png",
@@ -64,8 +64,8 @@ export const site = {
   },
   // Desktop: sep · tag · sep · tag · sep · tag · sep · tag · sep
   valuesSeparatorsDesktop: [
-    "women",
     "hat",
+    "rose",
     "trans",
     "gay",
     "wierd",
@@ -73,7 +73,7 @@ export const site = {
   // Mobile: two rows of sep · tag · sep · tag · sep (2 tags, 3 images each)
   valuesMobileRows: [
     {
-      separators: ["women", "hat", "trans"] as const,
+      separators: ["hat", "rose", "trans"] as const,
       valueIndices: [0, 1],
     },
     {
