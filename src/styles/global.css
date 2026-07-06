@@ -3225,7 +3225,7 @@ button {
   :root,
   [data-theme="light"],
   [data-theme="dark"] {
-    --header-logo-height: clamp(2.35rem, 11vw, 4.5rem);
+    --header-logo-height: clamp(4rem, 12vw, 4.5rem);
     --header-logo-padding-bottom: 0.125rem;
     --header-height: max(
       calc(var(--header-logo-height) + var(--header-logo-padding-bottom)),
