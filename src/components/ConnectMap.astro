@@ -31,6 +31,49 @@ const addressLine = `${site.address.street}, ${site.address.city}, ${site.addres
 </div>
 
 <script>
+  /** Matches connect mobile layout breakpoint in global.css */
+  const CONNECT_MAP_MOBILE_QUERY = "(max-width: 768px)";
+
+  function isConnectMapMobileViewport() {
+    return window.matchMedia(CONNECT_MAP_MOBILE_QUERY).matches;
+  }
+
+  function getConnectMapOptions(isMobile: boolean) {
+    return {
+      scrollWheelZoom: false,
+      zoomControl: false,
+      attributionControl: false,
+      dragging: !isMobile,
+      touchZoom: !isMobile,
+      doubleClickZoom: !isMobile,
+      boxZoom: !isMobile,
+      keyboard: !isMobile,
+      tap: true,
+      tapHold: false,
+    };
+  }
+
+  function applyConnectMapInteractionMode(
+    map: import("leaflet").Map,
+    isMobile: boolean
+  ) {
+    const handlers = [
+      map.dragging,
+      map.touchZoom,
+      map.doubleClickZoom,
+      map.boxZoom,
+      map.keyboard,
+    ] as const;
+
+    for (const handler of handlers) {
+      if (isMobile) {
+        handler.disable();
+      } else {
+        handler.enable();
+      }
+    }
+  }
+
   async function initConnectMap() {
     const container = document.getElementById("connect-map");
     if (!container || container.dataset.mapReady === "true") return;
@@ -50,12 +93,12 @@ const addressLine = `${site.address.street}, ${site.address.city}, ${site.addres
       import("leaflet/dist/leaflet.css"),
     ]);
 
+    const isMobile = isConnectMapMobileViewport();
+
     const map = L.map(container, {
       center: [lat, lng],
       zoom: 15,
-      scrollWheelZoom: false,
-      zoomControl: false,
-      attributionControl: false,
+      ...getConnectMapOptions(isMobile),
     });
 
     L.control
@@ -97,11 +140,41 @@ const addressLine = `${site.address.street}, ${site.address.city}, ${site.addres
       }
     );
 
-    container.dataset.mapReady = "true";
+    const refreshMapSize = () => {
+      map.invalidateSize({ pan: false });
+    };
 
+    container.dataset.mapReady = "true";
+    container.dataset.mapMobile = isMobile ? "true" : "false";
+
+    map.whenReady(refreshMapSize);
     requestAnimationFrame(() => {
-      map.invalidateSize();
+      refreshMapSize();
+      requestAnimationFrame(refreshMapSize);
     });
+    window.addEventListener("load", refreshMapSize, { once: true });
+
+    const resizeTarget = container.closest(".connect-map") ?? container;
+    if ("ResizeObserver" in window) {
+      const resizeObserver = new ResizeObserver(() => {
+        refreshMapSize();
+      });
+      resizeObserver.observe(resizeTarget);
+    }
+
+    const mobileMedia = window.matchMedia(CONNECT_MAP_MOBILE_QUERY);
+    const syncInteractionMode = () => {
+      const nextIsMobile = mobileMedia.matches;
+      container.dataset.mapMobile = nextIsMobile ? "true" : "false";
+      applyConnectMapInteractionMode(map, nextIsMobile);
+      refreshMapSize();
+    };
+
+    if ("addEventListener" in mobileMedia) {
+      mobileMedia.addEventListener("change", syncInteractionMode);
+    } else {
+      mobileMedia.addListener(syncInteractionMode);
+    }
   }
 
   function observeConnectMap() {

@@ -2320,6 +2320,9 @@ button {
 }
 
 .connect-section {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
   padding-bottom: 0;
 }
 
@@ -2475,7 +2478,9 @@ button {
 
 .connect-map {
   position: relative;
-  overflow: visible;
+  overflow: hidden;
+  isolation: isolate;
+  contain: layout paint;
   background: var(--color-light);
   min-height: clamp(280px, 45vw, 400px);
 }
@@ -2483,15 +2488,21 @@ button {
 .connect-map__viewport {
   position: absolute;
   inset: 0;
-  overflow: visible;
+  overflow: hidden;
   z-index: 0;
 }
 
 .connect-map__viewport .leaflet-container {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   background: var(--color-light);
   font-family: var(--font-sans);
+}
+
+.connect-map__viewport .leaflet-top,
+.connect-map__viewport .leaflet-bottom {
+  z-index: 1;
 }
 
 .connect-map__viewport .leaflet-tile-pane {
@@ -2652,9 +2663,12 @@ button {
 
 /* Reviews */
 .reviews-section {
+  position: relative;
+  z-index: 2;
   padding: clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 4vw, 3rem);
   border-top: 1px solid var(--color-border-subtle);
   background: var(--color-bg);
+  isolation: isolate;
 }
 
 .reviews-section__inner {
@@ -2953,6 +2967,8 @@ button {
 }
 /* Charcoal zone — reviews through footer (both themes) */
 .page-dark-zone {
+  position: relative;
+  z-index: 2;
   --color-bg: var(--color-charcoal);
   --color-text: var(--color-white);
   --color-gray: var(--color-charcoal-muted);
@@ -3048,6 +3064,14 @@ button {
 }
 
 @media (max-width: 768px) {
+  .connect-section {
+    overflow: hidden;
+  }
+
+  .connect-split {
+    overflow: hidden;
+  }
+
   .connect-info {
     order: 1;
     justify-content: center;
@@ -3078,6 +3102,16 @@ button {
 
   .connect-map {
     order: 2;
+    height: clamp(280px, 52vw, 340px);
+    min-height: 0;
+    max-height: 340px;
+    contain: layout paint size;
+  }
+
+  .connect-map__viewport,
+  .connect-map__viewport .leaflet-container {
+    overflow: hidden;
+    touch-action: pan-y;
   }
 }
 
