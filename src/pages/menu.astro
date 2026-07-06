@@ -77,9 +77,10 @@ const pageDescription =
           categories.map((category) => (
             <section
               class="menu-category"
-              id={category.id}
+              data-menu-category={category.id}
               aria-labelledby={`${category.id}-heading`}
             >
+              <span class="menu-category__anchor" id={category.id}></span>
               <h2 class="menu-category__title" id={`${category.id}-heading`}>
                 {category.name}
               </h2>
@@ -120,14 +121,30 @@ const pageDescription =
   <SiteFooter />
 
   <script>
+    const menuNav = document.querySelector<HTMLElement>(".menu-nav");
     const navLinks = Array.from(
       document.querySelectorAll<HTMLAnchorElement>("[data-menu-nav-link]")
     );
-    const sections = navLinks
-      .map((link) => document.getElementById(link.dataset.menuNavLink ?? ""))
-      .filter((section): section is HTMLElement => section !== null);
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-menu-category]")
+    );
+
+    const syncMenuNavHeight = () => {
+      if (!menuNav) return;
+      document.documentElement.style.setProperty(
+        "--menu-nav-height",
+        `${menuNav.offsetHeight}px`
+      );
+    };
+
+    syncMenuNavHeight();
+    window.addEventListener("resize", syncMenuNavHeight, { passive: true });
 
     if (navLinks.length && sections.length) {
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
       const setActive = (id: string) => {
         navLinks.forEach((link) => {
           const isActive = link.dataset.menuNavLink === id;
@@ -141,14 +158,35 @@ const pageDescription =
         });
       };
 
+      const scrollToCategory = (id: string) => {
+        const target = document.getElementById(id);
+        if (!target) return;
+        target.scrollIntoView({
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+        });
+        setActive(id);
+      };
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const id = link.dataset.menuNavLink;
+          if (!id) return;
+          event.preventDefault();
+          scrollToCategory(id);
+          history.pushState(null, "", `#${id}`);
+        });
+      });
+
       const observer = new IntersectionObserver(
         (entries) => {
           const visible = entries
             .filter((entry) => entry.isIntersecting)
             .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
-          if (visible[0]?.target.id) {
-            setActive(visible[0].target.id);
+          const categoryId = (visible[0]?.target as HTMLElement | undefined)
+            ?.dataset.menuCategory;
+          if (categoryId) {
+            setActive(categoryId);
           }
         },
         {
@@ -158,6 +196,11 @@ const pageDescription =
       );
 
       sections.forEach((section) => observer.observe(section));
+
+      if (location.hash) {
+        const id = location.hash.slice(1);
+        requestAnimationFrame(() => scrollToCategory(id));
+      }
     }
   </script>
 </BaseLayout>
