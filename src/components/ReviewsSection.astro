@@ -203,8 +203,7 @@ function stars(rating: number | null) {
 
       track.style.setProperty("--review-card-width", `${cardWidth}px`);
       track.style.setProperty("--review-gap", `${gap}px`);
-    track.style.width = `${pageCount * viewportWidth}px`;
-    track.style.maxWidth = `${pageCount * viewportWidth}px`;
+      track.style.width = `${pageCount * viewportWidth}px`;
 
       cards.forEach((card, index) => {
         const page = Math.floor(index / cardsPerPage);
