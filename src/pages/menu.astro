@@ -73,6 +73,21 @@ const pageDescription =
           </ul>
         </nav>
 
+        <script is:inline>
+          (function () {
+            if ("scrollRestoration" in history) {
+              history.scrollRestoration = "manual";
+            }
+            var menuNav = document.querySelector(".menu-nav");
+            if (menuNav) {
+              document.documentElement.style.setProperty(
+                "--menu-nav-height",
+                menuNav.offsetHeight + "px"
+              );
+            }
+          })();
+        </script>
+
         {
           categories.map((category) => (
             <section
@@ -164,7 +179,7 @@ const pageDescription =
         });
       };
 
-      const scrollToCategory = (id: string) => {
+      const scrollToCategory = (id: string, behavior?: ScrollBehavior) => {
         syncMenuNavHeight();
         const section = document.querySelector<HTMLElement>(
           `[data-menu-category="${id}"]`
@@ -175,7 +190,8 @@ const pageDescription =
           section.getBoundingClientRect().top + window.scrollY - stickyBottom;
         window.scrollTo({
           top: Math.max(0, top),
-          behavior: prefersReducedMotion ? "auto" : "smooth",
+          behavior:
+            behavior ?? (prefersReducedMotion ? "auto" : "smooth"),
         });
         setActive(id);
       };
@@ -225,10 +241,32 @@ const pageDescription =
       );
 
       if (location.hash) {
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+
         const id = location.hash.slice(1);
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => scrollToCategory(id));
-        });
+        const { pathname, search } = location;
+        history.replaceState(null, "", `${pathname}${search}`);
+
+        const alignHash = () => {
+          window.scrollTo(0, 0);
+          scrollToCategory(id, "auto");
+          history.replaceState(null, "", `#${id}`);
+          requestAnimationFrame(() => scrollToCategory(id, "auto"));
+        };
+
+        const scheduleHashAlign = () => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(alignHash);
+          });
+        };
+
+        if (document.fonts?.ready) {
+          document.fonts.ready.then(scheduleHashAlign);
+        } else {
+          scheduleHashAlign();
+        }
       }
     }
   </script>
