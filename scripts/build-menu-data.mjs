@@ -1,7 +1,26 @@
-import { writeFileSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 
-const res = await fetch("https://saloncitrineindy.glossgenius.com/services");
-const html = await res.text();
+const OUTPUT = "src/data/menu-services.json";
+const SERVICES_URL = "https://saloncitrineindy.glossgenius.com/services";
+
+let html;
+try {
+  const res = await fetch(SERVICES_URL);
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status} from ${SERVICES_URL}`);
+  }
+  html = await res.text();
+} catch (err) {
+  if (existsSync(OUTPUT)) {
+    console.warn(
+      `Menu sync failed (${err.message}); keeping existing ${OUTPUT}`
+    );
+    process.exit(0);
+  }
+  throw new Error(
+    `Menu sync failed (${err.message}) and no cached ${OUTPUT} exists`
+  );
+}
 const marker = '<script id="__NEXT_DATA__" type="application/json">';
 const start = html.indexOf(marker);
 if (start === -1) throw new Error("No __NEXT_DATA__ found");
@@ -122,10 +141,6 @@ const menuCategories = [...categories.entries()]
       })),
   }));
 
-writeFileSync(
-  "src/data/menu-services.json",
-  JSON.stringify(menuCategories, null, 2) + "\n",
-  "utf8"
-);
+writeFileSync(OUTPUT, JSON.stringify(menuCategories, null, 2) + "\n", "utf8");
 
 console.log(`Wrote ${menuCategories.length} categories, ${byGuid.size} services`);

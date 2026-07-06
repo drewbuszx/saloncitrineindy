@@ -61,6 +61,7 @@ const shopMenuId = "shop-submenu";
         width="1180"
         height="430"
         fetchpriority="high"
+        decoding="async"
       />
       <img
         class="site-header__logo-image site-header__logo-image--dark"
@@ -68,7 +69,8 @@ const shopMenuId = "shop-submenu";
         alt=""
         width="1180"
         height="430"
-        fetchpriority="high"
+        loading="lazy"
+        decoding="async"
         aria-hidden="true"
       />
     </a>
@@ -118,6 +120,7 @@ const shopMenuId = "shop-submenu";
                           class="site-header__dropdown-item"
                           href={child.href}
                           role="menuitem"
+                          aria-label={child.external ? `${child.label} (opens in new tab)` : undefined}
                           {...externalLinkAttrs(child.external)}
                         >
                           {child.label}
@@ -188,6 +191,7 @@ const shopMenuId = "shop-submenu";
     <nav
       class="site-header__nav site-header__nav--mobile"
       aria-label="Mobile"
+      aria-hidden="true"
       data-mobile-nav
     >
       {
@@ -234,6 +238,7 @@ const shopMenuId = "shop-submenu";
                           class="site-header__dropdown-item"
                           href={child.href}
                           role="menuitem"
+                          aria-label={child.external ? `${child.label} (opens in new tab)` : undefined}
                           {...externalLinkAttrs(child.external)}
                         >
                           {child.label}

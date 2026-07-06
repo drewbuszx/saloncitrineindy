@@ -21,11 +21,12 @@ const { heading: policyHeading, body: policyBody } = parseCancellationPolicyPart
     role="dialog"
     aria-modal="true"
     aria-labelledby="booking-modal-title"
+    aria-describedby="booking-modal-description"
     tabindex="-1"
     data-booking-modal-dialog
   >
     <h2 id="booking-modal-title" class="booking-modal__title">{policyHeading}</h2>
-    <p class="booking-modal__text">{policyBody}</p>
+    <p id="booking-modal-description" class="booking-modal__text">{policyBody}</p>
     <div class="booking-modal__actions">
       <button
         class="booking-modal__btn booking-modal__btn--secondary"

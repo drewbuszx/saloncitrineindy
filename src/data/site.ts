@@ -166,17 +166,18 @@ export function schemaOpeningHours(): {
 }
 
 export function localBusinessJsonLd() {
-  const siteUrl = `https://${site.domain}`;
+  const siteOrigin = `https://${site.domain}`;
+  const siteUrl = `${siteOrigin}/`;
   return {
     "@context": "https://schema.org",
     "@type": "HairSalon",
-    "@id": `${siteUrl}/#business`,
+    "@id": `${siteUrl}#business`,
     name: site.name,
     description: site.tagline,
     url: siteUrl,
     telephone: site.phone,
     email: site.email,
-    image: `${siteUrl}/images/salon-citrine-logo.png`,
+    image: `${siteOrigin}/images/salon-citrine-logo.png`,
     priceRange: "$$",
     hasMap: site.address.mapsUrl,
     areaServed: {

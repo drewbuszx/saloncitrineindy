@@ -1,0 +1,7 @@
+# Trailing-slash redirects (site uses trailingSlash: always in astro.config.mjs)
+/menu /menu/ 301
+/privacy /privacy/ 301
+/team/:slug /team/:slug/ 301
+
+# Optional booking shortcut (see README)
+/book https://saloncitrineindy.glossgenius.com/booking-flow 302

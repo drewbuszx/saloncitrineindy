@@ -52,27 +52,16 @@ const hasDesktopPhoto =
       )
     : hasPhoto;
 
-const placeholderParagraphs = [64, 48, 56, 32].map((count) =>
-  Array(count).fill("bio").join(" ")
-);
-
 const aboutParagraphs = member.about
   ? member.about
       .split(/\n\s*\n/)
       .map((paragraph) => paragraph.trim())
       .filter(Boolean)
-  : placeholderParagraphs;
+  : member.bio
+    ? [member.bio]
+    : [];
 
-const placeholderFeaturedServices = [
-  { name: "BASE", price: "$200" },
-  { name: "FULL TINT", price: "$300" },
-  { name: "PARTIAL HIGHLIGHT", price: "$475" },
-];
-
-const featuredServices =
-  member.featuredServices && member.featuredServices.length > 0
-    ? member.featuredServices
-    : placeholderFeaturedServices;
+const featuredServices = member.featuredServices ?? [];
 
 const profilePath = teamMemberPath(member.name);
 const pageTitle = `${member.name} — ${member.role} | ${site.name}`;
@@ -86,36 +75,72 @@ const pageDescription = member.bio
   description={pageDescription}
   path={profilePath}
   ogImage={hasPhoto ? member.image : undefined}
+  preloadImage={hasPhoto ? member.image : undefined}
   bookBarUrl={member.bookingUrl}
 >
   <Header />
 
   <main id="main" class="profile-page">
     <section class="profile" aria-labelledby="profile-heading">
+      <figure class="profile__media">
+        {
+          hasPhoto ? (
+            <picture class="profile__picture">
+              {hasDesktopPhoto && (
+                <source media="(min-width: 900px)" srcset={desktopImage} />
+              )}
+              <img
+                class="profile__photo"
+                src={member.image}
+                alt={`${member.name}, ${member.role} at Salon Citrine`}
+                width="713"
+                height="1024"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
+          ) : (
+            <span class="profile__photo profile__photo--placeholder" aria-hidden="true"></span>
+          )
+        }
+        <div class="profile__media-overlay" aria-hidden="true"></div>
+        <h1 class="profile__name" id="profile-heading">{member.name}</h1>
+      </figure>
+
       <div class="profile__content">
         <div class="profile__content-inner">
           <a class="profile-page__back" href="/#team">← Back to the team</a>
 
-          <div class="profile__bio">
-            {aboutParagraphs.map((paragraph) => <p>{paragraph}</p>)}
-          </div>
+          {
+            aboutParagraphs.length > 0 && (
+              <div class="profile__bio">
+                {aboutParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+            )
+          }
 
           <div class="profile__meta">
             <p class="profile__meta-title">{member.role.toUpperCase()}</p>
 
-            <hr class="profile__meta-divider" />
+            {
+              featuredServices.length > 0 && (
+                <>
+                  <hr class="profile__meta-divider" />
 
-            <div class="profile__services">
-              <h2 class="profile__services-heading">Top Services</h2>
-              <ul class="profile__services-list">
-                {featuredServices.map((service) => (
-                  <li class="profile__service">
-                    <span class="profile__service-name">{service.name}</span>
-                    <span class="profile__service-price">{service.price}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                  <div class="profile__services">
+                    <h2 class="profile__services-heading">Top Services</h2>
+                    <ul class="profile__services-list">
+                      {featuredServices.map((service) => (
+                        <li class="profile__service">
+                          <span class="profile__service-name">{service.name}</span>
+                          <span class="profile__service-price">{service.price}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              )
+            }
           </div>
 
           <div class="profile__book-row">
@@ -124,6 +149,7 @@ const pageDescription = member.bio
               href={member.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`Book with ${member.firstName} (opens in new tab)`}
               data-booking-link
             >
               Book with {member.firstName}
@@ -147,6 +173,7 @@ const pageDescription = member.bio
                       href={`https://www.instagram.com/${member.instagram}/`}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`${socialDisplayHandle(member.instagram)} on Instagram (opens in new tab)`}
                     >
                       <img
                         class="social-link__icon"
@@ -167,6 +194,7 @@ const pageDescription = member.bio
                       href={member.threads}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`${socialDisplayHandle(member.threads)} on Threads (opens in new tab)`}
                     >
                       <img
                         class="social-link__icon"
@@ -194,30 +222,6 @@ const pageDescription = member.bio
 
         <SiteFooter profile />
       </div>
-
-      <figure class="profile__media">
-        {
-          hasPhoto ? (
-            <picture class="profile__picture">
-              {hasDesktopPhoto && (
-                <source media="(min-width: 900px)" srcset={desktopImage} />
-              )}
-              <img
-                class="profile__photo"
-                src={member.image}
-                alt={`${member.name}, ${member.role} at Salon Citrine`}
-                width="720"
-                height="960"
-                fetchpriority="high"
-              />
-            </picture>
-          ) : (
-            <span class="profile__photo profile__photo--placeholder" aria-hidden="true"></span>
-          )
-        }
-        <div class="profile__media-overlay" aria-hidden="true"></div>
-        <h1 class="profile__name" id="profile-heading">{member.name}</h1>
-      </figure>
     </section>
   </main>
 </BaseLayout>

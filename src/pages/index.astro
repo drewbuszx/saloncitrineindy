@@ -128,7 +128,11 @@ const pageDescription =
   "Women-owned hair salon in historic Irvington, Indianapolis. Haircuts, color, vivid transformations, skin services, and waxing. Gender-affirming and LGBTQ+ welcoming.";
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  preloadImage="/images/background.png"
+>
   <Header />
 
   <main id="main">
@@ -146,6 +150,7 @@ const pageDescription =
             width="1024"
             height="768"
             fetchpriority="high"
+            decoding="async"
             aria-hidden="true"
           />
           <img
@@ -265,7 +270,7 @@ const pageDescription =
             alt=""
             width="1024"
             height="668"
-            loading="lazy"
+            decoding="async"
             aria-hidden="true"
           />
           <img
@@ -370,9 +375,10 @@ const pageDescription =
                         class="team-member__photo"
                         src={member.image}
                         alt={`${member.name}, ${member.role} at Salon Citrine`}
-                        width="360"
-                        height="480"
+                        width="713"
+                        height="1024"
                         loading="lazy"
+                        decoding="async"
                       />
                       <span class="team-member__book-overlay">
                         Open Bio

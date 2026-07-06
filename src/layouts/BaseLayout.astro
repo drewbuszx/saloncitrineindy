@@ -12,15 +12,21 @@ interface Props {
   description?: string;
   path?: string;
   ogImage?: string;
+  /** Preload the LCP hero image on this page. */
+  preloadImage?: string;
   /** Overrides the fixed bottom book bar link (e.g. per-stylist GlossGenius URL). */
   bookBarUrl?: string;
 }
+
+const GOOGLE_FONTS_URL =
+  "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Oswald:wght@400;500;600;700&display=swap";
 
 const {
   title = `${site.name} | Hair Salon in Indianapolis, IN`,
   description = site.tagline,
   path = "/",
   ogImage = "/images/background.png",
+  preloadImage,
   bookBarUrl,
 } = Astro.props;
 
@@ -40,6 +46,26 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={GOOGLE_FONTS_URL} />
+    <link
+      rel="preload"
+      href="/fonts/BasicTitle.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    {
+      preloadImage && (
+        <link
+          rel="preload"
+          as="image"
+          href={preloadImage}
+          fetchpriority="high"
+        />
+      )
+    }
     <script type="application/ld+json" set:html={businessSchema} />
     {
       gaId && (
@@ -179,8 +205,82 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
       });
 
       const menuToggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+      const menuClose = document.querySelector<HTMLButtonElement>("[data-menu-close]");
       const nav = document.querySelector<HTMLElement>("[data-mobile-nav]");
       const dropdowns = document.querySelectorAll<HTMLElement>("[data-nav-dropdown]");
+      const mobileFocusableSelector =
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+      function getMobileNavFocusables() {
+        if (!nav) return [];
+        return Array.from(nav.querySelectorAll<HTMLElement>(mobileFocusableSelector));
+      }
+
+      function setMobileNavAccessible(hidden: boolean) {
+        nav?.setAttribute("aria-hidden", String(hidden));
+
+        getMobileNavFocusables().forEach((element) => {
+          if (hidden) {
+            if (!element.hasAttribute("data-tabindex-restore")) {
+              const tabindex = element.getAttribute("tabindex");
+              element.setAttribute(
+                "data-tabindex-restore",
+                tabindex === null ? "" : tabindex,
+              );
+            }
+            element.setAttribute("tabindex", "-1");
+            return;
+          }
+
+          const restore = element.getAttribute("data-tabindex-restore");
+          if (restore === null) return;
+
+          if (restore === "") {
+            element.removeAttribute("tabindex");
+          } else {
+            element.setAttribute("tabindex", restore);
+          }
+          element.removeAttribute("data-tabindex-restore");
+        });
+      }
+
+      function handleMobileMenuKeydown(event: KeyboardEvent) {
+        if (!nav?.classList.contains("is-open")) {
+          return;
+        }
+
+        if (event.key === "Escape") {
+          event.preventDefault();
+          closeMobileMenu();
+          return;
+        }
+
+        if (event.key !== "Tab") {
+          return;
+        }
+
+        const focusable = getMobileNavFocusables().filter(
+          (element) => element.tabIndex !== -1,
+        );
+        if (focusable.length === 0) {
+          event.preventDefault();
+          return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const active = document.activeElement;
+
+        if (event.shiftKey && active === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && active === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+
+      setMobileNavAccessible(true);
 
       function closeDropdown(dropdown: HTMLElement) {
         const trigger = dropdown.querySelector<HTMLButtonElement>("[data-dropdown-trigger]");
@@ -299,14 +399,26 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
         menuToggle?.setAttribute("aria-expanded", String(open));
         menuToggle?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
         document.body.classList.toggle("mobile-menu-open", open);
+        setMobileNavAccessible(!open);
 
-        if (!open) {
+        if (open) {
+          document.addEventListener("keydown", handleMobileMenuKeydown);
+          const firstFocusable = getMobileNavFocusables().find(
+            (element) => element.tabIndex !== -1,
+          );
+          firstFocusable?.focus();
+        } else {
+          document.removeEventListener("keydown", handleMobileMenuKeydown);
           dropdowns.forEach((dropdown) => closeDropdown(dropdown));
         }
       }
 
       function closeMobileMenu() {
+        const wasOpen = nav?.classList.contains("is-open");
         setMobileMenuOpen(false);
+        if (wasOpen) {
+          menuToggle?.focus();
+        }
       }
 
       menuToggle?.addEventListener("click", () => {
@@ -314,19 +426,10 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
         setMobileMenuOpen(isOpen);
       });
 
-      document
-        .querySelector<HTMLButtonElement>("[data-menu-close]")
-        ?.addEventListener("click", closeMobileMenu);
+      menuClose?.addEventListener("click", closeMobileMenu);
 
       nav?.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", closeMobileMenu);
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && nav?.classList.contains("is-open")) {
-          closeMobileMenu();
-          menuToggle?.focus();
-        }
       });
     </script>
   </body>
