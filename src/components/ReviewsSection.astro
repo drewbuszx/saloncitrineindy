@@ -40,10 +40,37 @@ function stars(rating: number | null) {
     <div
       class="reviews-carousel"
       data-reviews-carousel
-      aria-live="polite"
-      aria-atomic="true"
+      aria-roledescription="carousel"
+      aria-label="Client reviews"
     >
-      <div class="reviews-carousel__viewport">
+      <div class="reviews-carousel__controls">
+        <button
+          class="reviews-carousel__btn reviews-carousel__btn--prev"
+          type="button"
+          aria-label="Previous reviews"
+          data-reviews-prev
+        >
+          <svg viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M7.5 2.5 4 6l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+        <button
+          class="reviews-carousel__btn reviews-carousel__btn--next"
+          type="button"
+          aria-label="Next reviews"
+          data-reviews-next
+        >
+          <svg viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div
+        class="reviews-carousel__viewport"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div class="reviews-carousel__track" data-reviews-track>
           {
             reviews.map((review) => (
@@ -67,6 +94,10 @@ function stars(rating: number | null) {
           }
         </div>
       </div>
+
+      <div class="reviews-carousel__footer" data-reviews-footer hidden>
+        <div class="reviews-carousel__dots" data-reviews-dots role="tablist" aria-label="Review pages"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -77,11 +108,19 @@ function stars(rating: number | null) {
       root.querySelectorAll<HTMLElement>("[data-review-card]")
     );
     const track = root.querySelector<HTMLElement>("[data-reviews-track]");
+    const prevBtn = root.querySelector<HTMLButtonElement>("[data-reviews-prev]");
+    const nextBtn = root.querySelector<HTMLButtonElement>("[data-reviews-next]");
+    const dotsContainer = root.querySelector<HTMLElement>("[data-reviews-dots]");
+    const footer = root.querySelector<HTMLElement>("[data-reviews-footer]");
     if (!track || cards.length === 0) return;
 
     let currentPage = 0;
     let cardsPerPage = 1;
+    let lastPageCount = 0;
     let timer: ReturnType<typeof setInterval> | undefined;
+    let dotButtons: HTMLButtonElement[] = [];
+    const autoplayMs = 6000;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     function getCardsPerPage() {
       const width = root.clientWidth;
@@ -92,6 +131,57 @@ function stars(rating: number | null) {
 
     function getPageCount() {
       return Math.max(1, Math.ceil(cards.length / cardsPerPage));
+    }
+
+    function renderDots() {
+      if (!dotsContainer || !footer) return;
+      const pageCount = getPageCount();
+
+      if (pageCount <= 1) {
+        footer.hidden = true;
+        dotButtons = [];
+        dotsContainer.replaceChildren();
+        lastPageCount = pageCount;
+        return;
+      }
+
+      footer.hidden = false;
+
+      if (pageCount !== lastPageCount) {
+        dotsContainer.replaceChildren();
+        dotButtons = Array.from({ length: pageCount }, (_, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "reviews-carousel__dot";
+          button.setAttribute("role", "tab");
+          button.setAttribute("aria-label", `Go to review page ${index + 1} of ${pageCount}`);
+          button.addEventListener("click", () => {
+            goToPage(index);
+            startAutoplay();
+          });
+          return button;
+        });
+
+        dotButtons.forEach((button) => dotsContainer.appendChild(button));
+        lastPageCount = pageCount;
+      }
+
+      updateDots();
+    }
+
+    function updateDots() {
+      dotButtons.forEach((button, index) => {
+        const isActive = index === currentPage;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+
+      const activeDot = dotButtons[currentPage];
+      if (activeDot) {
+        activeDot.classList.remove("is-active");
+        void activeDot.offsetWidth;
+        activeDot.classList.add("is-active");
+      }
     }
 
     function layoutCards() {
@@ -138,25 +228,56 @@ function stars(rating: number | null) {
         maxHeight = Math.max(maxHeight, cards[i].offsetHeight);
       }
       track.style.height = `${Math.max(maxHeight, 192)}px`;
+
+      renderDots();
     }
 
     function goToPage(page: number) {
       currentPage = page;
       layoutCards();
+      updateDots();
     }
 
     function nextPage() {
       goToPage((currentPage + 1) % getPageCount());
     }
 
+    function prevPage() {
+      goToPage((currentPage - 1 + getPageCount()) % getPageCount());
+    }
+
     function startAutoplay() {
       if (timer) clearInterval(timer);
-      if (getPageCount() <= 1) return;
-      timer = setInterval(nextPage, 6000);
+      if (getPageCount() <= 1 || reducedMotion) return;
+      timer = setInterval(nextPage, autoplayMs);
+    }
+
+    function stopAutoplay() {
+      if (timer) clearInterval(timer);
+      timer = undefined;
     }
 
     layoutCards();
     startAutoplay();
+
+    prevBtn?.addEventListener("click", () => {
+      prevPage();
+      startAutoplay();
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      nextPage();
+      startAutoplay();
+    });
+
+    root.addEventListener("mouseenter", stopAutoplay);
+    root.addEventListener("mouseleave", startAutoplay);
+    root.addEventListener("focusin", stopAutoplay);
+    root.addEventListener("focusout", (event) => {
+      if (!root.contains(event.relatedTarget as Node)) {
+        startAutoplay();
+      }
+    });
 
     const resizeObserver = new ResizeObserver(() => {
       layoutCards();
@@ -164,8 +285,8 @@ function stars(rating: number | null) {
     });
     resizeObserver.observe(root);
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      if (timer) clearInterval(timer);
+    if (reducedMotion) {
+      stopAutoplay();
       goToPage(0);
     }
   }

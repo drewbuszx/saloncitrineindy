@@ -52,9 +52,17 @@ const addressLine = `${site.address.street}, ${site.address.city}, ${site.addres
       center: [lat, lng],
       zoom: 15,
       scrollWheelZoom: false,
-      zoomControl: true,
+      zoomControl: false,
       attributionControl: false,
     });
+
+    L.control
+      .zoom({
+        position: "bottomright",
+        zoomInTitle: "Zoom in",
+        zoomOutTitle: "Zoom out",
+      })
+      .addTo(map);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
@@ -74,14 +82,16 @@ const addressLine = `${site.address.street}, ${site.address.city}, ${site.addres
       `<div class="connect-map__popup">
         <p class="connect-map__popup-name">${name}</p>
         <p class="connect-map__popup-address">${address}</p>
-        <p class="connect-map__popup-phone"><a href="${phoneHref}">${phone}</a></p>
-        <p class="connect-map__popup-directions"><a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">Get directions</a></p>
+        <div class="connect-map__popup-actions">
+          <a class="connect-map__popup-action" href="${phoneHref}">Call ${phone}</a>
+          <a class="connect-map__popup-action" href="${mapsUrl}" target="_blank" rel="noopener noreferrer">Directions</a>
+        </div>
       </div>`,
       {
         closeButton: true,
         className: "connect-map__popup-wrapper",
-        minWidth: 200,
-        maxWidth: 280,
+        minWidth: 210,
+        maxWidth: 260,
       }
     );
 

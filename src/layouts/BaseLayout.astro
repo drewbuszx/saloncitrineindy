@@ -34,7 +34,7 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -73,6 +73,12 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <title>{title}</title>
     <script is:inline>
       (function () {
@@ -107,6 +113,7 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
         href={resolvedBookBarUrl}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={`Book an appointment at ${site.name} (opens in new tab)`}
         data-booking-link
       >
         Book Now
@@ -215,6 +222,21 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
           setDropdownOpen(dropdown, !isOpen);
         });
 
+        if (desktopMq.matches) {
+          dropdown.addEventListener("mouseenter", () => {
+            dropdowns.forEach((other) => {
+              if (other !== dropdown) {
+                closeDropdown(other);
+              }
+            });
+            openDropdown(dropdown);
+          });
+
+          dropdown.addEventListener("mouseleave", () => {
+            closeDropdown(dropdown);
+          });
+        }
+
         trigger?.addEventListener("keydown", (event) => {
           if (event.key === "ArrowDown") {
             event.preventDefault();
@@ -272,19 +294,24 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
         });
       });
 
+      function setMobileMenuOpen(open: boolean) {
+        nav?.classList.toggle("is-open", open);
+        menuToggle?.setAttribute("aria-expanded", String(open));
+        menuToggle?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        document.body.classList.toggle("mobile-menu-open", open);
+
+        if (!open) {
+          dropdowns.forEach((dropdown) => closeDropdown(dropdown));
+        }
+      }
+
       function closeMobileMenu() {
-        nav?.classList.remove("is-open");
-        menuToggle?.setAttribute("aria-expanded", "false");
-        dropdowns.forEach((dropdown) => closeDropdown(dropdown));
+        setMobileMenuOpen(false);
       }
 
       menuToggle?.addEventListener("click", () => {
-        const isOpen = nav?.classList.toggle("is-open");
-        menuToggle.setAttribute("aria-expanded", String(!!isOpen));
-
-        if (!isOpen) {
-          dropdowns.forEach((dropdown) => closeDropdown(dropdown));
-        }
+        const isOpen = !nav?.classList.contains("is-open");
+        setMobileMenuOpen(isOpen);
       });
 
       document
@@ -293,6 +320,13 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
 
       nav?.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", closeMobileMenu);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && nav?.classList.contains("is-open")) {
+          closeMobileMenu();
+          menuToggle?.focus();
+        }
       });
     </script>
   </body>

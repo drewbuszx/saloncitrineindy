@@ -122,9 +122,13 @@ const hoursGroups = groupHours(site.hours);
 const cancellationPolicy = policies.find(
   (policy) => policy.title === "CANCELLATION POLICY"
 )!;
+
+const pageTitle = `${site.name} | Hair Salon in Indianapolis, IN`;
+const pageDescription =
+  "Women-owned hair salon in historic Irvington, Indianapolis. Haircuts, color, vivid transformations, skin services, and waxing. Gender-affirming and LGBTQ+ welcoming.";
 ---
 
-<BaseLayout>
+<BaseLayout title={pageTitle} description={pageDescription}>
   <Header />
 
   <main id="main">
@@ -165,6 +169,9 @@ const cancellationPolicy = policies.find(
         </div>
         <div class="hero__overlay" aria-hidden="true"></div>
         <h1 class="hero__title">Irvington</h1>
+        <a href="#about" class="hero__scroll" aria-label="Scroll to about Salon Citrine">
+          <span class="hero__scroll-line" aria-hidden="true"></span>
+        </a>
       </div>
     </section>
 
@@ -371,7 +378,14 @@ const cancellationPolicy = policies.find(
                         Open Bio
                       </span>
                     </a>
-                    <h4 class="team-member__name">{member.name}</h4>
+                    <h4 class="team-member__name">
+                      <a
+                        class="team-member__name-link"
+                        href={teamMemberPath(member.name)}
+                      >
+                        {member.name}
+                      </a>
+                    </h4>
                     <p class="team-member__role">{member.role}</p>
                   </article>
                 ))}
@@ -388,7 +402,7 @@ const cancellationPolicy = policies.find(
         <header class="editorial-section__header">
           <h2 class="editorial-section__title" id="policies-heading">policies</h2>
         </header>
-        <div class="editorial-columns">
+        <div class="editorial-columns policies-columns">
           {
             policies.map((policy) => (
               <article class="editorial-column">
@@ -472,6 +486,7 @@ const cancellationPolicy = policies.find(
                 href={site.address.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Get directions to ${site.name}, ${site.address.street}, ${site.address.city}`}
               >
                 {site.address.street}<br />
                 {site.address.city}, {site.address.state} {site.address.zip}
@@ -490,12 +505,17 @@ const cancellationPolicy = policies.find(
             </div>
 
             <div class="connect-contact">
-              <a class="connect-contact__link" href={site.phoneHref}>
+              <a
+                class="connect-contact__link connect-contact__link--action"
+                href={site.phoneHref}
+                aria-label={`Call ${site.name} at ${site.phone}`}
+              >
                 {site.phone}
               </a>
               <a
-                class="connect-contact__link"
+                class="connect-contact__link connect-contact__link--action"
                 href={`mailto:${site.email}`}
+                aria-label={`Email ${site.name} at ${site.email}`}
               >
                 {site.email}
               </a>

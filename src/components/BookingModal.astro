@@ -1,10 +1,12 @@
 ---
-import { policies, formatCancellationPolicyText } from "../data/site";
+import { policies, parseCancellationPolicyParts } from "../data/site";
 
 const cancellationPolicy = policies.find(
   (policy) => policy.title === "CANCELLATION POLICY",
 )!;
-const policyText = formatCancellationPolicyText(cancellationPolicy.text);
+const { heading: policyHeading, body: policyBody } = parseCancellationPolicyParts(
+  cancellationPolicy.text,
+);
 ---
 
 <div
@@ -22,8 +24,8 @@ const policyText = formatCancellationPolicyText(cancellationPolicy.text);
     tabindex="-1"
     data-booking-modal-dialog
   >
-    <h2 id="booking-modal-title" class="visually-hidden">Cancellation Policy</h2>
-    <p class="booking-modal__text">{policyText}</p>
+    <h2 id="booking-modal-title" class="booking-modal__title">{policyHeading}</h2>
+    <p class="booking-modal__text">{policyBody}</p>
     <div class="booking-modal__actions">
       <button
         class="booking-modal__btn booking-modal__btn--secondary"
@@ -54,6 +56,7 @@ const policyText = formatCancellationPolicyText(cancellationPolicy.text);
     let pendingUrl: string | null = null;
     let pendingTarget: string | null = null;
     let triggerLink: HTMLAnchorElement | null = null;
+    let inertTargets: Element[] = [];
 
     const focusableSelector =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -64,6 +67,55 @@ const policyText = formatCancellationPolicyText(cancellationPolicy.text);
       );
     }
 
+    function setPageInert(isInert: boolean) {
+      if (isInert) {
+        inertTargets = Array.from(document.body.children).filter(
+          (child) => child !== modal,
+        );
+        inertTargets.forEach((el) => el.setAttribute("inert", ""));
+        return;
+      }
+
+      inertTargets.forEach((el) => el.removeAttribute("inert"));
+      inertTargets = [];
+    }
+
+    function handleModalKeydown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        goBack();
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusable = getFocusableElements(dialog);
+      if (focusable.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (!dialog.contains(active)) {
+        event.preventDefault();
+        first.focus();
+        return;
+      }
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
     function openModal(link: HTMLAnchorElement) {
       pendingUrl = link.href;
       pendingTarget = link.target || "_self";
@@ -72,19 +124,54 @@ const policyText = formatCancellationPolicyText(cancellationPolicy.text);
       modal.removeAttribute("hidden");
       modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("booking-modal-open");
+      setPageInert(true);
+      document.addEventListener("keydown", handleModalKeydown);
 
-      backBtn.focus();
+      requestAnimationFrame(() => {
+        modal.classList.add("is-open");
+      });
+
+      confirmBtn.focus();
     }
 
-    function closeModal() {
+    function finishCloseModal() {
       modal.setAttribute("hidden", "");
       modal.setAttribute("aria-hidden", "true");
+      modal.classList.remove("is-open");
       document.body.classList.remove("booking-modal-open");
+      setPageInert(false);
+      document.removeEventListener("keydown", handleModalKeydown);
       pendingUrl = null;
       pendingTarget = null;
 
       triggerLink?.focus();
       triggerLink = null;
+    }
+
+    function closeModal() {
+      if (modal.hasAttribute("hidden") || !modal.classList.contains("is-open")) {
+        finishCloseModal();
+        return;
+      }
+
+      modal.classList.remove("is-open");
+
+      const onTransitionEnd = (event: TransitionEvent) => {
+        if (event.target !== dialog) {
+          return;
+        }
+
+        window.clearTimeout(fallbackTimer);
+        dialog.removeEventListener("transitionend", onTransitionEnd);
+        finishCloseModal();
+      };
+
+      const fallbackTimer = window.setTimeout(() => {
+        dialog.removeEventListener("transitionend", onTransitionEnd);
+        finishCloseModal();
+      }, 300);
+
+      dialog.addEventListener("transitionend", onTransitionEnd);
     }
 
     function goBack() {
@@ -118,33 +205,5 @@ const policyText = formatCancellationPolicyText(cancellationPolicy.text);
     backBtn.addEventListener("click", goBack);
     confirmBtn.addEventListener("click", confirmBooking);
     backdrop.addEventListener("click", goBack);
-
-    dialog.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        goBack();
-        return;
-      }
-
-      if (event.key !== "Tab") {
-        return;
-      }
-
-      const focusable = getFocusableElements(dialog);
-      if (focusable.length === 0) {
-        return;
-      }
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    });
   }
 </script>

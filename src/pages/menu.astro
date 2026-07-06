@@ -10,6 +10,20 @@ import {
 } from "../data/site";
 import menuCategories from "../data/menu-services.json";
 
+function slugifyCategory(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+const categories = menuCategories.map((category) => ({
+  ...category,
+  id: slugifyCategory(category.name),
+}));
+
 const cancellationPolicy = policies.find(
   (policy) => policy.title === "CANCELLATION POLICY"
 )!;
@@ -41,15 +55,41 @@ const pageDescription =
           <p class="services-cancellation__text">{formatCancellationPolicyText(cancellationPolicy.text)}</p>
         </aside>
 
+        <nav class="menu-nav" aria-label="Jump to service category">
+          <ul class="menu-nav__list">
+            {
+              categories.map((category) => (
+                <li class="menu-nav__item">
+                  <a
+                    class="menu-nav__link"
+                    href={`#${category.id}`}
+                    data-menu-nav-link={category.id}
+                  >
+                    {category.name}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
         {
-          menuCategories.map((category) => (
-            <div class="menu-category">
-              <h2 class="menu-category__title">{category.name}</h2>
+          categories.map((category) => (
+            <section
+              class="menu-category"
+              id={category.id}
+              aria-labelledby={`${category.id}-heading`}
+            >
+              <h2 class="menu-category__title" id={`${category.id}-heading`}>
+                {category.name}
+              </h2>
               <div class="menu-category__list">
                 {category.services.map((service) => (
                   <article class="service-item service-item--full">
-                    <p class="service-item__name">{service.name}</p>
-                    <p class="service-item__price">{service.price}</p>
+                    <div class="service-item__header">
+                      <p class="service-item__name">{service.name}</p>
+                      <p class="service-item__price">{service.price}</p>
+                    </div>
                     {service.description && (
                       <p class="service-item__description">
                         {service.description}
@@ -58,7 +98,7 @@ const pageDescription =
                   </article>
                 ))}
               </div>
-            </div>
+            </section>
           ))
         }
 
@@ -78,4 +118,43 @@ const pageDescription =
   </main>
 
   <SiteFooter />
+
+  <script>
+    const navLinks = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>("[data-menu-nav-link]")
+    );
+    const sections = navLinks
+      .map((link) => document.getElementById(link.dataset.menuNavLink ?? ""))
+      .filter((section): section is HTMLElement => section !== null);
+
+    if (navLinks.length && sections.length) {
+      const setActive = (id: string) => {
+        navLinks.forEach((link) => {
+          const isActive = link.dataset.menuNavLink === id;
+          link.classList.toggle("is-active", isActive);
+          if (isActive) {
+            link.scrollIntoView({ block: "nearest", inline: "nearest" });
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+          if (visible[0]?.target.id) {
+            setActive(visible[0].target.id);
+          }
+        },
+        {
+          rootMargin: "-30% 0px -55% 0px",
+          threshold: [0, 0.25, 0.5, 0.75, 1],
+        }
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    }
+  </script>
 </BaseLayout>

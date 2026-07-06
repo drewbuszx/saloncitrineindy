@@ -28,6 +28,21 @@ export function formatCancellationPolicyText(text: string): string {
   return `**CANCELLATION POLICY: ${text}**`;
 }
 
+/** Split formatted policy text into heading + body for readable modal layout. */
+export function parseCancellationPolicyParts(text: string): {
+  heading: string;
+  body: string;
+} {
+  const formatted = formatCancellationPolicyText(text);
+  const match = formatted.match(/^\*\*(.+?):\s*(.+)\*\*$/);
+
+  if (match) {
+    return { heading: `${match[1]}:`, body: match[2] };
+  }
+
+  return { heading: "CANCELLATION POLICY:", body: text };
+}
+
 /** Display handle from a social URL or handle (strips leading @). */
 export function socialDisplayHandle(urlOrHandle: string): string {
   const trimmed = urlOrHandle.trim();
@@ -155,12 +170,19 @@ export function localBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "HairSalon",
+    "@id": `${siteUrl}/#business`,
     name: site.name,
     description: site.tagline,
     url: siteUrl,
     telephone: site.phone,
     email: site.email,
     image: `${siteUrl}/images/salon-citrine-logo.png`,
+    priceRange: "$$",
+    hasMap: site.address.mapsUrl,
+    areaServed: {
+      "@type": "City",
+      name: site.address.city,
+    },
     address: {
       "@type": "PostalAddress",
       streetAddress: site.address.street,

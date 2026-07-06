@@ -1,5 +1,5 @@
 ---
-import { site, PRIVACY_PATH } from "../data/site";
+import { site, PRIVACY_PATH, socialDisplayHandle } from "../data/site";
 
 interface Props {
   /** Profile pages use a narrower centered footer. */
@@ -8,12 +8,59 @@ interface Props {
 
 const { profile = false } = Astro.props;
 const year = new Date().getFullYear();
+
+const footerNav = [
+  { href: "/#about", label: "About" },
+  { href: "/#services", label: "Services" },
+  { href: "/#team", label: "Team" },
+  { href: "/#connect", label: "Connect" },
+];
 ---
 
 <footer class:list={["site-footer", profile && "site-footer--profile"]}>
-  <p>
-    &copy; {year} {site.name}. All Rights Reserved.
-    <span class="site-footer__sep" aria-hidden="true"> · </span>
-    <a class="site-footer__link" href={PRIVACY_PATH}>Privacy Policy</a>
-  </p>
+  {
+    !profile && (
+      <nav class="site-footer__nav" aria-label="Footer">
+        <ul class="site-footer__links">
+          {
+            footerNav.map((link) => (
+              <li>
+                <a class="site-footer__nav-link" href={link.href}>
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    )
+  }
+
+  <div class="site-footer__meta">
+    {
+      !profile && (
+        <a
+          class="site-footer__social social-link"
+          href={site.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            class="social-link__icon"
+            src="/icons/instagram.png"
+            alt=""
+            width="16"
+            height="16"
+            decoding="async"
+          />
+          {socialDisplayHandle(site.instagram)}
+        </a>
+      )
+    }
+    <p class="site-footer__legal">
+      &copy; {year} {site.name}. All Rights Reserved.
+      <span class="site-footer__sep" aria-hidden="true"> · </span>
+      <a class="site-footer__link" href={PRIVACY_PATH}>Privacy Policy</a>
+    </p>
+  </div>
 </footer>
