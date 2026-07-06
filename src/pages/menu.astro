@@ -78,9 +78,9 @@ const pageDescription =
             <section
               class="menu-category"
               data-menu-category={category.id}
+              id={category.id}
               aria-labelledby={`${category.id}-heading`}
             >
-              <span class="menu-category__anchor" id={category.id}></span>
               <h2 class="menu-category__title" id={`${category.id}-heading`}>
                 {category.name}
               </h2>
@@ -121,6 +121,7 @@ const pageDescription =
   <SiteFooter />
 
   <script>
+    const siteHeader = document.querySelector<HTMLElement>(".site-header");
     const menuNav = document.querySelector<HTMLElement>(".menu-nav");
     const navLinks = Array.from(
       document.querySelectorAll<HTMLAnchorElement>("[data-menu-nav-link]")
@@ -137,8 +138,13 @@ const pageDescription =
       );
     };
 
+    const getStickyNavBottom = () => {
+      const headerHeight = siteHeader?.offsetHeight ?? 0;
+      const menuNavHeight = menuNav?.offsetHeight ?? 0;
+      return headerHeight + menuNavHeight;
+    };
+
     syncMenuNavHeight();
-    window.addEventListener("resize", syncMenuNavHeight, { passive: true });
 
     if (navLinks.length && sections.length) {
       const prefersReducedMotion = window.matchMedia(
@@ -159,9 +165,16 @@ const pageDescription =
       };
 
       const scrollToCategory = (id: string) => {
-        const target = document.getElementById(id);
-        if (!target) return;
-        target.scrollIntoView({
+        syncMenuNavHeight();
+        const section = document.querySelector<HTMLElement>(
+          `[data-menu-category="${id}"]`
+        );
+        if (!section) return;
+        const stickyBottom = getStickyNavBottom();
+        const top =
+          section.getBoundingClientRect().top + window.scrollY - stickyBottom;
+        window.scrollTo({
+          top: Math.max(0, top),
           behavior: prefersReducedMotion ? "auto" : "smooth",
         });
         setActive(id);
@@ -177,29 +190,45 @@ const pageDescription =
         });
       });
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const visible = entries
-            .filter((entry) => entry.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      let scrollSpy: IntersectionObserver | null = null;
 
-          const categoryId = (visible[0]?.target as HTMLElement | undefined)
-            ?.dataset.menuCategory;
-          if (categoryId) {
-            setActive(categoryId);
+      const bindScrollSpy = () => {
+        scrollSpy?.disconnect();
+        scrollSpy = new IntersectionObserver(
+          (entries) => {
+            const visible = entries
+              .filter((entry) => entry.isIntersecting)
+              .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+            const categoryId = (visible[0]?.target as HTMLElement | undefined)
+              ?.dataset.menuCategory;
+            if (categoryId) {
+              setActive(categoryId);
+            }
+          },
+          {
+            rootMargin: `-${getStickyNavBottom()}px 0px -55% 0px`,
+            threshold: [0, 0.25, 0.5, 0.75, 1],
           }
-        },
-        {
-          rootMargin: "-30% 0px -55% 0px",
-          threshold: [0, 0.25, 0.5, 0.75, 1],
-        }
-      );
+        );
+        sections.forEach((section) => scrollSpy!.observe(section));
+      };
 
-      sections.forEach((section) => observer.observe(section));
+      bindScrollSpy();
+      window.addEventListener(
+        "resize",
+        () => {
+          syncMenuNavHeight();
+          bindScrollSpy();
+        },
+        { passive: true }
+      );
 
       if (location.hash) {
         const id = location.hash.slice(1);
-        requestAnimationFrame(() => scrollToCategory(id));
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => scrollToCategory(id));
+        });
       }
     }
   </script>
