@@ -369,7 +369,7 @@ const pageDescription =
                     <a
                       class="team-member__photo-link"
                       href={teamMemberPath(member.name)}
-                      aria-label={`Open ${member.name} bio`}
+                      aria-label={`Meet ${member.firstName}`}
                     >
                       <img
                         class="team-member__photo"
@@ -381,7 +381,7 @@ const pageDescription =
                         decoding="async"
                       />
                       <span class="team-member__book-overlay">
-                        Open Bio
+                        Meet {member.firstName}
                       </span>
                     </a>
                     <h4 class="team-member__name">
