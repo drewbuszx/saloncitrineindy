@@ -353,6 +353,17 @@ button {
     overflow: visible;
   }
 
+  /* Invisible bridge so the cursor can reach the menu without leaving the dropdown. */
+  .site-header__nav--left .site-header__dropdown-menu::before,
+  .site-header__nav--right .site-header__dropdown-menu::before {
+    content: "";
+    position: absolute;
+    top: -0.65rem;
+    left: 0;
+    right: 0;
+    height: 0.65rem;
+  }
+
   .site-header__dropdown.is-open .site-header__dropdown-menu {
     opacity: 1;
     visibility: visible;
