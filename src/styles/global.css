@@ -398,6 +398,7 @@ button {
   padding: 0;
   background: none;
   border: none;
+  color: var(--color-white);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -406,7 +407,7 @@ button {
   width: 22px;
   height: 2px;
   margin: 5px 0;
-  background: currentColor;
+  background: var(--color-white);
 }
 
 .site-header__menu-toggle:focus-visible {
