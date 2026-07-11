@@ -170,7 +170,7 @@ const pageDescription =
         </div>
         <div class="hero__overlay" aria-hidden="true"></div>
         <h1 class="hero__title">
-          <span class="hero__title-kicker">Inclusive hair salon in historic</span>
+          <span class="hero__title-kicker">An inclusive salon in historic</span>
           <span class="hero__title-place">Irvington</span>
         </h1>
         <a href="#about" class="hero__scroll" aria-label="Scroll to about Salon Citrine">
@@ -574,47 +574,60 @@ const pageDescription =
 </BaseLayout>
 
 <script>
-  function measureText(el: HTMLElement): number {
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    return range.getBoundingClientRect().width;
-  }
-
-  // Scale the kicker line so its rendered width matches the IRVINGTON word.
+  // Scale the kicker so its rendered width matches IRVINGTON, then lock both
+  // to the same centered box. Prefer element getBoundingClientRect over Range:
+  // Range under-counts width when letter-spacing is applied (trailing tracking
+  // is omitted), which made the kicker settle too large and overhang IRVINGTON.
   function fitHeroKicker() {
     const kicker = document.querySelector<HTMLElement>(".hero__title-kicker");
     const place = document.querySelector<HTMLElement>(".hero__title-place");
     if (!kicker || !place) return;
 
-    const targetWidth = measureText(place);
+    // Clear a previous explicit width so measurements shrink-wrap to glyphs.
+    kicker.style.width = "max-content";
+
+    const targetWidth = place.getBoundingClientRect().width;
     if (targetWidth <= 0) return;
 
-    // Binary search the font-size so the single-line kicker spans targetWidth.
-    let lo = 6;
-    let hi = targetWidth;
+    // Binary search font-size until kicker width matches place within 1px.
+    let lo = 4;
+    let hi = Math.max(targetWidth, 8);
 
-    while (hi - lo > 0.25) {
+    for (let i = 0; i < 24; i++) {
       const mid = (lo + hi) / 2;
       kicker.style.fontSize = `${mid}px`;
-      if (measureText(kicker) > targetWidth) {
-        hi = mid;
-      } else {
+      const width = kicker.getBoundingClientRect().width;
+      if (Math.abs(width - targetWidth) <= 1) {
         lo = mid;
+        break;
       }
+      if (width > targetWidth) hi = mid;
+      else lo = mid;
+      if (hi - lo < 0.05) break;
     }
 
     kicker.style.fontSize = `${lo}px`;
+    // Pin the box to IRVINGTON's width so edges align and flex centering matches.
+    kicker.style.width = `${targetWidth}px`;
   }
 
-  fitHeroKicker();
-  window.addEventListener("resize", fitHeroKicker, { passive: true });
-  window.addEventListener("orientationchange", fitHeroKicker, {
+  function scheduleFitHeroKicker() {
+    requestAnimationFrame(() => {
+      fitHeroKicker();
+      // Second pass after layout/fonts settle (stroke, clamp, webfont swap).
+      requestAnimationFrame(fitHeroKicker);
+    });
+  }
+
+  scheduleFitHeroKicker();
+  window.addEventListener("resize", scheduleFitHeroKicker, { passive: true });
+  window.addEventListener("orientationchange", scheduleFitHeroKicker, {
     passive: true,
   });
-  document.fonts?.ready.then(fitHeroKicker);
+  document.fonts?.ready.then(scheduleFitHeroKicker);
 
   const heroTitle = document.querySelector(".hero__title");
   if (heroTitle) {
-    new ResizeObserver(fitHeroKicker).observe(heroTitle);
+    new ResizeObserver(scheduleFitHeroKicker).observe(heroTitle);
   }
 </script>

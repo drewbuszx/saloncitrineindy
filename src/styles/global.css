@@ -689,8 +689,8 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Keep kicker snug above IRVINGTON — half the previous gap. */
-  gap: clamp(0.12rem, 0.4vw, 0.32rem);
+  /* Keep kicker snug above IRVINGTON. */
+  gap: clamp(0.04rem, 0.2vw, 0.16rem);
   /* Match .about-image__title / .connect-image__title: rest on the lower edge
      of the media (hero__media already ends above the sticky book bar). */
   bottom: 0;
@@ -707,15 +707,21 @@ button {
 
 .hero__title-kicker {
   display: block;
+  /* Shrink-wrap to text so getBoundingClientRect reflects glyph width, not
+     the full hero title column. JS then sets an explicit width to match
+     IRVINGTON after the font-size fit. */
+  width: max-content;
   max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
   font-family: var(--font-sans);
-  /* Fallback size before JS fit runs; JS scales this so the kicker's rendered
-     width matches the IRVINGTON word below it. Wider tracking lets fit-text
-     settle at a slightly smaller font-size while still matching that width. */
-  font-size: clamp(0.62rem, 1.4vw, 0.92rem);
+  /* Fallback size before JS fit runs; JS scales font-size so rendered width
+     matches IRVINGTON. Tracking is moderate so fit can land at a readable size. */
+  font-size: clamp(0.52rem, 1.2vw, 0.8rem);
   font-weight: 500;
   line-height: 1.2;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
+  text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
   /* Reset the heavy display stroke/shadow inherited from .hero__title */
@@ -1172,7 +1178,7 @@ button {
 .about-image__photo,
 .connect-image__photo {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   object-position: center;
 }
@@ -1180,16 +1186,12 @@ button {
 .about-image__slideshow {
   position: relative;
   width: 100%;
-  aspect-ratio: 1024 / 668;
+  /* Match services-slideshow intrinsic ratio so every slide shares one box */
+  aspect-ratio: 1024 / 509;
   background: var(--color-light);
 }
 
-.about-image__slideshow .about-image__photo--slide:first-child {
-  position: relative;
-  display: block;
-}
-
-.about-image__slideshow .about-image__photo--slide:not(:first-child) {
+.about-image__slideshow .about-image__photo--slide {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1271,14 +1273,12 @@ button {
 .connect-image__slideshow {
   position: relative;
   width: 100%;
+  /* Match connect slideshow intrinsic ratio; same absolute-fill pattern as services */
+  aspect-ratio: 1022 / 508;
+  background: var(--color-light);
 }
 
-.connect-image__slideshow .connect-image__photo--slide:first-child {
-  position: relative;
-  display: block;
-}
-
-.connect-image__slideshow .connect-image__photo--slide:not(:first-child) {
+.connect-image__slideshow .connect-image__photo--slide {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1367,19 +1367,6 @@ button {
   .connect-image__slideshow {
     aspect-ratio: auto;
     height: clamp(440px, 45vw, 660px);
-  }
-
-  .about-image__slideshow .about-image__photo--slide:first-child,
-  .connect-image__slideshow .connect-image__photo--slide:first-child {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .about-image__photo,
-  .connect-image__photo {
-    height: 100%;
   }
 }
 
