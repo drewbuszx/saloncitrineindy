@@ -413,10 +413,10 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         ),
         instagram: "lilylovve.hair",
         featuredServices: [
-          { name: "HAIRCUT", price: "$55+" },
-          { name: "BLOWOUT", price: "$50+" },
-          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
-          { name: "PARTIAL DIMENSIONAL COLOR & BLOWOUT", price: "$90+" },
+          { name: "HAIRCUT", price: "$75" },
+          { name: "CLIPPER CUT", price: "$60" },
+          { name: "TRANSFORMATIVE HAIRCUT", price: "$85" },
+          { name: "FULL DIMENSIONAL COLOR & CUT", price: "$290+" },
         ],
       },
       {
@@ -433,10 +433,10 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         ),
         instagram: "miriambusz_hair",
         featuredServices: [
-          { name: "HAIRCUT", price: "$55+" },
-          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
-          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$100+" },
-          { name: "PARTIAL DIMENSIONAL COLOR & BLOWOUT", price: "$90+" },
+          { name: "HAIRCUT", price: "$75" },
+          { name: "ALL OVER COLOR WITH HAIRCUT", price: "$225+" },
+          { name: "FULL DIMENSIONAL COLOR & CUT", price: "$290+" },
+          { name: "ROOT TOUCH UP WITH A HAIRCUT", price: "$175+" },
         ],
       },
       {
@@ -454,10 +454,10 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         ),
         instagram: "hair_by_andra",
         featuredServices: [
-          { name: "HAIRCUT", price: "$55+" },
-          { name: "BLOWOUT", price: "$50+" },
-          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
-          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$100+" },
+          { name: "HAIRCUT", price: "$75" },
+          { name: "BLOWOUT", price: "$65" },
+          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$225+" },
+          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$150+" },
         ],
       },
     ],
@@ -480,10 +480,10 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         ),
         instagram: "hairxcraft",
         featuredServices: [
-          { name: "HAIRCUT", price: "$55+" },
-          { name: "VIVID TRANSFORMATION", price: "$250+" },
-          { name: "BLOWOUT", price: "$50+" },
-          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
+          { name: "HAIRCUT", price: "$75" },
+          { name: "VIVID TRANSFORMATION", price: "$300+" },
+          { name: "BLOWOUT", price: "$65" },
+          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$200+" },
         ],
       },
       {
@@ -501,8 +501,8 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         ),
         instagram: "julie.tology",
         featuredServices: [
-          { name: "HAIRCUT", price: "$55+" },
-          { name: "BLOWOUT", price: "$50+" },
+          { name: "HAIRCUT", price: "$55" },
+          { name: "BLOWOUT", price: "$50" },
           { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
           { name: "ALL OVER COLOR WITH BLOWOUT", price: "$100+" },
         ],
@@ -514,18 +514,17 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         image: "/images/brie-crowe.jpg",
         profileImage: "/images/brie-crowe2.jpg",
         bio: "Dimensional and all-over color, cuts, and smooth blowouts.",
-        // DRAFT — review with stylist (IG title: Indianapolis Cosmetologist; services-based)
         about:
-          "Brie is an Indianapolis cosmetologist offering dimensional and all-over color, cuts, and smooth blowouts. Expect a welcoming chair and finished looks that feel polished without being fussy.",
+          "Brie specializes in dimensional and all-over color, alternative cuts, and smooth, polished blowouts. Her welcoming approach creates finished looks that feel expressive, wearable, and never overly fussy.",
         bookingUrl: memberBookingUrl(
           "10001-32abe5c0-3025-48ed-8516-850b1fc5783f"
         ),
         instagram: "ez.breezy.mua",
         featuredServices: [
-          { name: "HAIRCUT", price: "$55+" },
-          { name: "BLOWOUT", price: "$50+" },
-          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$150+" },
-          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$100+" },
+          { name: "HAIRCUT", price: "$65+" },
+          { name: "BLOWOUT", price: "$65" },
+          { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$185+" },
+          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$125+" },
         ],
       },
     ],

@@ -1930,7 +1930,7 @@ button {
   /* White bio area bleeds up over image bottom / lower portion of name (SERVICES pattern) */
   margin-top: calc(-1 * clamp(2.75rem, 14vw, 5.5rem));
   background: var(--color-bg);
-  padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1.25rem, 4vw, 3rem)
+  padding: clamp(1rem, 3.5vw, 1.75rem) clamp(1.25rem, 4vw, 3rem)
     calc(var(--section-padding) + var(--book-bar-height));
 }
 
@@ -1944,9 +1944,18 @@ button {
   text-align: left;
 }
 
+.profile__header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.25rem;
+  width: 100%;
+  margin-bottom: clamp(0.85rem, 2.5vw, 1.35rem);
+}
+
 .profile-page__back {
   display: inline-block;
-  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  flex-shrink: 0;
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 500;
@@ -2061,8 +2070,10 @@ button {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem 1.25rem;
-  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  justify-content: flex-end;
+  gap: 0.65rem 1rem;
+  margin: 0 0 0 auto;
+  min-width: 0;
 }
 
 .profile__book-notice {
@@ -2081,17 +2092,14 @@ button {
 
 .profile__book-cta {
   display: inline-block;
-  padding: 1rem 2.5rem;
+  padding: 0.85rem 2.25rem;
   border: 1px solid var(--color-black);
   background: var(--color-black);
   color: var(--color-white);
-  font-family: var(--font-basic-title);
+  font-family: var(--font-sans);
   font-size: clamp(0.9rem, 1.4vw, 1rem);
   font-weight: 700;
-  font-synthesis: weight;
-  -webkit-text-stroke: 0.3px currentColor;
-  paint-order: stroke fill;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
@@ -2226,7 +2234,7 @@ button {
     /* Bleed white into lower name strokes; pad past bleed so back link + bio clear the name */
     --profile-bleed: clamp(2rem, 10vw, 3.5rem);
     margin-top: calc(-1 * var(--profile-bleed));
-    padding-top: calc(var(--profile-bleed) + clamp(1.5rem, 4vw, 2rem));
+    padding-top: calc(var(--profile-bleed) + clamp(0.75rem, 2.5vw, 1.25rem));
   }
 
   .profile__name {
@@ -2248,7 +2256,7 @@ button {
     max-width: 50%;
     margin-top: 0;
     min-height: calc(100svh - var(--header-height));
-    padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 5vw, 4.5rem)
+    padding: clamp(1.5rem, 3.5vw, 2.5rem) clamp(2rem, 5vw, 4.5rem)
       var(--section-padding);
   }
 
