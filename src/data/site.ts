@@ -407,7 +407,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         profileImage: "/images/lily-gleitsman2.jpg",
         bio: "Dimensional color, blowouts, and cuts built to fit your everyday.",
         about:
-          "Over nearly 15 years in the industry, Lily has developed a specialty in precision cuts, clipper work, polished blowouts, and styles that are easy to live in. She began her career alongside Miriam and Andra, and she and Miriam have continued working together at every salon since. Her thoughtful approach creates hair that fits each client's routine, personality, and natural texture.",
+          "Over 15 years in the industry, Lily has developed a specialty in transformational cuts, clipper work, curls, and styles that are easy to live in. She began her career alongside Miriam and Andra, and she and Miriam have continued working together at every salon since. Her thoughtful approach creates hair that fits each client's routine, personality, and natural texture.",
         bookingUrl: memberBookingUrl(
           "10001-f5bd9a7b-3e2f-4255-951d-ca4881f88678"
         ),
