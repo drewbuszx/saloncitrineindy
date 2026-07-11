@@ -28,12 +28,10 @@
   --color-charcoal-border: rgba(255, 255, 255, 0.14);
   --color-charcoal-border-subtle: rgba(255, 255, 255, 0.08);
   --color-charcoal-card: rgba(255, 255, 255, 0.06);
-  --color-book-bar-bg: var(--color-citrine);
-  --color-book-bar-text: var(--color-black);
-  --color-book-bar-border: var(--color-header-border);
-  --color-book-bar-hover-bg: var(--color-black);
-  --color-book-bar-hover-text: var(--color-citrine);
-  --color-book-bar-hover-border: var(--color-citrine);
+  --color-book-bar-bg: var(--color-black);
+  --color-book-bar-text: var(--color-citrine);
+  --color-book-bar-hover-bg: var(--color-citrine);
+  --color-book-bar-hover-text: var(--color-black);
   --font-sans: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
   --font-serif: "Cormorant Garamond", "Times New Roman", serif;
   --font-basic-title: "Basic Title", var(--font-sans);
@@ -68,12 +66,10 @@
   --color-border: rgba(255, 255, 255, 0.12);
   --color-border-subtle: rgba(255, 255, 255, 0.08);
   --color-header-border: rgba(255, 255, 255, 0.2);
-  --color-book-bar-bg: var(--color-citrine);
-  --color-book-bar-text: var(--color-black);
-  --color-book-bar-border: var(--color-header-border);
-  --color-book-bar-hover-bg: var(--color-black);
-  --color-book-bar-hover-text: var(--color-citrine);
-  --color-book-bar-hover-border: var(--color-citrine);
+  --color-book-bar-bg: var(--color-black);
+  --color-book-bar-text: var(--color-citrine);
+  --color-book-bar-hover-bg: var(--color-citrine);
+  --color-book-bar-hover-text: var(--color-black);
 }
 
 *,
@@ -690,13 +686,47 @@ button {
 }
 
 .hero__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Keep kicker snug above IRVINGTON — half the previous gap. */
+  gap: clamp(0.12rem, 0.4vw, 0.32rem);
+  /* Match .about-image__title / .connect-image__title: rest on the lower edge
+     of the media (hero__media already ends above the sticky book bar). */
+  bottom: 0;
+  padding-bottom: 0;
+  /* Slight downward nudge so letterforms sit flush like SERVICES/CONNECT. */
+  transform: translateX(-50%) translateY(0.08em);
+}
+
+.hero__title-place {
+  display: block;
   font-size: clamp(4.92rem, 16vw, 12.75rem);
-  padding-bottom: clamp(0.35rem, 1.5vw, 0.75rem);
+  line-height: 0.82;
+}
+
+.hero__title-kicker {
+  display: block;
+  max-width: 100%;
+  font-family: var(--font-sans);
+  /* Fallback size before JS fit runs; JS scales this so the kicker's rendered
+     width matches the IRVINGTON word below it. Wider tracking lets fit-text
+     settle at a slightly smaller font-size while still matching that width. */
+  font-size: clamp(0.62rem, 1.4vw, 0.92rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  /* Reset the heavy display stroke/shadow inherited from .hero__title */
+  -webkit-text-stroke: 0;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
 }
 
 .hero__scroll {
   position: absolute;
-  bottom: clamp(4.75rem, 17vw, 8.5rem);
+  /* Sit just above the kicker + IRVINGTON stack (title is bottom-aligned). */
+  bottom: clamp(6.75rem, 22vw, 13.5rem);
   left: 50%;
   z-index: 3;
   display: flex;
@@ -804,8 +834,7 @@ button {
   height: var(--book-bar-height);
   padding-bottom: var(--book-bar-safe-bottom);
   background: var(--color-book-bar-bg);
-  border-top: 1px solid var(--color-book-bar-border);
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease;
 }
 
 .book-bar__link {
@@ -829,7 +858,6 @@ button {
 .book-bar:has(.book-bar__link:hover),
 .book-bar:has(.book-bar__link:focus-visible) {
   background: var(--color-book-bar-hover-bg);
-  border-top-color: var(--color-book-bar-hover-border);
 }
 
 .book-bar__link:hover,
@@ -919,7 +947,7 @@ button {
 }
 
 .section__title,
-.services-group__title,
+.services-category__title,
 .editorial-section__title,
 .reviews-section__title {
   font-family: var(--font-serif);
@@ -957,7 +985,7 @@ button {
 .intro__text p {
   margin: 0 0 1.25rem;
   font-family: var(--font-sans);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   font-weight: 400;
   line-height: var(--leading-body);
   letter-spacing: 0.02em;
@@ -1018,6 +1046,10 @@ button {
 }
 
 @media (max-width: 767px) {
+  .intro-split__tagline {
+    text-align: center;
+  }
+
   .intro__values {
     flex-direction: column;
     align-items: center;
@@ -1073,6 +1105,29 @@ button {
     text-align: center;
     white-space: nowrap;
   }
+}
+
+.intro__badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem 2rem;
+  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.intro__badge {
+  display: block;
+  height: clamp(4.125rem, 9vw, 5.25rem);
+  width: auto;
+  max-width: min(16.5rem, 63vw);
+  object-fit: contain;
+  border-radius: 0.25rem;
+}
+
+.intro__badge--light {
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
 }
 
 @media (min-width: 768px) {
@@ -1302,6 +1357,32 @@ button {
   }
 }
 
+/* Desktop: cap full-bleed slideshow heights so they read as banners, not full pages */
+@media (min-width: 768px) {
+  .about-image__slideshow {
+    aspect-ratio: auto;
+    height: clamp(400px, 42vw, 620px);
+  }
+
+  .connect-image__slideshow {
+    aspect-ratio: auto;
+    height: clamp(440px, 45vw, 660px);
+  }
+
+  .about-image__slideshow .about-image__photo--slide:first-child,
+  .connect-image__slideshow .connect-image__photo--slide:first-child {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .about-image__photo,
+  .connect-image__photo {
+    height: 100%;
+  }
+}
+
 /* Services, team, policies — shared editorial content width */
 .section:has(#services) .section__inner,
 .section:has(#team) .section__inner,
@@ -1339,63 +1420,60 @@ button {
   }
 }
 
-.services-group {
-  margin-bottom: clamp(1.75rem, 4.5vw, 3.25rem);
+.services-intro {
+  max-width: min(52rem, 100%);
+  margin: 0 auto clamp(1.75rem, 4.5vw, 2.75rem);
+  padding-bottom: clamp(1.5rem, 3.5vw, 2.25rem);
+  border-bottom: 1px solid var(--color-border-subtle);
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  text-align: center;
+  text-wrap: pretty;
 }
 
-.services-group:last-of-type {
-  margin-bottom: 0;
-}
-
-.services-group__header {
-  margin-bottom: clamp(1.75rem, 4.5vw, 2.75rem);
-  text-align: left;
-}
-
-.services-group__title {
-  margin: 0;
-  font-size: var(--text-display);
-}
-
-.services-columns,
-.editorial-columns {
+.services-overview {
   display: grid;
   grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 3.5vw, 2.25rem) clamp(1.5rem, 4vw, 2.75rem);
+  max-width: min(56rem, 100%);
+  margin-inline: auto;
 }
 
-.services-columns {
-  gap: clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.125rem, 3vw, 2rem);
-}
-
-.editorial-columns {
-  gap: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
-}
-
-.services-column,
-.editorial-column {
+.services-category {
+  position: relative;
+  padding-top: 0.15rem;
   text-align: left;
 }
 
-.services-column__header,
-.editorial-column__header {
-  font-family: var(--font-sans);
-  font-size: var(--text-label);
-  font-weight: 700;
-  line-height: 1.35;
-  letter-spacing: var(--tracking-label-wide);
-  text-transform: uppercase;
+.services-category__title {
+  position: relative;
+  margin: 0 0 0.7rem;
+  padding-bottom: 0.7rem;
+  font-size: clamp(1.65rem, 3.4vw, 2.35rem);
 }
 
-.services-column__header {
-  margin: 0 0 1rem;
+.services-category__title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1.75rem;
+  height: 1px;
+  background: var(--color-citrine);
+  transition: width var(--transition-medium);
 }
 
-.editorial-column__header {
-  margin: 0 0 1.5rem;
+.services-category:hover .services-category__title::after,
+.services-category:focus-within .services-category__title::after {
+  width: 2.75rem;
 }
 
-.services-column__text,
-.editorial-column__text {
+.services-category__blurb {
+  margin: 0;
+  max-width: 22rem;
   font-family: var(--font-serif);
   font-size: var(--text-body);
   font-weight: 400;
@@ -1404,12 +1482,34 @@ button {
   text-wrap: pretty;
 }
 
-.services-column__text {
-  margin: 1.25rem 0 0;
+.editorial-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+}
+
+.editorial-column {
+  text-align: left;
+}
+
+.editorial-column__header {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: var(--tracking-label-wide);
+  text-transform: uppercase;
 }
 
 .editorial-column__text {
   margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  text-wrap: pretty;
 }
 
 /* Policies — improved scanability */
@@ -1468,7 +1568,7 @@ button {
 }
 
 .service-item__name {
-  margin: 0 0 0.35rem;
+  margin: 0;
   font-family: var(--font-sans);
   font-size: var(--text-label);
   font-weight: 400;
@@ -1492,8 +1592,9 @@ button {
   flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
+  justify-content: center;
   margin-top: clamp(1.6rem, 4vw, 2.35rem);
-  text-align: left;
+  text-align: center;
 }
 
 .services-cta__link,
@@ -2347,6 +2448,35 @@ button {
   padding-bottom: 0;
 }
 
+.connect-intro {
+  max-width: min(72rem, 90%);
+  margin: 0 auto;
+  padding: clamp(0.875rem, 2.5vw, 1.5rem) clamp(1.5rem, 6vw, 2.5rem)
+    clamp(0.75rem, 2vw, 1.25rem);
+  text-align: center;
+}
+
+.connect-intro__text {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+  color: var(--color-gray);
+  text-wrap: pretty;
+}
+
+.connect-note {
+  max-width: 22rem;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--color-gray);
+}
+
 .connect-split {
   display: grid;
   grid-template-columns: 1fr;
@@ -3037,14 +3167,13 @@ button {
 }
 
 @media (min-width: 640px) {
-  .services-columns,
+  .services-overview,
   .editorial-columns {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .services-columns,
   .editorial-columns {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     max-width: 68rem;

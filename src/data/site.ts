@@ -216,6 +216,8 @@ export type ServiceColumn = {
 export type ServiceGroup = {
   id: string;
   title: string;
+  /** Short homepage orientation line; full details live on /menu/. */
+  summary: string;
   columns: ServiceColumn[];
 };
 
@@ -223,6 +225,8 @@ export const serviceGroups: ServiceGroup[] = [
   {
     id: "haircuts",
     title: "haircuts",
+    summary:
+      "Classic and transformative cuts, clipper work, fringe maintenance, blowouts, and silk presses.",
     columns: [
       {
         header: "CUTS",
@@ -257,6 +261,8 @@ export const serviceGroups: ServiceGroup[] = [
   {
     id: "color",
     title: "color",
+    summary:
+      "All-over and dimensional color, bleach and tone, glosses, vivid transforms, and color consults.",
     columns: [
       {
         header: "ALL OVER COLOR",
@@ -295,6 +301,8 @@ export const serviceGroups: ServiceGroup[] = [
   {
     id: "treatments",
     title: "treatments & styling",
+    summary:
+      "Keratin, K-18 and Malibu treatments, deep conditioning, scalp care, tinsel, and extension consults.",
     columns: [
       {
         header: "TREATMENTS",
@@ -303,11 +311,11 @@ export const serviceGroups: ServiceGroup[] = [
       {
         header: "ADD-ONS",
         items: [
-          { name: "ADD-ON: DEEP CONDITION", price: "$20+" },
-          { name: "ADD-ON: SCALP REVITALIZING TREATMENT", price: "$40+" },
-          { name: "ADD-ON: K-18 TREATMENT", price: "$40+" },
-          { name: "ADD-ON: MALIBU TREATMENT", price: "$30+" },
-          { name: "ADD-ON: HOT TOWEL TREATMENT", price: "$5" },
+          { name: "DEEP CONDITION", price: "$20+" },
+          { name: "SCALP REVITALIZING TREATMENT", price: "$40+" },
+          { name: "K-18 TREATMENT", price: "$40+" },
+          { name: "MALIBU TREATMENT", price: "$30+" },
+          { name: "HOT TOWEL TREATMENT", price: "$5" },
         ],
       },
       {
@@ -324,6 +332,8 @@ export const serviceGroups: ServiceGroup[] = [
   {
     id: "skin",
     title: "skin & wax",
+    summary:
+      "Bespoke Korean and acne facials, glow peels, body and brow waxing, and complimentary skincare consults.",
     columns: [
       {
         header: "FACIALS",
@@ -395,6 +405,10 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         role: "Owner/Stylist",
         image: "/images/lily-gleitsman.jpg",
         profileImage: "/images/lily-gleitsman2.jpg",
+        bio: "Dimensional color, blowouts, and cuts built to fit your everyday.",
+        // DRAFT — review with stylist (IG blocked; based on featured services)
+        about:
+          "Lily specializes in dimensional color, polished blowouts, and cuts that feel easy to live in. Expect a thoughtful consult and hair that fits your everyday, not just the chair.",
         bookingUrl: memberBookingUrl(
           "10001-f5bd9a7b-3e2f-4255-951d-ca4881f88678"
         ),
@@ -412,6 +426,10 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         role: "Owner/Stylist",
         image: "/images/miriam-zhukov.jpg",
         profileImage: "/images/miriam-zhukov2.jpg",
+        bio: "All-over and dimensional color paired with precise, wearable cuts.",
+        // DRAFT — review with stylist (IG blocked; based on featured services)
+        about:
+          "Miriam focuses on all-over and dimensional color paired with precise, wearable cuts. Clients can expect color that grows out gracefully and a shape that still looks intentional weeks later.",
         bookingUrl: memberBookingUrl(
           "10001-690e87a4-3d1b-44db-a449-08c9d40b5dff"
         ),
@@ -429,6 +447,10 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         role: "Owner/Stylist",
         image: "/images/andra-kramer.jpg",
         profileImage: "/images/andra-kramer2.jpg",
+        bio: "Dimensional and all-over color, cuts, and polished blowouts.",
+        // DRAFT — review with stylist (IG blocked; based on featured services)
+        about:
+          "Andra offers dimensional and all-over color, cuts, and polished blowouts with a calm, detail-minded approach. Book with her for color and cut work that feels finished and easy to maintain.",
         acceptingNewClients: false,
         bookingUrl: memberBookingUrl(
           "10001-7e4b7dd5-f741-4f6f-b71d-ed5cc3b638ec"
@@ -453,6 +475,9 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         image: "/images/shelby-craft.jpg",
         profileImage: "/images/shelby-craft2.jpg",
         bio: "Specializes in alternative, vivid, and edgy styles... and low-maintenance natural looks too!",
+        // Sourced from GlossGenius team bio + featured services (vivid transform)
+        about:
+          "Shelby has been behind the chair for over a decade, specializing in alternative, vivid, and edgy styles, plus low-maintenance natural looks too. She treats hair as self-expression and loves custom cuts and color that help you look and feel exactly how you want.",
         bookingUrl: memberBookingUrl(
           "10001-6a29adda-3651-43d9-8899-3ace37524a1e"
         ),
@@ -471,6 +496,9 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         image: "/images/jules-hoffman.jpg",
         profileImage: "/images/jules-hoffman2.jpg",
         bio: "Helping you feel like the star you are, one appointment at a time.",
+        // Sourced from GlossGenius team bio (pronouns, emerging stylist note)
+        about:
+          "Jules / Julie (they/them/she) is an emerging stylist (some services may take a bit more time) whose priority is helping you feel like the star you are. Whether you're maintaining a look you love or fully switching the vibe, they're always down.",
         bookingUrl: memberBookingUrl(
           "10001-40fac3c0-b13b-47c2-86da-6e1c3452329f"
         ),
@@ -488,6 +516,10 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         role: "Stylist",
         image: "/images/brie-crowe.jpg",
         profileImage: "/images/brie-crowe2.jpg",
+        bio: "Dimensional and all-over color, cuts, and smooth blowouts.",
+        // DRAFT — review with stylist (IG title: Indianapolis Cosmetologist; services-based)
+        about:
+          "Brie is an Indianapolis cosmetologist offering dimensional and all-over color, cuts, and smooth blowouts. Expect a welcoming chair and finished looks that feel polished without being fussy.",
         bookingUrl: memberBookingUrl(
           "10001-32abe5c0-3025-48ed-8516-850b1fc5783f"
         ),
@@ -511,6 +543,9 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         image: "/images/julie-powers.jpg",
         profileImage: "/images/julie-powers2.jpg",
         bio: "Korean-inspired facials, peels, waxing, and makeup artistry.",
+        // Sourced from IG display title + featured services / existing bio
+        about:
+          "Julie specializes in Korean-inspired skincare and creative makeup in Irvington: bespoke facials, peels, waxing, and brow shaping. Expect inclusive, affirming care and skin that feels as good as it looks.",
         bookingUrl: memberBookingUrl(
           "10001-d788dd27-3f49-452f-af8e-c87bb31e94c3"
         ),

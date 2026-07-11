@@ -168,32 +168,32 @@
     "name": "Hair Treatments",
     "services": [
       {
-        "name": "ADD-ON: HOT TOWEL TREATMENT",
+        "name": "HOT TOWEL TREATMENT",
         "price": "$5",
         "description": "*NOT A STANDALONE SERVICE.*\nAdd a hot towel & aromatherapy to your shampoo experience."
       },
       {
-        "name": "ADD-ON: DEEP CONDITION",
+        "name": "DEEP CONDITION",
         "price": "$20+",
         "description": "*NOT A STANDALONE SERVICE.*\nDoes your hair need some extra moisture or strengthening? Book this for a custom deep condition and pampering moment!"
       },
       {
-        "name": "ADD-ON: MALIBU TREATMENT",
+        "name": "MALIBU TREATMENT",
         "price": "$30+",
         "description": "Amazing treatments for pre-color, mineral & buildup removal, post swim or vacation, and more. \n*NOT A STANDALONE SERVICE.*"
       },
       {
-        "name": "ADD-ON:SCALP REVITALIZING TREATMENT",
+        "name": "SCALP REVITALIZING TREATMENT",
         "price": "$40+",
         "description": "Feel rejuvenated with this scalp & hair treatment!\nFully unwind with a warm, weighted eye mask & cozy aromas. \n»Start off with a stimulating dry brushing. Remove buildup with a double cleanse & scalp scrub. Relax & re-energize with a Jade  comb & thorough massage. Finish with a balancing & hydrating deep condition with a hot towel!\n*Ear plugs available for ultimate relaxation*\n\n*NOT A STANDALONE SERVICE.*"
       },
       {
-        "name": "ADD-ON: K-18 TREATMENT",
+        "name": "K-18 TREATMENT",
         "price": "$40+",
         "description": "Repair and protect. This can be done with a color service or as a stand alone treatment.\n*Must schedule blowout if scheduling a stand alone treatment*"
       },
       {
-        "name": "ADD-ON: STYLING EDUCATION",
+        "name": "STYLING EDUCATION",
         "price": "$10+",
         "description": "Some extra 1 on 1 styling education for you!\n*NOT A STANDALONE SERVICE.*"
       },

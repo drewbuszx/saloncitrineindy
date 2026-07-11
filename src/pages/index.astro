@@ -11,7 +11,6 @@ import {
   policies,
   FULL_MENU_PATH,
   BOOKING_URL,
-  formatCancellationPolicyText,
   teamMemberPath,
   socialDisplayHandle,
 } from "../data/site";
@@ -119,9 +118,6 @@ function groupHours(
 }
 
 const hoursGroups = groupHours(site.hours);
-const cancellationPolicy = policies.find(
-  (policy) => policy.title === "CANCELLATION POLICY"
-)!;
 
 const pageTitle = `${site.name} | Hair Salon in Indianapolis, IN`;
 const pageDescription =
@@ -173,7 +169,10 @@ const pageDescription =
           />
         </div>
         <div class="hero__overlay" aria-hidden="true"></div>
-        <h1 class="hero__title">Irvington</h1>
+        <h1 class="hero__title">
+          <span class="hero__title-kicker">Inclusive hair salon in historic</span>
+          <span class="hero__title-place">Irvington</span>
+        </h1>
         <a href="#about" class="hero__scroll" aria-label="Scroll to about Salon Citrine">
           <span class="hero__scroll-line" aria-hidden="true"></span>
         </a>
@@ -257,6 +256,24 @@ const pageDescription =
             }
           </div>
         </div>
+        <div class="intro__badges">
+          <img
+            src="/images/indy-rainbow-chamber.png"
+            alt="Indy Rainbow Chamber of Commerce"
+            class="intro__badge intro__badge--light"
+            width="160"
+            height="56"
+            loading="lazy"
+          />
+          <img
+            src="/images/strands-for-trans.png"
+            alt="Strands for Trans"
+            class="intro__badge"
+            width="160"
+            height="56"
+            loading="lazy"
+          />
+        </div>
       </div>
       <figure class="about-image">
         <div
@@ -269,7 +286,7 @@ const pageDescription =
             src="/images/services-slideshow-1.png"
             alt=""
             width="1024"
-            height="668"
+            height="509"
             decoding="async"
             aria-hidden="true"
           />
@@ -278,7 +295,7 @@ const pageDescription =
             src="/images/services-slideshow-2.png"
             alt=""
             width="1024"
-            height="668"
+            height="509"
             loading="lazy"
             aria-hidden="true"
           />
@@ -287,7 +304,7 @@ const pageDescription =
             src="/images/services-slideshow-3.png"
             alt=""
             width="1024"
-            height="668"
+            height="509"
             loading="lazy"
             aria-hidden="true"
           />
@@ -300,39 +317,23 @@ const pageDescription =
     <section class="section section--editorial" aria-labelledby="services-heading">
       <div class="section__inner section__inner--wide">
         <span id="services" class="scroll-target"></span>
-        <aside class="services-cancellation" aria-label="Cancellation policy">
-          <p class="services-cancellation__text">{formatCancellationPolicyText(cancellationPolicy.text)}</p>
-        </aside>
-        {
-          serviceGroups.map((group) => (
-            <div class="services-group">
-              <header class="services-group__header">
-                <h2
-                  class="services-group__title"
-                  id={group.id === "haircuts" ? "services-heading" : undefined}
-                >
-                  {group.title}
-                </h2>
-              </header>
-              <div class="services-columns">
-                {group.columns.map((column) => (
-                  <div class="services-column">
-                    <h3 class="services-column__header">{column.header}</h3>
-                    {column.items?.map((item) => (
-                      <article class="service-item">
-                        <p class="service-item__name">{item.name}</p>
-                        <p class="service-item__price">{item.price}</p>
-                      </article>
-                    ))}
-                    {column.text && (
-                      <p class="services-column__text">{column.text}</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))
-        }
+        <h2 id="services-heading" class="visually-hidden">Services</h2>
+        <p class="services-intro">
+          Whether you're after a fresh cut, vivid color, lived-in blonding, or
+          custom skincare, our team creates a look that feels like you. Explore
+          our service areas below, or view the full menu for every service and
+          detail.
+        </p>
+        <div class="services-overview">
+          {
+            serviceGroups.map((group) => (
+              <article class="services-category" id={group.id}>
+                <h3 class="services-category__title">{group.title}</h3>
+                <p class="services-category__blurb">{group.summary}</p>
+              </article>
+            ))
+          }
+        </div>
         <div class="services-cta">
           <a
             class="services-cta__link"
@@ -431,8 +432,8 @@ const pageDescription =
           class="connect-image__photo connect-image__photo--slide"
           src="/images/about-team.png"
           alt=""
-          width="1024"
-          height="988"
+          width="1022"
+          height="508"
           loading="lazy"
           aria-hidden="true"
         />
@@ -440,8 +441,8 @@ const pageDescription =
           class="connect-image__photo connect-image__photo--slide"
           src="/images/connect-slideshow-2.png"
           alt=""
-          width="1024"
-          height="988"
+          width="1022"
+          height="508"
           loading="lazy"
           aria-hidden="true"
         />
@@ -449,8 +450,8 @@ const pageDescription =
           class="connect-image__photo connect-image__photo--slide"
           src="/images/connect-slideshow-3.png"
           alt=""
-          width="1024"
-          height="988"
+          width="1022"
+          height="508"
           loading="lazy"
           aria-hidden="true"
         />
@@ -463,6 +464,14 @@ const pageDescription =
 
     <section class="connect-section" aria-labelledby="connect-heading">
       <h2 class="visually-hidden" id="connect-heading">Connect</h2>
+      <div class="connect-intro">
+        <p class="connect-intro__text">
+          Tucked into a historic storefront on Audubon Road, Salon Citrine
+          welcomes Indianapolis and its surrounding neighborhoods for creative
+          cuts, vivid color, gender-inclusive hair care, facials, skincare, and
+          makeup, all in one warm, weird-in-the-best-way space.
+        </p>
+      </div>
       <div class="connect-split">
         <div class="connect-info">
           <div class="connect-info__layout">
@@ -509,6 +518,11 @@ const pageDescription =
                 ))
               }
             </div>
+
+            <p class="connect-note">
+              Questions before your first visit? We'd love to hear from you. Say
+              hello anytime.
+            </p>
 
             <div class="connect-contact">
               <a
@@ -558,3 +572,49 @@ const pageDescription =
     </div>
   </main>
 </BaseLayout>
+
+<script>
+  function measureText(el: HTMLElement): number {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    return range.getBoundingClientRect().width;
+  }
+
+  // Scale the kicker line so its rendered width matches the IRVINGTON word.
+  function fitHeroKicker() {
+    const kicker = document.querySelector<HTMLElement>(".hero__title-kicker");
+    const place = document.querySelector<HTMLElement>(".hero__title-place");
+    if (!kicker || !place) return;
+
+    const targetWidth = measureText(place);
+    if (targetWidth <= 0) return;
+
+    // Binary search the font-size so the single-line kicker spans targetWidth.
+    let lo = 6;
+    let hi = targetWidth;
+
+    while (hi - lo > 0.25) {
+      const mid = (lo + hi) / 2;
+      kicker.style.fontSize = `${mid}px`;
+      if (measureText(kicker) > targetWidth) {
+        hi = mid;
+      } else {
+        lo = mid;
+      }
+    }
+
+    kicker.style.fontSize = `${lo}px`;
+  }
+
+  fitHeroKicker();
+  window.addEventListener("resize", fitHeroKicker, { passive: true });
+  window.addEventListener("orientationchange", fitHeroKicker, {
+    passive: true,
+  });
+  document.fonts?.ready.then(fitHeroKicker);
+
+  const heroTitle = document.querySelector(".hero__title");
+  if (heroTitle) {
+    new ResizeObserver(fitHeroKicker).observe(heroTitle);
+  }
+</script>

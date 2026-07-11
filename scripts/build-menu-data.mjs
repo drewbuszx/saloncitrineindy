@@ -56,12 +56,17 @@ for (const service of byGuid.values()) {
 
 const FIXED_PRICE_SERVICES = new Set([
   "COLOR CONSULTATION",
-  "ADD-ON: HOT TOWEL TREATMENT",
+  "HOT TOWEL TREATMENT",
   "HAIR REDUCTION ENZYME ADD ON",
 ]);
 
+/** Strip redundant "ADD-ON:" / "ADD-ONS:" prefix; category headers already say ADD-ONS. */
+function cleanServiceName(name) {
+  return name.replace(/^ADD-ONS?:\s*/i, "").trim();
+}
+
 function usesStartingPrice(category, serviceName, priceVaries) {
-  const upper = serviceName.toUpperCase();
+  const upper = cleanServiceName(serviceName).toUpperCase();
   if (FIXED_PRICE_SERVICES.has(upper)) return false;
   if (upper.includes("CONSULTATION")) return false;
 
@@ -128,17 +133,20 @@ const menuCategories = [...categories.entries()]
     name,
     services: services
       .sort((a, b) => a.ordering - b.ordering || a.name.localeCompare(b.name))
-      .map((s) => ({
-        name: s.name.toUpperCase(),
-        price: formatPrice(
-          s.price,
-          s.priceVaries,
-          s.priceHidden,
-          name,
-          s.name
-        ),
-        description: s.description,
-      })),
+      .map((s) => {
+        const displayName = cleanServiceName(s.name).toUpperCase();
+        return {
+          name: displayName,
+          price: formatPrice(
+            s.price,
+            s.priceVaries,
+            s.priceHidden,
+            name,
+            displayName
+          ),
+          description: s.description,
+        };
+      }),
   }));
 
 writeFileSync(OUTPUT, JSON.stringify(menuCategories, null, 2) + "\n", "utf8");
