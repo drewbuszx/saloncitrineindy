@@ -446,9 +446,8 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         image: "/images/andra-kramer.jpg",
         profileImage: "/images/andra-kramer2.jpg",
         bio: "Dimensional and all-over color, cuts, and polished blowouts.",
-        // DRAFT — review with stylist (IG blocked; based on featured services)
         about:
-          "Andra offers dimensional and all-over color, cuts, and polished blowouts with a calm, detail-minded approach. Book with her for color and cut work that feels finished and easy to maintain.",
+          "With more than 15 years in the industry, Andra is known for beautiful color, precise cuts, and an efficient approach that never sacrifices the details. She is especially skilled in grey blending and creating polished, easy-to-maintain results. After reconnecting with Miriam and Lily, the three came together to create a welcoming salon space with a little bit of magic.",
         acceptingNewClients: false,
         bookingUrl: memberBookingUrl(
           "10001-7e4b7dd5-f741-4f6f-b71d-ed5cc3b638ec"
