@@ -406,9 +406,8 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         image: "/images/lily-gleitsman.jpg",
         profileImage: "/images/lily-gleitsman2.jpg",
         bio: "Dimensional color, blowouts, and cuts built to fit your everyday.",
-        // DRAFT — review with stylist (IG blocked; based on featured services)
         about:
-          "Lily specializes in dimensional color, polished blowouts, and cuts that feel easy to live in. Expect a thoughtful consult and hair that fits your everyday, not just the chair.",
+          "Over nearly 15 years in the industry, Lily has developed a specialty in precision cuts, clipper work, polished blowouts, and styles that are easy to live in. She began her career alongside Miriam and Andra, and she and Miriam have continued working together at every salon since. Her thoughtful approach creates hair that fits each client's routine, personality, and natural texture.",
         bookingUrl: memberBookingUrl(
           "10001-f5bd9a7b-3e2f-4255-951d-ca4881f88678"
         ),
@@ -427,9 +426,8 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         image: "/images/miriam-zhukov.jpg",
         profileImage: "/images/miriam-zhukov2.jpg",
         bio: "All-over and dimensional color paired with precise, wearable cuts.",
-        // DRAFT — review with stylist (IG blocked; based on featured services)
         about:
-          "Miriam focuses on all-over and dimensional color paired with precise, wearable cuts. Clients can expect color that grows out gracefully and a shape that still looks intentional weeks later.",
+          "With more than 15 years behind the chair, Miriam specializes in lived-in, natural-looking color, dimensional color, and precise, wearable cuts. She has worked alongside Lily at nearly every salon throughout her career, making them a true gruesome twosome. Miriam creates beautiful color that grows out gracefully and cuts that still feel intentional weeks later.",
         bookingUrl: memberBookingUrl(
           "10001-690e87a4-3d1b-44db-a449-08c9d40b5dff"
         ),
