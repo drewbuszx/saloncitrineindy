@@ -1982,8 +1982,6 @@ button {
 .profile__header-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem 1.25rem;
   width: 100%;
   margin-bottom: clamp(0.85rem, 2.5vw, 1.35rem);
 }
@@ -2111,10 +2109,6 @@ button {
   min-width: 0;
 }
 
-.profile__book-row--social {
-  display: none;
-}
-
 .profile__book-notice {
   margin: 0;
   font-family: var(--font-serif);
@@ -2189,20 +2183,48 @@ button {
   width: 100%;
   gap: 0.45rem;
   margin-top: 0.85rem;
+  /* Floor under Book/Instagram when desktop footer margin-top:auto collapses */
+  margin-bottom: 1.25rem;
 }
 
 .profile__social-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 0.75rem 1rem;
   width: 100%;
   min-width: 0;
 }
 
+/*
+ * Flatten the social book-row so Instagram + Book share one space-between
+ * row. A nested wrap + notice width:100% otherwise expands the Book column
+ * and crushes the Instagram link (icon disappears).
+ */
+.profile__book-row--social {
+  display: contents;
+}
+
 .profile__social-row .profile__book-instagram {
   min-width: 0;
   flex: 1 1 auto;
+}
+
+.profile__social-row .profile__book-cta {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 0.7rem 1.15rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+}
+
+.profile__social-row .profile__book-notice {
+  flex: 1 0 100%;
+  width: 100%;
+  margin: 0;
+  text-align: right;
+  font-size: 0.9rem;
 }
 
 .profile__book-instagram {
@@ -2297,40 +2319,6 @@ button {
     bottom: 0;
   }
 
-  /* Mobile: Back alone in header; Book CTA sits beside Instagram */
-  .profile__book-row--header {
-    display: none;
-  }
-
-  .profile__social-row {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  /*
-   * Flatten the social book-row so Instagram + Book share one space-between
-   * row. A nested wrap + notice width:100% otherwise expands the Book column
-   * and crushes the Instagram link (icon disappears).
-   */
-  .profile__book-row--social {
-    display: contents;
-  }
-
-  .profile__social-row .profile__book-cta {
-    flex-shrink: 0;
-    padding: 0.7rem 1.15rem;
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-  }
-
-  .profile__social-row .profile__book-notice {
-    flex: 1 0 100%;
-    width: 100%;
-    margin: 0;
-    text-align: right;
-    font-size: 0.9rem;
-  }
 }
 
 @media (min-width: 900px) {
@@ -2340,11 +2328,6 @@ button {
 
   .profile {
     display: block;
-  }
-
-  /* Desktop: Book stays in header; hide social-row Book CTA */
-  .profile__social:not(:has(.profile__book-instagram)) {
-    display: none;
   }
 
   .profile__content {

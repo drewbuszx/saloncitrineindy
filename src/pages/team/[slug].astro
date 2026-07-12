@@ -114,27 +114,6 @@ const pageDescription = member.bio
         <div class="profile__content-inner">
           <div class="profile__header-row">
             <a class="profile-page__back" href="/#team">← Back to the team</a>
-
-            <div class="profile__book-row profile__book-row--header">
-              <a
-                class="profile__book-cta"
-                href={member.bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Book with ${member.firstName} (opens in new tab)`}
-                data-booking-link
-                data-booking-stylist={isAndra ? stylistSlug : undefined}
-              >
-                Book with {member.firstName}
-              </a>
-              {
-                member.acceptingNewClients === false && (
-                  <p class="profile__book-notice">
-                    (currently not accepting new clients)
-                  </p>
-                )
-              }
-            </div>
           </div>
 
           {
