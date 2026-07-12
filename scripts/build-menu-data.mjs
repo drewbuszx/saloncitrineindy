@@ -149,6 +149,62 @@ const menuCategories = [...categories.entries()]
       }),
   }));
 
+/** Site content overrides (Julie Powers skin services) — applied after GlossGenius sync. */
+const FACIAL_75 = "BESPOKE KOREAN FACIAL- 75 MINUTES";
+const FACIAL_90 = "BESPOKE KOREAN FACIAL- 90 MINUTES";
+const MICRONEEDLING = "MICRONEEDLING";
+const BROW_WAX_TINT = "BROW WAX & TINT";
+const FACIAL_DESCRIPTION =
+  "Enjoy a personalized facial experience where every step is tailored to your unique skincare concerns and goals, ensuring that you get the most out of your visit with individualized protocols and targeted treatments.";
+const MICRONEEDLING_DESCRIPTION =
+  "A collagen-stimulating treatment customized to your skin goals.";
+
+for (const category of menuCategories) {
+  category.services = category.services.filter((s) => s.name !== FACIAL_90);
+  for (const service of category.services) {
+    if (service.name === BROW_WAX_TINT) {
+      service.price = "$45";
+    }
+  }
+}
+
+const skincare = menuCategories.find((c) => c.name === "Skincare Services");
+if (skincare) {
+  const facial75 = skincare.services.find((s) => s.name === FACIAL_75);
+  if (facial75) {
+    facial75.price = "$175";
+  } else {
+    const after30 = skincare.services.findIndex((s) =>
+      s.name.includes("30 MINUTES")
+    );
+    const entry = {
+      name: FACIAL_75,
+      price: "$175",
+      description: FACIAL_DESCRIPTION,
+    };
+    if (after30 >= 0) skincare.services.splice(after30 + 1, 0, entry);
+    else skincare.services.push(entry);
+  }
+
+  const micro = skincare.services.find((s) => s.name === MICRONEEDLING);
+  if (micro) {
+    micro.price = "$175+";
+  } else {
+    const after75 = skincare.services.findIndex((s) => s.name === FACIAL_75);
+    const entry = {
+      name: MICRONEEDLING,
+      price: "$175+",
+      description: MICRONEEDLING_DESCRIPTION,
+    };
+    if (after75 >= 0) skincare.services.splice(after75 + 1, 0, entry);
+    else skincare.services.push(entry);
+  }
+}
+
 writeFileSync(OUTPUT, JSON.stringify(menuCategories, null, 2) + "\n", "utf8");
 
-console.log(`Wrote ${menuCategories.length} categories, ${byGuid.size} services`);
+const serviceCount = menuCategories.reduce(
+  (sum, c) => sum + c.services.length,
+  0
+);
+console.log(`Wrote ${menuCategories.length} categories, ${serviceCount} services`);

@@ -333,13 +333,13 @@ export const serviceGroups: ServiceGroup[] = [
     id: "skin",
     title: "skin & wax",
     summary:
-      "Bespoke Korean and acne facials, glow peels, body and brow waxing, and complimentary skincare consults.",
+      "Bespoke Korean and acne facials, microneedling, glow peels, body and brow waxing, and complimentary skincare consults.",
     columns: [
       {
         header: "FACIALS",
         items: [
           { name: "BESPOKE KOREAN FACIAL — 60 MIN", price: "$125" },
-          { name: "BESPOKE KOREAN FACIAL — 90 MIN", price: "$175" },
+          { name: "BESPOKE KOREAN FACIAL — 75 MIN", price: "$175" },
         ],
       },
       {
@@ -347,6 +347,7 @@ export const serviceGroups: ServiceGroup[] = [
         items: [
           { name: "ACNE FACIAL — INITIAL VISIT", price: "$300" },
           { name: "GLOW PEEL", price: "$125" },
+          { name: "MICRONEEDLING", price: "$175+" },
         ],
       },
       {
@@ -541,7 +542,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         bio: "Korean-inspired facials, peels, waxing, and makeup artistry.",
         // Sourced from IG display title + featured services / existing bio
         about:
-          "Julie (she/her) specializes in Korean inspired skincare and creative makeup, with a thoughtful approach tailored to each client. As a licensed educator, she brings both knowledge and artistry to facials, peels, waxing, brow shaping, and makeup services. Her space is inclusive, affirming, and centered on helping every client feel confident, cared for, and fully themselves.",
+          "Julie (she/her) specializes in Korean-inspired skincare, creative makeup, and personalized esthetics education. She offers customized facials, peels, microneedling, waxing, and brow services in an inclusive, affirming environment. As a licensed educator, Julie also works one-on-one with esthetics students and recent graduates who want extra guidance, practice, or support building their skills.",
         bookingUrl: memberBookingUrl(
           "10001-d788dd27-3f49-452f-af8e-c87bb31e94c3"
         ),
@@ -549,9 +550,9 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         threads:
           "https://www.threads.com/@julieapowers?xmt=AQG0jfH4ZkjxsZB5WMhnNcu9-Vqomm45LbhfkCcUZxWC0Hk",
         featuredServices: [
-          { name: "BESPOKE KOREAN FACIAL — 60 MIN", price: "$125" },
-          { name: "BRAZILIAN WAX", price: "$80" },
-          { name: "BROW SHAPING", price: "$20" },
+          { name: "BESPOKE KOREAN FACIAL — 75 MIN", price: "$175" },
+          { name: "MICRONEEDLING", price: "$175+" },
+          { name: "BROW WAX & TINT", price: "$45" },
           { name: "GLOW PEEL", price: "$125" },
         ],
       },

@@ -344,7 +344,7 @@
       },
       {
         "name": "BROW WAX & TINT",
-        "price": "Complimentary",
+        "price": "$45",
         "description": null
       }
     ]
@@ -373,9 +373,14 @@
         "description": "Enjoy a personalized facial experience where every step is tailored to your unique skincare concerns and goals, ensuring that you get the most out of your visit with individualized protocols and targeted treatments. These facials can include one or more of the following treatments, depending on time"
       },
       {
-        "name": "BESPOKE KOREAN FACIAL- 90 MINUTES",
+        "name": "BESPOKE KOREAN FACIAL- 75 MINUTES",
         "price": "$175",
         "description": "Enjoy a personalized facial experience where every step is tailored to your unique skincare concerns and goals, ensuring that you get the most out of your visit with individualized protocols and targeted treatments."
+      },
+      {
+        "name": "MICRONEEDLING",
+        "price": "$175+",
+        "description": "A collagen-stimulating treatment customized to your skin goals."
       },
       {
         "name": "GLOW PEEL",
