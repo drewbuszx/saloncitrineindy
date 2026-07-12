@@ -1,16 +1,28 @@
 ---
-import { site } from "../data/site";
+import { site, GIFT_CARDS_URL } from "../data/site";
+
+type NavChild = {
+  href: string;
+  label: string;
+  external?: boolean;
+};
 
 type NavLink = {
   label: string;
-  href: string;
+  href?: string;
   external?: boolean;
+  children?: NavChild[];
 };
+
+const shopLinks: NavChild[] = [
+  { href: GIFT_CARDS_URL, label: "Gift Cards", external: true },
+];
 
 const navLinks: NavLink[] = [
   { href: "/#about", label: "About" },
   { href: "/#services", label: "Services" },
   { href: "/#team", label: "Team" },
+  { label: "Shop", children: shopLinks },
   { href: "/#policies", label: "Policies" },
   { href: "/#connect", label: "Connect" },
 ];
@@ -23,6 +35,8 @@ const mobileNavLinks: NavLink[] = navLinks.flatMap((link) =>
 
 const externalLinkAttrs = (external?: boolean) =>
   external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+
+const shopMenuId = "shop-submenu";
 ---
 
 <header class="site-header">
@@ -61,15 +75,60 @@ const externalLinkAttrs = (external?: boolean) =>
 
     <nav class="site-header__nav site-header__nav--right" aria-label="Secondary">
       {
-        navLinks.slice(3).map((link) => (
-          <a
-            class="site-header__link"
-            href={link.href}
-            {...externalLinkAttrs(link.external)}
-          >
-            {link.label}
-          </a>
-        ))
+        navLinks.slice(3).map((link) =>
+          link.children ? (
+            <div class="site-header__dropdown" data-nav-dropdown>
+              <button
+                class="site-header__link site-header__dropdown-trigger"
+                type="button"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls={shopMenuId}
+                data-dropdown-trigger
+              >
+                {link.label}
+                <svg
+                  class="site-header__dropdown-chevron"
+                  viewBox="0 0 12 12"
+                  aria-hidden="true"
+                >
+                  <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </button>
+              <ul
+                id={shopMenuId}
+                class="site-header__dropdown-menu"
+                role="menu"
+                aria-label="Shop"
+                data-dropdown-menu
+              >
+                {
+                  link.children.map((child) => (
+                    <li role="none">
+                      <a
+                        class="site-header__dropdown-item"
+                        href={child.href}
+                        role="menuitem"
+                        aria-label={child.external ? `${child.label} (opens in new tab)` : undefined}
+                        {...externalLinkAttrs(child.external)}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          ) : (
+            <a
+              class="site-header__link"
+              href={link.href}
+              {...externalLinkAttrs(link.external)}
+            >
+              {link.label}
+            </a>
+          )
+        )
       }
     </nav>
 
@@ -124,15 +183,60 @@ const externalLinkAttrs = (external?: boolean) =>
       data-mobile-nav
     >
       {
-        mobileNavLinks.map((link) => (
-          <a
-            class="site-header__link"
-            href={link.href}
-            {...externalLinkAttrs(link.external)}
-          >
-            {link.label}
-          </a>
-        ))
+        mobileNavLinks.map((link) =>
+          link.children ? (
+            <div class="site-header__dropdown site-header__dropdown--mobile" data-nav-dropdown>
+              <button
+                class="site-header__link site-header__dropdown-trigger"
+                type="button"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls={`${shopMenuId}-mobile`}
+                data-dropdown-trigger
+              >
+                {link.label}
+                <svg
+                  class="site-header__dropdown-chevron"
+                  viewBox="0 0 12 12"
+                  aria-hidden="true"
+                >
+                  <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </button>
+              <ul
+                id={`${shopMenuId}-mobile`}
+                class="site-header__dropdown-menu"
+                role="menu"
+                aria-label="Shop"
+                data-dropdown-menu
+              >
+                {
+                  link.children.map((child) => (
+                    <li role="none">
+                      <a
+                        class="site-header__dropdown-item"
+                        href={child.href}
+                        role="menuitem"
+                        aria-label={child.external ? `${child.label} (opens in new tab)` : undefined}
+                        {...externalLinkAttrs(child.external)}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          ) : (
+            <a
+              class="site-header__link"
+              href={link.href}
+              {...externalLinkAttrs(link.external)}
+            >
+              {link.label}
+            </a>
+          )
+        )
       }
 
       <button
