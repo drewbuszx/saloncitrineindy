@@ -933,9 +933,43 @@ button {
   border-bottom-color: rgba(24, 24, 24, 0.35);
 }
 
-/* Policies — half spacing into Connect bleed */
-.section:has(#policies) {
-  padding-bottom: calc(var(--section-padding) / 2);
+/* Origin story — citrine brand band, black text (both themes) */
+.section--origin {
+  --color-bg: var(--color-citrine);
+  --color-text: var(--color-black);
+  --color-gray: rgba(0, 0, 0, 0.68);
+  background: var(--color-citrine);
+  color: var(--color-black);
+  border-top: 1px solid var(--color-black);
+  border-bottom: 1px solid var(--color-black);
+  /* Modest buffer under text; citrine still meets Connect image edge-to-edge */
+  padding-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+[data-theme="dark"] .section--origin {
+  --color-bg: var(--color-citrine);
+  --color-text: var(--color-black);
+  --color-gray: rgba(0, 0, 0, 0.68);
+  --color-border: rgba(0, 0, 0, 0.22);
+  background: var(--color-citrine);
+  border-top-color: var(--color-black);
+  border-bottom-color: var(--color-black);
+}
+
+/* Origin body — match policies (.editorial-column__text) serif; citrine/black from .section--origin */
+.origin-story {
+  text-align: left;
+}
+
+.origin-story .editorial-column__text {
+  /* Match .origin-story desktop measure (68rem) so body wraps ~3 lines */
+  max-width: min(68rem, 100%);
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+  color: var(--color-text);
+  text-wrap: pretty;
 }
 
 .section__inner {
@@ -1373,6 +1407,7 @@ button {
 /* Services, team, policies — shared editorial content width */
 .section:has(#services) .section__inner,
 .section:has(#team) .section__inner,
+.section--origin .section__inner,
 .section:has(#policies-heading) .section__inner {
   max-width: min(72rem, 100%);
 }
@@ -3170,7 +3205,7 @@ button {
 }
 
 .connect-image {
-  margin-top: clamp(1.25rem, 3vw, 2.25rem);
+  margin-top: 0;
 }
 /* Charcoal zone — reviews through footer (both themes) */
 .page-dark-zone {
@@ -3241,7 +3276,8 @@ button {
     border-right: 1px solid var(--color-border-subtle);
   }
 
-  .team-group {
+  .team-group,
+  .origin-story {
     max-width: 68rem;
     margin-inline: auto;
   }

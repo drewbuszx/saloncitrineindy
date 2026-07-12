@@ -84,10 +84,14 @@ export const site = {
     { day: "Sunday", time: "Closed" },
   ],
   about: [
-    "Salon Citrine is a women-owned hair salon in magical historic Irvington. We believe beauty is in everyone, and that great hair should feel welcoming, affirming, and a little bit weird in the best way.",
-    "From vivid transformations and edgy cuts to low-maintenance color and classic shapes, our team brings craftsmanship, consultation, and care to every appointment. Whether you're new to the salon or a longtime regular, you'll find a space that celebrates individuality.",
-    "Our studio on Audubon Road is a gender-affirming, LGBTQ+ welcoming salon where all are encouraged to show up exactly as they are.",
+    "Salon Citrine is a women-owned hair and beauty salon in the heart of historic Irvington. We believe beauty belongs to everyone and that a salon visit should feel comfortable, affirming, and a little bit weird in the best way.",
+    "From vivid color and alternative cuts to lived-in color, timeless shapes, skincare, waxing, and makeup, our team brings creativity, craftsmanship, and thoughtful consultation to every appointment. We create looks that reflect the person wearing them, rather than a one-size-fits-all idea of beauty.",
+    "Salon Citrine is a gender-affirming, LGBTQ+ welcoming space where everyone is encouraged to show up exactly as they are.",
   ],
+  originStory: {
+    title: "How we came to be",
+    text: "Salon Citrine grew from years of friendship, shared work, and a belief that a salon could feel different. Lily and Miriam began their careers alongside Andra, and the two continued working side by side at every salon that followed. After reconnecting with Andra, the three brought decades of experience together to create a welcoming, affirming space in Irvington with plenty of creativity, character, and magic.",
+  },
   values: [
     "Women-Owned",
     "Gender-Affirming",
@@ -331,7 +335,7 @@ export const serviceGroups: ServiceGroup[] = [
   },
   {
     id: "skin",
-    title: "skin & wax",
+    title: "skin & beauty",
     summary:
       "Bespoke Korean and acne facials, microneedling, glow peels, body and brow waxing, and complimentary skincare consults.",
     columns: [
@@ -408,7 +412,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         profileImage: "/images/lily-gleitsman2.jpg",
         bio: "Dimensional color, blowouts, and cuts built to fit your everyday.",
         about:
-          "Over 15 years in the industry, Lily (she/they) has developed a specialty in transformational cuts, clipper work, curls, and styles that are easy to live in. She began her career alongside Miriam and Andra, and she and Miriam have continued working together at every salon since. Her thoughtful approach creates hair that fits each client's routine, personality, and natural texture.",
+          "With more than 15 years of experience, Lily (she/they) has developed a specialty in transformational cuts, clipper work, curls, and styles that are easy to live in. She began her career alongside Miriam and Andra, and she and Miriam have continued working together at every salon since. Her thoughtful approach creates hair that fits each client's routine, personality, and natural texture.",
         bookingUrl: memberBookingUrl(
           "10001-f5bd9a7b-3e2f-4255-951d-ca4881f88678"
         ),
@@ -428,7 +432,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         profileImage: "/images/miriam-zhukov2.jpg",
         bio: "All-over and dimensional color paired with precise, wearable cuts.",
         about:
-          "With more than 15 years behind the chair, Miriam (she/her) specializes in lived-in, natural-looking color, dimensional color, and precise, wearable cuts. She has worked alongside Lily at nearly every salon throughout her career, making them a true gruesome twosome. Miriam creates beautiful color that grows out gracefully and cuts that still feel intentional weeks later.",
+          "With more than 15 years behind the chair, Miriam (she/her) specializes in lived-in, natural-looking color, dimensional color, and precise, wearable cuts. She has worked alongside Lily at every salon throughout her career, making them a true gruesome twosome. Miriam creates beautiful color that grows out gracefully and cuts that still feel intentional weeks later.",
         bookingUrl: memberBookingUrl(
           "10001-690e87a4-3d1b-44db-a449-08c9d40b5dff"
         ),
@@ -448,7 +452,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         profileImage: "/images/andra-kramer2.jpg",
         bio: "Dimensional and all-over color, cuts, and polished blowouts.",
         about:
-          "With more than 15 years in the industry, Andra (she/her) is known for beautiful color, precise cuts, and an efficient approach that never sacrifices the details. She is especially skilled in grey blending and creating polished, easy-to-maintain results. After reconnecting with Miriam and Lily, the three came together to create a welcoming salon space with a little bit of magic.",
+          "With more than 17 years in the industry, Andra knows how to create color and cuts that feel polished, flattering, and completely wearable. She is especially skilled in grey blending and has a knack for balancing precision with an easygoing, efficient salon experience. Her work feels refined without being overworked, because great hair should fit into real life.",
         acceptingNewClients: false,
         bookingUrl: memberBookingUrl(
           "10001-7e4b7dd5-f741-4f6f-b71d-ed5cc3b638ec"
