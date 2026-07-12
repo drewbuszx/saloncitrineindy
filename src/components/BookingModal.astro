@@ -7,7 +7,48 @@ const cancellationPolicy = policies.find(
 const { heading: policyHeading, body: policyBody } = parseCancellationPolicyParts(
   cancellationPolicy.text,
 );
+
+const andraGateHeading = "Existing Clients Only";
+const andraGateBody =
+  "Andra is currently accepting appointments from existing clients only. If you’re a current client, you’re welcome to continue to booking. New guests, please choose another stylist.";
 ---
+
+<div
+  class="booking-modal"
+  data-booking-gate-modal
+  hidden
+  aria-hidden="true"
+>
+  <div class="booking-modal__backdrop" data-booking-gate-backdrop></div>
+  <div
+    class="booking-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="booking-gate-title"
+    aria-describedby="booking-gate-description"
+    tabindex="-1"
+    data-booking-gate-dialog
+  >
+    <h2 id="booking-gate-title" class="booking-modal__title">{andraGateHeading}</h2>
+    <p id="booking-gate-description" class="booking-modal__text">{andraGateBody}</p>
+    <div class="booking-modal__actions">
+      <button
+        class="booking-modal__btn booking-modal__btn--secondary"
+        type="button"
+        data-booking-gate-back
+      >
+        Go Back
+      </button>
+      <button
+        class="booking-modal__btn booking-modal__btn--primary"
+        type="button"
+        data-booking-gate-confirm
+      >
+        Existing Client
+      </button>
+    </div>
+  </div>
+</div>
 
 <div
   class="booking-modal"
@@ -47,17 +88,39 @@ const { heading: policyHeading, body: policyBody } = parseCancellationPolicyPart
 </div>
 
 <script>
+  const ANDRA_SLUG = "andra-kramer";
+
+  const gateModal = document.querySelector<HTMLElement>("[data-booking-gate-modal]");
+  const gateDialog = document.querySelector<HTMLElement>("[data-booking-gate-dialog]");
+  const gateBackBtn = document.querySelector<HTMLButtonElement>("[data-booking-gate-back]");
+  const gateConfirmBtn = document.querySelector<HTMLButtonElement>(
+    "[data-booking-gate-confirm]",
+  );
+  const gateBackdrop = document.querySelector<HTMLElement>("[data-booking-gate-backdrop]");
+
   const modal = document.querySelector<HTMLElement>("[data-booking-modal]");
   const dialog = document.querySelector<HTMLElement>("[data-booking-modal-dialog]");
   const backBtn = document.querySelector<HTMLButtonElement>("[data-booking-modal-back]");
   const confirmBtn = document.querySelector<HTMLButtonElement>("[data-booking-modal-confirm]");
   const backdrop = document.querySelector<HTMLElement>("[data-booking-modal-backdrop]");
 
-  if (modal && dialog && backBtn && confirmBtn && backdrop) {
+  if (
+    gateModal &&
+    gateDialog &&
+    gateBackBtn &&
+    gateConfirmBtn &&
+    gateBackdrop &&
+    modal &&
+    dialog &&
+    backBtn &&
+    confirmBtn &&
+    backdrop
+  ) {
     let pendingUrl: string | null = null;
     let pendingTarget: string | null = null;
     let triggerLink: HTMLAnchorElement | null = null;
     let inertTargets: Element[] = [];
+    let activeDialog: HTMLElement | null = null;
 
     const focusableSelector =
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -71,7 +134,7 @@ const { heading: policyHeading, body: policyBody } = parseCancellationPolicyPart
     function setPageInert(isInert: boolean) {
       if (isInert) {
         inertTargets = Array.from(document.body.children).filter(
-          (child) => child !== modal,
+          (child) => child !== modal && child !== gateModal,
         );
         inertTargets.forEach((el) => el.setAttribute("inert", ""));
         return;
@@ -84,15 +147,19 @@ const { heading: policyHeading, body: policyBody } = parseCancellationPolicyPart
     function handleModalKeydown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         event.preventDefault();
-        goBack();
+        if (activeDialog === gateDialog) {
+          closeGate();
+        } else {
+          goBack();
+        }
         return;
       }
 
-      if (event.key !== "Tab") {
+      if (event.key !== "Tab" || !activeDialog) {
         return;
       }
 
-      const focusable = getFocusableElements(dialog);
+      const focusable = getFocusableElements(activeDialog);
       if (focusable.length === 0) {
         event.preventDefault();
         return;
@@ -102,7 +169,7 @@ const { heading: policyHeading, body: policyBody } = parseCancellationPolicyPart
       const last = focusable[focusable.length - 1];
       const active = document.activeElement;
 
-      if (!dialog.contains(active)) {
+      if (!activeDialog.contains(active)) {
         event.preventDefault();
         first.focus();
         return;
@@ -117,41 +184,122 @@ const { heading: policyHeading, body: policyBody } = parseCancellationPolicyPart
       }
     }
 
-    function openModal(link: HTMLAnchorElement) {
+    function capturePending(link: HTMLAnchorElement) {
       pendingUrl = link.href;
       pendingTarget = link.target || "_self";
       triggerLink = link;
-
-      modal.removeAttribute("hidden");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("booking-modal-open");
-      setPageInert(true);
-      document.addEventListener("keydown", handleModalKeydown);
-
-      requestAnimationFrame(() => {
-        modal.classList.add("is-open");
-      });
-
-      confirmBtn.focus();
     }
 
-    function finishCloseModal() {
-      modal.setAttribute("hidden", "");
-      modal.setAttribute("aria-hidden", "true");
-      modal.classList.remove("is-open");
-      document.body.classList.remove("booking-modal-open");
-      setPageInert(false);
-      document.removeEventListener("keydown", handleModalKeydown);
+    function clearPending() {
       pendingUrl = null;
       pendingTarget = null;
-
-      triggerLink?.focus();
       triggerLink = null;
     }
 
-    function closeModal() {
+    function showOverlay(
+      overlay: HTMLElement,
+      overlayDialog: HTMLElement,
+      focusTarget: HTMLElement,
+    ) {
+      overlay.removeAttribute("hidden");
+      overlay.setAttribute("aria-hidden", "false");
+      document.body.classList.add("booking-modal-open");
+      setPageInert(true);
+      document.removeEventListener("keydown", handleModalKeydown);
+      document.addEventListener("keydown", handleModalKeydown);
+      activeDialog = overlayDialog;
+
+      requestAnimationFrame(() => {
+        overlay.classList.add("is-open");
+      });
+
+      focusTarget.focus();
+    }
+
+    function finishHideOverlay(overlay: HTMLElement, overlayDialog: HTMLElement) {
+      overlay.setAttribute("hidden", "");
+      overlay.setAttribute("aria-hidden", "true");
+      overlay.classList.remove("is-open");
+
+      if (activeDialog === overlayDialog) {
+        activeDialog = null;
+      }
+    }
+
+    function hideOverlay(
+      overlay: HTMLElement,
+      overlayDialog: HTMLElement,
+      onHidden?: () => void,
+    ) {
+      const finish = () => {
+        finishHideOverlay(overlay, overlayDialog);
+        onHidden?.();
+      };
+
+      if (overlay.hasAttribute("hidden") || !overlay.classList.contains("is-open")) {
+        finish();
+        return;
+      }
+
+      overlay.classList.remove("is-open");
+
+      const onTransitionEnd = (event: TransitionEvent) => {
+        if (event.target !== overlayDialog) {
+          return;
+        }
+
+        window.clearTimeout(fallbackTimer);
+        overlayDialog.removeEventListener("transitionend", onTransitionEnd);
+        finish();
+      };
+
+      const fallbackTimer = window.setTimeout(() => {
+        overlayDialog.removeEventListener("transitionend", onTransitionEnd);
+        finish();
+      }, 300);
+
+      overlayDialog.addEventListener("transitionend", onTransitionEnd);
+    }
+
+    function releasePageLock() {
+      document.body.classList.remove("booking-modal-open");
+      setPageInert(false);
+      document.removeEventListener("keydown", handleModalKeydown);
+    }
+
+    function openGate(link: HTMLAnchorElement) {
+      capturePending(link);
+      showOverlay(gateModal, gateDialog, gateConfirmBtn);
+    }
+
+    function openPolicyModal(link?: HTMLAnchorElement) {
+      if (link) {
+        capturePending(link);
+      }
+      showOverlay(modal, dialog, confirmBtn);
+    }
+
+    function closeGate() {
+      const linkToRestore = triggerLink;
+
+      hideOverlay(gateModal, gateDialog, () => {
+        releasePageLock();
+        clearPending();
+        linkToRestore?.focus();
+      });
+    }
+
+    function finishClosePolicyModal() {
+      finishHideOverlay(modal, dialog);
+      releasePageLock();
+      const linkToRestore = triggerLink;
+      clearPending();
+      linkToRestore?.focus();
+    }
+
+    function closePolicyModal() {
       if (modal.hasAttribute("hidden") || !modal.classList.contains("is-open")) {
-        finishCloseModal();
+        finishClosePolicyModal();
         return;
       }
 
@@ -164,25 +312,31 @@ const { heading: policyHeading, body: policyBody } = parseCancellationPolicyPart
 
         window.clearTimeout(fallbackTimer);
         dialog.removeEventListener("transitionend", onTransitionEnd);
-        finishCloseModal();
+        finishClosePolicyModal();
       };
 
       const fallbackTimer = window.setTimeout(() => {
         dialog.removeEventListener("transitionend", onTransitionEnd);
-        finishCloseModal();
+        finishClosePolicyModal();
       }, 300);
 
       dialog.addEventListener("transitionend", onTransitionEnd);
     }
 
     function goBack() {
-      closeModal();
+      closePolicyModal();
+    }
+
+    function confirmExistingClient() {
+      // Swap straight into the cancellation policy step (keep pending booking URL).
+      finishHideOverlay(gateModal, gateDialog);
+      openPolicyModal();
     }
 
     function confirmBooking() {
       const url = pendingUrl;
       const target = pendingTarget;
-      closeModal();
+      closePolicyModal();
 
       if (url) {
         if (target === "_blank") {
@@ -193,6 +347,10 @@ const { heading: policyHeading, body: policyBody } = parseCancellationPolicyPart
       }
     }
 
+    function requiresAndraGate(link: HTMLAnchorElement) {
+      return link.getAttribute("data-booking-stylist") === ANDRA_SLUG;
+    }
+
     document.addEventListener("click", (event) => {
       const link = (event.target as Element).closest<HTMLAnchorElement>("[data-booking-link]");
       if (!link) {
@@ -200,8 +358,18 @@ const { heading: policyHeading, body: policyBody } = parseCancellationPolicyPart
       }
 
       event.preventDefault();
-      openModal(link);
+
+      if (requiresAndraGate(link)) {
+        openGate(link);
+        return;
+      }
+
+      openPolicyModal(link);
     });
+
+    gateBackBtn.addEventListener("click", closeGate);
+    gateConfirmBtn.addEventListener("click", confirmExistingClient);
+    gateBackdrop.addEventListener("click", closeGate);
 
     backBtn.addEventListener("click", goBack);
     confirmBtn.addEventListener("click", confirmBooking);

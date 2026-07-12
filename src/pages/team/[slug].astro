@@ -64,6 +64,8 @@ const aboutParagraphs = member.about
 const featuredServices = member.featuredServices ?? [];
 
 const profilePath = teamMemberPath(member.name);
+const stylistSlug = teamMemberSlug(member.name);
+const isAndra = stylistSlug === "andra-kramer";
 const pageTitle = `${member.name} — ${member.role} | ${site.name}`;
 const pageDescription = member.bio
   ? `Meet ${member.name}, ${member.role.toLowerCase()} at ${site.name} in historic Irvington, Indianapolis. ${member.bio}`
@@ -77,6 +79,7 @@ const pageDescription = member.bio
   ogImage={hasPhoto ? member.image : undefined}
   preloadImage={hasPhoto ? member.image : undefined}
   bookBarUrl={member.bookingUrl}
+  bookBarStylistSlug={isAndra ? stylistSlug : undefined}
 >
   <Header />
 
@@ -120,6 +123,7 @@ const pageDescription = member.bio
                 rel="noopener noreferrer"
                 aria-label={`Book with ${member.firstName} (opens in new tab)`}
                 data-booking-link
+                data-booking-stylist={isAndra ? stylistSlug : undefined}
               >
                 Book with {member.firstName}
               </a>
@@ -197,6 +201,7 @@ const pageDescription = member.bio
                   rel="noopener noreferrer"
                   aria-label={`Book with ${member.firstName} (opens in new tab)`}
                   data-booking-link
+                  data-booking-stylist={isAndra ? stylistSlug : undefined}
                 >
                   Book with {member.firstName}
                 </a>

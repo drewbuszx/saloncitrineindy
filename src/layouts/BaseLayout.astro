@@ -16,6 +16,8 @@ interface Props {
   preloadImage?: string;
   /** Overrides the fixed bottom book bar link (e.g. per-stylist GlossGenius URL). */
   bookBarUrl?: string;
+  /** Stylist slug for the book bar (e.g. andra-kramer triggers the existing-client gate). */
+  bookBarStylistSlug?: string;
 }
 
 const GOOGLE_FONTS_URL =
@@ -28,6 +30,7 @@ const {
   ogImage = "/images/background.png",
   preloadImage,
   bookBarUrl,
+  bookBarStylistSlug,
 } = Astro.props;
 
 const resolvedBookBarUrl = bookBarUrl ?? BOOKING_URL;
@@ -43,9 +46,10 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {/* ?v=2 busts sticky browser favicon cache after switching from crystal → SC logo */}
+    <link rel="icon" href="/favicon.ico?v=2" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="any" href="/favicon.png?v=2" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -142,6 +146,7 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
         rel="noopener noreferrer"
         aria-label={`Book an appointment at ${site.name} (opens in new tab)`}
         data-booking-link
+        data-booking-stylist={bookBarStylistSlug}
       >
         Book Now
       </a>
