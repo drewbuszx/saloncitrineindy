@@ -407,7 +407,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         profileImage: "/images/lily-gleitsman2.jpg",
         bio: "Dimensional color, blowouts, and cuts built to fit your everyday.",
         about:
-          "Over 15 years in the industry, Lily has developed a specialty in transformational cuts, clipper work, curls, and styles that are easy to live in. She began her career alongside Miriam and Andra, and she and Miriam have continued working together at every salon since. Her thoughtful approach creates hair that fits each client's routine, personality, and natural texture.",
+          "Over 15 years in the industry, Lily (she/they) has developed a specialty in transformational cuts, clipper work, curls, and styles that are easy to live in. She began her career alongside Miriam and Andra, and she and Miriam have continued working together at every salon since. Her thoughtful approach creates hair that fits each client's routine, personality, and natural texture.",
         bookingUrl: memberBookingUrl(
           "10001-f5bd9a7b-3e2f-4255-951d-ca4881f88678"
         ),
@@ -427,7 +427,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         profileImage: "/images/miriam-zhukov2.jpg",
         bio: "All-over and dimensional color paired with precise, wearable cuts.",
         about:
-          "With more than 15 years behind the chair, Miriam specializes in lived-in, natural-looking color, dimensional color, and precise, wearable cuts. She has worked alongside Lily at nearly every salon throughout her career, making them a true gruesome twosome. Miriam creates beautiful color that grows out gracefully and cuts that still feel intentional weeks later.",
+          "With more than 15 years behind the chair, Miriam (she/her) specializes in lived-in, natural-looking color, dimensional color, and precise, wearable cuts. She has worked alongside Lily at nearly every salon throughout her career, making them a true gruesome twosome. Miriam creates beautiful color that grows out gracefully and cuts that still feel intentional weeks later.",
         bookingUrl: memberBookingUrl(
           "10001-690e87a4-3d1b-44db-a449-08c9d40b5dff"
         ),
@@ -447,7 +447,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         profileImage: "/images/andra-kramer2.jpg",
         bio: "Dimensional and all-over color, cuts, and polished blowouts.",
         about:
-          "With more than 15 years in the industry, Andra is known for beautiful color, precise cuts, and an efficient approach that never sacrifices the details. She is especially skilled in grey blending and creating polished, easy-to-maintain results. After reconnecting with Miriam and Lily, the three came together to create a welcoming salon space with a little bit of magic.",
+          "With more than 15 years in the industry, Andra (she/her) is known for beautiful color, precise cuts, and an efficient approach that never sacrifices the details. She is especially skilled in grey blending and creating polished, easy-to-maintain results. After reconnecting with Miriam and Lily, the three came together to create a welcoming salon space with a little bit of magic.",
         acceptingNewClients: false,
         bookingUrl: memberBookingUrl(
           "10001-7e4b7dd5-f741-4f6f-b71d-ed5cc3b638ec"
@@ -474,7 +474,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         bio: "Specializes in alternative, vivid, and edgy styles... and low-maintenance natural looks too!",
         // Sourced from GlossGenius team bio + featured services (vivid transform)
         about:
-          "Shelby has been behind the chair for over a decade, specializing in alternative, vivid, and edgy styles, plus low-maintenance natural looks too. She treats hair as self-expression and loves custom cuts and color that help you look and feel exactly how you want.",
+          "Shelby (she/her) has been behind the chair for over a decade, specializing in alternative, vivid, and edgy styles, plus low-maintenance natural looks too. She treats hair as self-expression and loves custom cuts and color that help you look and feel exactly how you want.",
         bookingUrl: memberBookingUrl(
           "10001-6a29adda-3651-43d9-8899-3ace37524a1e"
         ),
@@ -515,16 +515,16 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         profileImage: "/images/brie-crowe2.jpg",
         bio: "Dimensional and all-over color, cuts, and smooth blowouts.",
         about:
-          "Brie specializes in dimensional and all-over color, alternative cuts, and smooth, polished blowouts. Her welcoming approach creates finished looks that feel expressive, wearable, and never overly fussy.",
+          "Brie (she/her) specializes in vivid and retro-inspired color transformations, alternative cuts and styling, clipper work, and textured hair. Her welcoming approach creates expressive, personalized looks that feel polished, wearable, and completely your own.",
         bookingUrl: memberBookingUrl(
           "10001-32abe5c0-3025-48ed-8516-850b1fc5783f"
         ),
         instagram: "ez.breezy.mua",
         featuredServices: [
-          { name: "HAIRCUT", price: "$65+" },
-          { name: "BLOWOUT", price: "$65" },
+          { name: "HAIRCUT", price: "$65" },
+          { name: "TRANSFORMATIVE HAIRCUT", price: "$75" },
           { name: "FULL DIMENSIONAL COLOR & BLOWOUT", price: "$185+" },
-          { name: "ALL OVER COLOR WITH BLOWOUT", price: "$125+" },
+          { name: "VIVID TRANSFORM", price: "$280+" },
         ],
       },
     ],
@@ -541,7 +541,7 @@ export const teamGroups: { title: string; members: TeamMember[] }[] = [
         bio: "Korean-inspired facials, peels, waxing, and makeup artistry.",
         // Sourced from IG display title + featured services / existing bio
         about:
-          "Julie specializes in Korean-inspired skincare and creative makeup in Irvington: bespoke facials, peels, waxing, and brow shaping. Expect inclusive, affirming care and skin that feels as good as it looks.",
+          "Julie (she/her) specializes in Korean inspired skincare and creative makeup, with a thoughtful approach tailored to each client. As a licensed educator, she brings both knowledge and artistry to facials, peels, waxing, brow shaping, and makeup services. Her space is inclusive, affirming, and centered on helping every client feel confident, cared for, and fully themselves.",
         bookingUrl: memberBookingUrl(
           "10001-d788dd27-3f49-452f-af8e-c87bb31e94c3"
         ),

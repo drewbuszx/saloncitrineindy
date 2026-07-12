@@ -112,7 +112,7 @@ const pageDescription = member.bio
           <div class="profile__header-row">
             <a class="profile-page__back" href="/#team">← Back to the team</a>
 
-            <div class="profile__book-row">
+            <div class="profile__book-row profile__book-row--header">
               <a
                 class="profile__book-cta"
                 href={member.bookingUrl}
@@ -165,54 +165,73 @@ const pageDescription = member.bio
             }
           </div>
 
-          {
-            (member.instagram || member.threads) && (
-              <div class="profile__social">
+          <div class="profile__social">
+            <div class="profile__social-row">
+              {
+                member.instagram && (
+                  <a
+                    class="social-link profile__book-instagram"
+                    href={`https://www.instagram.com/${member.instagram}/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${socialDisplayHandle(member.instagram)} on Instagram (opens in new tab)`}
+                  >
+                    <img
+                      class="social-link__icon"
+                      src="/icons/instagram.png"
+                      alt=""
+                      width="16"
+                      height="16"
+                      decoding="async"
+                    />
+                    {socialDisplayHandle(member.instagram)}
+                  </a>
+                )
+              }
+
+              <div class="profile__book-row profile__book-row--social">
+                <a
+                  class="profile__book-cta"
+                  href={member.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Book with ${member.firstName} (opens in new tab)`}
+                  data-booking-link
+                >
+                  Book with {member.firstName}
+                </a>
                 {
-                  member.instagram && (
-                    <a
-                      class="social-link profile__book-instagram"
-                      href={`https://www.instagram.com/${member.instagram}/`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${socialDisplayHandle(member.instagram)} on Instagram (opens in new tab)`}
-                    >
-                      <img
-                        class="social-link__icon"
-                        src="/icons/instagram.png"
-                        alt=""
-                        width="16"
-                        height="16"
-                        decoding="async"
-                      />
-                      {socialDisplayHandle(member.instagram)}
-                    </a>
-                  )
-                }
-                {
-                  member.threads && (
-                    <a
-                      class="social-link profile__book-instagram"
-                      href={member.threads}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${socialDisplayHandle(member.threads)} on Threads (opens in new tab)`}
-                    >
-                      <img
-                        class="social-link__icon"
-                        src="/icons/threads.png"
-                        alt=""
-                        width="16"
-                        height="16"
-                        decoding="async"
-                      />
-                      {socialDisplayHandle(member.threads)}
-                    </a>
+                  member.acceptingNewClients === false && (
+                    <p class="profile__book-notice">
+                      (currently not accepting new clients)
+                    </p>
                   )
                 }
               </div>
-            )
-          }
+            </div>
+
+            {
+              member.threads && (
+                <a
+                  class="social-link profile__book-instagram"
+                  href={member.threads}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${socialDisplayHandle(member.threads)} on Threads (opens in new tab)`}
+                >
+                  <img
+                    class="social-link__icon"
+                    src="/icons/threads.png"
+                    alt=""
+                    width="16"
+                    height="16"
+                    decoding="async"
+                  />
+                  {socialDisplayHandle(member.threads)}
+                </a>
+              )
+            }
+          </div>
 
           <footer class="profile__footer">
             <a class="profile__next" href={teamMemberPath(nextMember.name)}>
