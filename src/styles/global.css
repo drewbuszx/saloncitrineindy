@@ -2167,6 +2167,7 @@ button {
 
 .profile__social-row .profile__book-instagram {
   min-width: 0;
+  flex: 1 1 auto;
 }
 
 .profile__book-instagram {
@@ -2267,26 +2268,31 @@ button {
   }
 
   .profile__social-row {
+    flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
   }
 
+  /*
+   * Flatten the social book-row so Instagram + Book share one space-between
+   * row. A nested wrap + notice width:100% otherwise expands the Book column
+   * and crushes the Instagram link (icon disappears).
+   */
   .profile__book-row--social {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-end;
-    margin: 0;
-    flex-shrink: 0;
+    display: contents;
   }
 
   .profile__social-row .profile__book-cta {
+    flex-shrink: 0;
     padding: 0.7rem 1.15rem;
     font-size: 0.78rem;
     letter-spacing: 0.12em;
   }
 
   .profile__social-row .profile__book-notice {
+    flex: 1 0 100%;
     width: 100%;
+    margin: 0;
     text-align: right;
     font-size: 0.9rem;
   }
