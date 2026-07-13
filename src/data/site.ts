@@ -90,7 +90,7 @@ export const site = {
   ],
   originStory: {
     title: "How we came to be",
-    text: "Salon Citrine grew from years of friendship, shared work, and a belief that a salon could feel different. Lily and Miriam began their careers alongside Andra, and the two continued working side by side at every salon that followed. After reconnecting with Andra, the three brought decades of experience together to create a welcoming, affirming space in Irvington with plenty of creativity, character, and magic.",
+    text: "Salon Citrine grew from years of friendship, shared work, and a belief that a salon could feel different. Lily and Miriam began their careers alongside Andra, and the two continued working side by side at every salon that followed. After reconnecting with Andra, the three brought decades of experience together to create a welcoming, affirming space of their own in Irvington with plenty of creativity, character, and magic.",
   },
   values: [
     "Women-Owned",
