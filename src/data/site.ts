@@ -84,7 +84,7 @@ export const site = {
     { day: "Sunday", time: "Closed" },
   ],
   about: [
-    "Salon Citrine is a women-owned hair and beauty salon in the heart of historic Irvington. We believe beauty belongs to everyone and that a salon visit should feel comfortable, affirming, and a little bit weird in the best way.",
+    "Salon Citrine is an Indianapolis-based, women-owned hair and beauty salon in the heart of Irvington. We believe beauty belongs to everyone and that a salon visit should feel comfortable, affirming, and a little bit weird in the best way.",
     "From vivid color and alternative cuts to lived-in color, timeless shapes, skincare, waxing, and makeup, our team brings creativity, craftsmanship, and thoughtful consultation to every appointment. We create looks that reflect the person wearing them, rather than a one-size-fits-all idea of beauty.",
     "Salon Citrine is a gender-affirming, LGBTQ+ welcoming space where everyone is encouraged to show up exactly as they are.",
   ],
