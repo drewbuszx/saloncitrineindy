@@ -1,10 +1,5 @@
 ---
 import type { VisitorMenuCategory } from "../../data/menu";
-import { BOOKING_URL } from "../../data/site";
-import {
-  MENU_BOOKING_CTA,
-  MENU_CONSULTATION_CTA,
-} from "../../data/menu-config";
 import MenuConsultationPanel from "./MenuConsultationPanel.astro";
 import MenuServiceCard from "./MenuServiceCard.astro";
 
@@ -15,10 +10,6 @@ interface Props {
 const { category } = Astro.props;
 const panelId = `${category.id}-panel`;
 const contentId = `${category.id}-content`;
-const isConsultationsCategory = category.id === "consultations";
-const categoryCtaLabel = isConsultationsCategory
-  ? MENU_CONSULTATION_CTA
-  : MENU_BOOKING_CTA;
 ---
 
 <section
@@ -63,24 +54,48 @@ const categoryCtaLabel = isConsultationsCategory
   >
     {category.showConsultationPanel && <MenuConsultationPanel />}
 
-    <div class="menu-category-section__grid">
-      {category.services.map((service) => (
-        <MenuServiceCard service={service} />
-      ))}
-    </div>
-
-    <div class="menu-category-section__booking">
-      <a
-        class="menu-category-section__book-cta"
-        href={BOOKING_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-booking-link
-        data-analytics-action="category-book"
-        data-analytics-category={category.id}
-      >
-        {categoryCtaLabel}
-      </a>
-    </div>
+    {
+      category.subgroups ? (
+        category.subgroups.map((subgroup) => (
+          <div
+            class:list={[
+              "menu-category-section__subgroup",
+              subgroup.presentation === "compact" && "menu-category-section__subgroup--compact",
+            ]}
+            data-menu-subgroup={subgroup.id}
+          >
+            <h3 class="menu-category-section__subgroup-title">{subgroup.name}</h3>
+            <div
+              class:list={[
+                "menu-category-section__list",
+                subgroup.presentation === "compact"
+                  ? "menu-category-section__list--compact"
+                  : "menu-category-section__list--full",
+              ]}
+            >
+              {subgroup.services.map((service) => (
+                <MenuServiceCard service={service} presentation={subgroup.presentation} />
+              ))}
+            </div>
+          </div>
+        ))
+      ) : (
+        <div
+          class:list={[
+            "menu-category-section__list",
+            category.defaultPresentation === "compact"
+              ? "menu-category-section__list--compact"
+              : "menu-category-section__list--full",
+          ]}
+        >
+          {category.services.map((service) => (
+            <MenuServiceCard
+              service={service}
+              presentation={service.presentation}
+            />
+          ))}
+        </div>
+      )
+    }
   </div>
 </section>

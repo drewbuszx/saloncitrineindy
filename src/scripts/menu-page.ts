@@ -6,14 +6,14 @@ const navLinks = Array.from(
 const intentLinks = Array.from(
   document.querySelectorAll<HTMLAnchorElement>("[data-menu-intent-link]"),
 );
+const anchorLinks = Array.from(
+  document.querySelectorAll<HTMLAnchorElement>("[data-menu-anchor-link]"),
+);
 const sections = Array.from(
   document.querySelectorAll<HTMLElement>("[data-menu-category]"),
 );
 const accordionToggles = Array.from(
   document.querySelectorAll<HTMLButtonElement>("[data-menu-accordion-toggle]"),
-);
-const accordionPanels = Array.from(
-  document.querySelectorAll<HTMLElement>("[data-menu-accordion-panel]"),
 );
 
 const MOBILE_MQ = window.matchMedia("(max-width: 767px)");
@@ -66,22 +66,38 @@ function openAccordionCategory(id: string) {
   });
 }
 
-function scrollToCategory(id: string, behavior?: ScrollBehavior) {
+function findCategoryForAnchor(id: string): string | null {
+  const category = document.querySelector<HTMLElement>(
+    `[data-menu-category="${id}"]`,
+  );
+  if (category) return id;
+
+  const target = document.getElementById(id);
+  const parentCategory = target?.closest<HTMLElement>("[data-menu-category]");
+  return parentCategory?.dataset.menuCategory ?? null;
+}
+
+function scrollToTarget(id: string, behavior?: ScrollBehavior) {
   syncNavHeight();
+
+  const categoryId = findCategoryForAnchor(id);
+  if (categoryId) {
+    openAccordionCategory(categoryId);
+    setActiveCategory(categoryId);
+  }
+
   const section = document.querySelector<HTMLElement>(
     `[data-menu-category="${id}"]`,
   );
-  if (!section) return;
-
-  openAccordionCategory(id);
+  const target = section ?? document.getElementById(id);
+  if (!target) return;
 
   const top =
-    section.getBoundingClientRect().top + window.scrollY - getStickyOffset();
+    target.getBoundingClientRect().top + window.scrollY - getStickyOffset();
   window.scrollTo({
     top: Math.max(0, top),
     behavior: behavior ?? scrollBehavior(),
   });
-  setActiveCategory(id);
 }
 
 function bindAnchorNavigation(
@@ -99,8 +115,9 @@ function bindAnchorNavigation(
   });
 }
 
-bindAnchorNavigation(navLinks, (id) => scrollToCategory(id));
-bindAnchorNavigation(intentLinks, (id) => scrollToCategory(id));
+bindAnchorNavigation(navLinks, (id) => scrollToTarget(id));
+bindAnchorNavigation(intentLinks, (id) => scrollToTarget(id));
+bindAnchorNavigation(anchorLinks, (id) => scrollToTarget(id));
 
 syncNavHeight();
 
@@ -147,7 +164,7 @@ accordionToggles.forEach((toggle) => {
     }
 
     openAccordionCategory(id);
-    scrollToCategory(id, scrollBehavior());
+    scrollToTarget(id, scrollBehavior());
     history.pushState(null, "", `#${id}`);
   });
 });
@@ -164,7 +181,10 @@ function syncAccordionMode(openId?: string) {
       return;
     }
 
-    const shouldOpen = openId ? id === openId : index === 0;
+    const resolvedOpenId = openId
+      ? (findCategoryForAnchor(openId) ?? openId)
+      : undefined;
+    const shouldOpen = resolvedOpenId ? id === resolvedOpenId : index === 0;
     toggle.setAttribute("aria-expanded", String(shouldOpen));
     section?.classList.toggle("is-collapsed", !shouldOpen);
   });
@@ -183,7 +203,7 @@ window.addEventListener(
   { passive: true },
 );
 
-MOBILE_MQ.addEventListener("change", syncAccordionMode);
+MOBILE_MQ.addEventListener("change", () => syncAccordionMode());
 
 if (location.hash) {
   if ("scrollRestoration" in history) {
@@ -196,9 +216,9 @@ if (location.hash) {
 
   const alignHash = () => {
     window.scrollTo(0, 0);
-    scrollToCategory(id, "auto");
+    scrollToTarget(id, "auto");
     history.replaceState(null, "", `#${id}`);
-    requestAnimationFrame(() => scrollToCategory(id, "auto"));
+    requestAnimationFrame(() => scrollToTarget(id, "auto"));
   };
 
   const scheduleHashAlign = () => {

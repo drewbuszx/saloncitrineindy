@@ -13,31 +13,49 @@ export type MenuCategoryId =
   | "makeup";
 
 export type ServiceLabel =
-  | "Best for New Clients"
-  | "Consultation Required"
-  | "Maintenance Service"
-  | "Major Transformation"
+  | "New Clients"
   | "Existing Clients"
-  | "Price Varies"
-  | "Advanced Treatment"
-  | "Add-On Service";
+  | "Consultation Required"
+  | "Add-On"
+  | "Advanced Treatment";
 
-/** Primary CTA for main GlossGenius booking-flow links on the menu page. */
-export const MENU_BOOKING_CTA = "View Availability & Book";
+export type ServicePresentation = "full" | "compact";
 
-export const MENU_CONSULTATION_CTA = "Start With a Consultation";
-
-export const MENU_TOP_BOOKING_COPY =
-  "Ready to schedule? Choose a provider and service in online booking — starting prices here are a guide.";
+/** Primary CTA for the single bottom booking action on the menu page. */
+export const MENU_BOOKING_CTA = "Book Online";
 
 export const MENU_FOOTER_BOOKING_COPY =
-  "When you are ready, continue to online booking to choose a provider, pick a service, and find a time that works.";
+  "Choose your provider, pick a service, and find a time that works.";
+
+export const MENU_CONSULTATION_HELP_LEAD = "Not sure what to book?";
+
+export const MENU_CONSULTATION_HELP_COPY =
+  "Start with a consultation and we will help you choose the right service.";
+
+export const MENU_CONSULTATION_HELP_CTA = "Explore Consultations";
+
+export const MENU_COLOR_CONSULTATION_PANEL_COPY =
+  "Planning a major color change? Vivid color, corrective work, all-over bleach, and significant blonding transformations may require a consultation before booking.";
+
+export const MENU_COLOR_CONSULTATION_PANEL_CTA = "View Color Consultations";
+
+export const MENU_COLOR_CONSULTATION_ANCHOR = "color-consultation";
 
 export interface MenuCategoryDefinition {
   id: MenuCategoryId;
   name: string;
   description: string;
+  /** Show the shared color-consultation panel immediately before this category. */
   showConsultationPanel?: boolean;
+  defaultPresentation: ServicePresentation;
+}
+
+export interface MenuSubgroupDefinition {
+  id: string;
+  name: string;
+  presentation: ServicePresentation;
+  /** Match against uppercase raw service names. */
+  serviceNames: string[];
 }
 
 export const MENU_CATEGORIES: MenuCategoryDefinition[] = [
@@ -46,6 +64,7 @@ export const MENU_CATEGORIES: MenuCategoryDefinition[] = [
     name: "Haircuts",
     description:
       "From first visits and kids' cuts to transformative shapes, clipper work, and curly or textured hair maintenance.",
+    defaultPresentation: "full",
   },
   {
     id: "dimensional-color",
@@ -53,58 +72,138 @@ export const MENU_CATEGORIES: MenuCategoryDefinition[] = [
     description:
       "Highlights, lowlights, balayage, all-over color, root touch-ups, and gloss services for natural dimension or grey blending.",
     showConsultationPanel: true,
+    defaultPresentation: "full",
   },
   {
     id: "blonding",
     name: "Blonding and Bleach",
     description:
       "All-over bleach and tone, root lightening, and blonding services for clients ready to go lighter.",
-    showConsultationPanel: true,
+    defaultPresentation: "full",
   },
   {
     id: "vivid-color",
     name: "Vivid and Creative Color",
     description:
       "Fashion colors and vivid transformations for clients who want bold, creative color results.",
-    showConsultationPanel: true,
+    defaultPresentation: "full",
   },
   {
     id: "styling-treatments",
     name: "Styling and Treatments",
     description:
       "Blowouts, silk press, keratin, deep conditioning, scalp treatments, and add-on services paired with appointments.",
+    defaultPresentation: "compact",
   },
   {
     id: "consultations",
     name: "Consultations",
     description:
       "Complimentary or low-cost consultations for color, extensions, keratin, skincare, and makeup — a smart first step when you are unsure what to book.",
+    defaultPresentation: "compact",
   },
   {
     id: "facials-skincare",
     name: "Facials and Skincare",
     description:
       "Bespoke Korean facials, acne care, and express treatments tailored to your skin goals.",
+    defaultPresentation: "full",
   },
   {
     id: "advanced-treatments",
     name: "Peels and Advanced Treatments",
     description:
       "Chemical peels, microneedling, and advanced resurfacing for texture, hyperpigmentation, and collagen support.",
+    defaultPresentation: "full",
   },
   {
     id: "waxing-brows",
     name: "Waxing and Brows",
     description:
       "Body waxing, brow shaping and tinting, and facial wax services.",
+    defaultPresentation: "compact",
   },
   {
     id: "makeup",
     name: "Makeup",
     description:
       "Beauty makeup, lessons, FX and body painting, and personal shopping support.",
+    defaultPresentation: "full",
   },
 ];
+
+export const MENU_SUBGROUPS: Partial<
+  Record<MenuCategoryId, MenuSubgroupDefinition[]>
+> = {
+  "styling-treatments": [
+    {
+      id: "styling-services",
+      name: "Styling Services",
+      presentation: "full",
+      serviceNames: ["BLOWOUT", "SILK PRESS", "KERATIN COMPLEX TREATMENT"],
+    },
+    {
+      id: "treatments-addons",
+      name: "Treatments and Add-Ons",
+      presentation: "compact",
+      serviceNames: [
+        "HOT TOWEL TREATMENT",
+        "DEEP CONDITION",
+        "MALIBU TREATMENT",
+        "SCALP REVITALIZING TREATMENT",
+        "K-18 TREATMENT",
+        "STYLING EDUCATION",
+        "HAIR TINSEL",
+      ],
+    },
+  ],
+  "waxing-brows": [
+    {
+      id: "face-brows",
+      name: "Face and Brows",
+      presentation: "compact",
+      serviceNames: [
+        "NOSTRIL",
+        "BROW MAINTENANCE",
+        "BROW SHAPING",
+        "CHIN",
+        "EAR",
+        "LIP",
+        "LIP AND CHIN",
+        "FULL FACE WAX",
+      ],
+    },
+    {
+      id: "body-waxing",
+      name: "Body Waxing",
+      presentation: "compact",
+      serviceNames: [
+        "BACK WAX",
+        "BIKINI WAX",
+        "BRAZILIAN WAX",
+        "BUTTOCKS",
+        "CHEST WAX",
+        "FULL ARM WAX",
+        "FULL LEG WAX",
+        "HALF ARM WAX",
+        "HALF LEG",
+        "UNDERARM WAX",
+      ],
+    },
+    {
+      id: "lashes-tinting",
+      name: "Lashes and Tinting",
+      presentation: "compact",
+      serviceNames: ["BROW TINT", "LASH TINT", "BROW WAX & TINT"],
+    },
+    {
+      id: "waxing-addons",
+      name: "Add-Ons",
+      presentation: "compact",
+      serviceNames: ["HAIR REDUCTION ENZYME ADD ON"],
+    },
+  ],
+};
 
 /** GlossGenius source category names from menu-services.json. */
 export const SOURCE_CATEGORY_NAMES = {
@@ -140,6 +239,12 @@ const ADVANCED_SKINCARE_NAMES = new Set([
 ]);
 
 const MAKEUP_EXCLUDED_FROM_MAKEUP = new Set(["MAKEUP CONSULTATION"]);
+
+/** Compact presentation even when the parent category defaults to full cards. */
+export const COMPACT_SERVICE_NAMES = new Set([
+  "PERSONAL SHOPPING",
+  "SUNBURN RX EXPRESS",
+]);
 
 export function resolveMenuCategoryId(
   sourceCategory: string,
@@ -216,23 +321,10 @@ export const MENU_INTENT_CARDS = [
     targetId: "facials-skincare" as MenuCategoryId,
     analyticsAction: "intent-skincare",
   },
-  {
-    id: "consultation",
-    title: "I am not sure what to book",
-    description:
-      "Start with a consultation to discuss your goals, hair history, and the right service for you.",
-    cta: "Book a Consultation",
-    targetId: "consultations" as MenuCategoryId,
-    analyticsAction: "intent-consultation",
-    compact: true,
-  },
 ] as const;
 
 export const MENU_PRICING_NOTE =
-  "Prices vary by provider, service time, hair needs, and product required. Starting prices are shown here. Your selected provider's current pricing will be shown during online booking.";
+  "Prices vary by provider, service time, hair needs, and product required. Starting prices are shown here, and your selected provider’s current pricing will be shown during booking.";
 
 export const MENU_INTRO_COPY =
-  "Explore hair, skincare, waxing, and makeup services offered at Salon Citrine. Prices vary by provider, service time, hair needs, and product required. The full price for your selected provider will be shown during booking, and major transformations may require a consultation.";
-
-export const MENU_CONSULTATION_PANEL_COPY =
-  "Not sure which color service fits your goals? Major transformations, vivid color, corrective work, and significant blonding changes may require a consultation before booking.";
+  "Explore hair, skincare, waxing, and makeup services at Salon Citrine.";

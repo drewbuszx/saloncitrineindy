@@ -1,18 +1,19 @@
 ---
 import {
-  MENU_CONSULTATION_CTA,
-  MENU_CONSULTATION_PANEL_COPY,
+  MENU_COLOR_CONSULTATION_ANCHOR,
+  MENU_COLOR_CONSULTATION_PANEL_COPY,
+  MENU_COLOR_CONSULTATION_PANEL_CTA,
 } from "../../data/menu-config";
 ---
 
 <aside class="menu-consultation-panel" data-menu-consultation-panel>
-  <p class="menu-consultation-panel__text">{MENU_CONSULTATION_PANEL_COPY}</p>
+  <p class="menu-consultation-panel__text">{MENU_COLOR_CONSULTATION_PANEL_COPY}</p>
   <a
     class="menu-consultation-panel__cta"
-    href="#consultations"
-    data-menu-intent-link="consultations"
+    href={`#${MENU_COLOR_CONSULTATION_ANCHOR}`}
+    data-menu-anchor-link={MENU_COLOR_CONSULTATION_ANCHOR}
     data-analytics-action="consultation-panel"
   >
-    {MENU_CONSULTATION_CTA}
+    {MENU_COLOR_CONSULTATION_PANEL_CTA}
   </a>
 </aside>

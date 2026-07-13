@@ -1,39 +1,46 @@
 ---
 import type { MenuService } from "../../data/menu";
-import { MENU_CONSULTATION_CTA } from "../../data/menu-config";
+import {
+  getConsultationBookingUrl,
+  getConsultationCtaLabel,
+} from "../../data/menu";
 
 interface Props {
   service: MenuService;
+  presentation?: "full" | "compact";
 }
 
-const { service } = Astro.props;
+const { service, presentation = service.presentation } = Astro.props;
+const isCompact = presentation === "compact";
 const metaParts = [service.priceDisplay, service.durationDisplay].filter(Boolean);
 
-/** Only consultation-specific actions stay on cards — not per-service "Book This Service". */
 const showConsultationCta =
   !service.isAddon && (service.isConsultation || service.requiresConsultation);
 
 const consultationHref = service.isConsultation
   ? service.bookingUrl
-  : "#consultations";
+  : getConsultationBookingUrl(service.consultationKind);
 
-const consultationIsBookingLink = service.isConsultation;
+const consultationLabel = getConsultationCtaLabel(service);
+const consultationIsBookingLink = true;
 ---
 
 <article
   class:list={[
-    "menu-service-card",
-    showConsultationCta && "menu-service-card--actionable",
+    "menu-service",
+    isCompact ? "menu-service--compact" : "menu-service--full",
+    showConsultationCta && "menu-service--actionable",
   ]}
   data-menu-service-card
+  id={service.anchorId}
 >
-  <div class="menu-service-card__header">
-    <h3 class="menu-service-card__name">{service.name}</h3>
+  <div class="menu-service__header">
+    <h3 class="menu-service__name">{service.name}</h3>
     {
       service.labels.length > 0 && (
-        <ul class="menu-service-card__labels" aria-label="Service notes">
+        <ul class="menu-service__labels" aria-label="Service notes">
           {service.labels.map((label) => (
-            <li class="menu-service-card__label">{label}</li>
+            <li class="menu-service__label">{label}</li>
           ))}
         </ul>
       )
@@ -42,7 +49,7 @@ const consultationIsBookingLink = service.isConsultation;
 
   {
     metaParts.length > 0 && (
-      <p class="menu-service-card__meta">
+      <p class="menu-service__meta">
         {metaParts.join(" · ")}
       </p>
     )
@@ -50,20 +57,20 @@ const consultationIsBookingLink = service.isConsultation;
 
   {
     service.descriptionBody && (
-      <p class="menu-service-card__description">{service.descriptionBody}</p>
+      <p class="menu-service__description">{service.descriptionBody}</p>
     )
   }
 
   {
     service.qualifier && (
-      <p class="menu-service-card__qualifier">{service.qualifier}</p>
+      <p class="menu-service__qualifier">{service.qualifier}</p>
     )
   }
 
   {
     showConsultationCta && (
       <a
-        class="menu-service-card__consult"
+        class="menu-service__consult"
         href={consultationHref}
         {...(consultationIsBookingLink
           ? {
@@ -71,15 +78,13 @@ const consultationIsBookingLink = service.isConsultation;
               rel: "noopener noreferrer",
               "data-booking-link": true,
             }
-          : {
-              "data-menu-intent-link": "consultations",
-            })}
+          : {})}
         data-analytics-action={
           service.isConsultation ? "consultation-service-book" : "consultation-required-cta"
         }
         data-analytics-service={service.name}
       >
-        {MENU_CONSULTATION_CTA}
+        {consultationLabel}
       </a>
     )
   }

@@ -10,7 +10,6 @@ import { site, BOOKING_URL } from "../data/site";
 import {
   MENU_INTRO_COPY,
   MENU_BOOKING_CTA,
-  MENU_TOP_BOOKING_COPY,
   MENU_FOOTER_BOOKING_COPY,
 } from "../data/menu-config";
 import { buildVisitorMenuCategories } from "../data/menu";
@@ -36,20 +35,6 @@ const pageDescription =
 
         <MenuPricingNote variant="top" />
 
-        <aside class="menu-page__top-booking" data-menu-top-booking>
-          <p class="menu-page__top-booking-copy">{MENU_TOP_BOOKING_COPY}</p>
-          <a
-            class="menu-page__book-cta"
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-booking-link
-            data-analytics-action="menu-top-book"
-          >
-            {MENU_BOOKING_CTA}
-          </a>
-        </aside>
-
         <MenuIntentCards />
 
         <MenuCategoryNav categories={categories} />
@@ -59,8 +44,6 @@ const pageDescription =
             <MenuCategorySection category={category} />
           ))}
         </div>
-
-        <MenuPricingNote variant="bottom" />
 
         <footer class="menu-page__footer" data-menu-footer-booking>
           <h2 class="menu-page__footer-title">Ready to book?</h2>

@@ -1,16 +1,16 @@
 ---
-import { MENU_INTENT_CARDS } from "../../data/menu-config";
+import {
+  MENU_INTENT_CARDS,
+  MENU_CONSULTATION_HELP_LEAD,
+  MENU_CONSULTATION_HELP_COPY,
+  MENU_CONSULTATION_HELP_CTA,
+} from "../../data/menu-config";
 ---
 
 <div class="menu-intent" data-menu-intent>
   {
     MENU_INTENT_CARDS.map((card) => (
-      <article
-        class:list={[
-          "menu-intent__card",
-          card.compact && "menu-intent__card--compact",
-        ]}
-      >
+      <article class="menu-intent__card">
         <h2 class="menu-intent__title">{card.title}</h2>
         <p class="menu-intent__description">{card.description}</p>
         <a
@@ -25,3 +25,19 @@ import { MENU_INTENT_CARDS } from "../../data/menu-config";
     ))
   }
 </div>
+
+<aside class="menu-consult-help" data-menu-consult-help>
+  <p class="menu-consult-help__text">
+    <strong>{MENU_CONSULTATION_HELP_LEAD}</strong>
+    {" "}
+    {MENU_CONSULTATION_HELP_COPY}
+  </p>
+  <a
+    class="menu-consult-help__cta"
+    href="#consultations"
+    data-menu-intent-link="consultations"
+    data-analytics-action="intent-consultation"
+  >
+    {MENU_CONSULTATION_HELP_CTA}
+  </a>
+</aside>
