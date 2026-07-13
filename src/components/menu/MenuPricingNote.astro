@@ -1,0 +1,16 @@
+---
+import { MENU_PRICING_NOTE } from "../../data/menu-config";
+
+interface Props {
+  variant?: "top" | "bottom";
+}
+
+const { variant = "top" } = Astro.props;
+---
+
+<aside
+  class:list={["menu-pricing-note", variant === "bottom" && "menu-pricing-note--bottom"]}
+  data-menu-pricing-note={variant}
+>
+  <p class="menu-pricing-note__text">{MENU_PRICING_NOTE}</p>
+</aside>

@@ -2,6 +2,7 @@ import { existsSync, writeFileSync } from "node:fs";
 
 const OUTPUT = "src/data/menu-services.json";
 const SERVICES_URL = "https://saloncitrineindy.glossgenius.com/services";
+const BOOKING_BASE = "https://saloncitrineindy.glossgenius.com/booking-flow";
 
 let html;
 try {
@@ -42,6 +43,8 @@ for (const user of users) {
         priceVaries: service.price_varies,
         priceHidden: service.price_hidden,
         ordering: service.ordering ?? 999,
+        duration: service.total_duration ?? null,
+        token: service.token ?? null,
       });
     }
   }
@@ -145,6 +148,10 @@ const menuCategories = [...categories.entries()]
             displayName
           ),
           description: s.description,
+          duration: s.duration,
+          bookingUrl: s.token
+            ? `${BOOKING_BASE}?service_token=${s.token}`
+            : BOOKING_BASE,
         };
       }),
   }));
@@ -181,6 +188,8 @@ if (skincare) {
       name: FACIAL_75,
       price: "$175",
       description: FACIAL_DESCRIPTION,
+      duration: 75,
+      bookingUrl: BOOKING_BASE,
     };
     if (after30 >= 0) skincare.services.splice(after30 + 1, 0, entry);
     else skincare.services.push(entry);
@@ -195,6 +204,8 @@ if (skincare) {
       name: MICRONEEDLING,
       price: "$175+",
       description: MICRONEEDLING_DESCRIPTION,
+      duration: null,
+      bookingUrl: BOOKING_BASE,
     };
     if (after75 >= 0) skincare.services.splice(after75 + 1, 0, entry);
     else skincare.services.push(entry);

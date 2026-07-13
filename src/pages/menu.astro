@@ -2,35 +2,19 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import {
-  site,
-  BOOKING_URL,
-  policies,
-  formatCancellationPolicyText,
-} from "../data/site";
-import menuCategories from "../data/menu-services.json";
+import MenuIntentCards from "../components/menu/MenuIntentCards.astro";
+import MenuCategoryNav from "../components/menu/MenuCategoryNav.astro";
+import MenuCategorySection from "../components/menu/MenuCategorySection.astro";
+import MenuPricingNote from "../components/menu/MenuPricingNote.astro";
+import { site, BOOKING_URL } from "../data/site";
+import { MENU_INTRO_COPY } from "../data/menu-config";
+import { buildVisitorMenuCategories } from "../data/menu";
 
-function slugifyCategory(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-const categories = menuCategories.map((category) => ({
-  ...category,
-  id: slugifyCategory(category.name),
-}));
-
-const cancellationPolicy = policies.find(
-  (policy) => policy.title === "CANCELLATION POLICY"
-)!;
+const categories = buildVisitorMenuCategories();
 
 const pageTitle = `Full Service Menu | ${site.name}`;
 const pageDescription =
-  "Browse the complete Salon Citrine service menu with descriptions and starting prices for hair, color, treatments, skin, and waxing.";
+  "Explore Salon Citrine's full service menu for haircuts, dimensional color, blonding, vivid color, facials, waxing, and makeup with starting prices and online booking.";
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} path="/menu/">
@@ -38,85 +22,26 @@ const pageDescription =
 
   <main id="main" class="menu-page">
     <section class="section section--editorial" aria-labelledby="menu-heading">
-      <div class="section__inner section__inner--wide">
+      <div class="section__inner section__inner--wide menu-page__inner">
         <header class="menu-page__header">
           <a class="menu-page__back" href="/#services">← Services overview</a>
-          <h1 class="editorial-section__title" id="menu-heading">Full Detailed Menu</h1>
-          <p class="menu-page__intro">
-            Prices with a + are starting rates and may vary based on hair length,
-            density, and stylist.
-          </p>
+          <h1 class="editorial-section__title" id="menu-heading">Full Service Menu</h1>
+          <p class="menu-page__intro">{MENU_INTRO_COPY}</p>
         </header>
 
-        <aside
-          class="services-cancellation services-cancellation--menu"
-          aria-label="Cancellation policy"
-        >
-          <p class="services-cancellation__text">{formatCancellationPolicyText(cancellationPolicy.text)}</p>
-        </aside>
+        <MenuPricingNote variant="top" />
 
-        <nav class="menu-nav" aria-label="Jump to service category">
-          <ul class="menu-nav__list">
-            {
-              categories.map((category) => (
-                <li class="menu-nav__item">
-                  <a
-                    class="menu-nav__link"
-                    href={`#${category.id}`}
-                    data-menu-nav-link={category.id}
-                  >
-                    {category.name}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
+        <MenuIntentCards />
 
-        <script is:inline>
-          (function () {
-            if ("scrollRestoration" in history) {
-              history.scrollRestoration = "manual";
-            }
-            var menuNav = document.querySelector(".menu-nav");
-            if (menuNav) {
-              document.documentElement.style.setProperty(
-                "--menu-nav-height",
-                menuNav.offsetHeight + "px"
-              );
-            }
-          })();
-        </script>
+        <MenuCategoryNav categories={categories} />
 
-        {
-          categories.map((category) => (
-            <section
-              class="menu-category"
-              data-menu-category={category.id}
-              id={category.id}
-              aria-labelledby={`${category.id}-heading`}
-            >
-              <h2 class="menu-category__title" id={`${category.id}-heading`}>
-                {category.name}
-              </h2>
-              <div class="menu-category__list">
-                {category.services.map((service) => (
-                  <article class="service-item service-item--full">
-                    <div class="service-item__header">
-                      <p class="service-item__name">{service.name}</p>
-                      <p class="service-item__price">{service.price}</p>
-                    </div>
-                    {service.description && (
-                      <p class="service-item__description">
-                        {service.description}
-                      </p>
-                    )}
-                  </article>
-                ))}
-              </div>
-            </section>
-          ))
-        }
+        <div class="menu-page__categories" data-menu-categories>
+          {categories.map((category) => (
+            <MenuCategorySection category={category} />
+          ))}
+        </div>
+
+        <MenuPricingNote variant="bottom" />
 
         <footer class="menu-page__footer">
           <a
@@ -125,6 +50,7 @@ const pageDescription =
             target="_blank"
             rel="noopener noreferrer"
             data-booking-link
+            data-analytics-action="menu-footer-book"
           >
             Book Now
           </a>
@@ -135,139 +61,5 @@ const pageDescription =
 
   <SiteFooter />
 
-  <script>
-    const siteHeader = document.querySelector<HTMLElement>(".site-header");
-    const menuNav = document.querySelector<HTMLElement>(".menu-nav");
-    const navLinks = Array.from(
-      document.querySelectorAll<HTMLAnchorElement>("[data-menu-nav-link]")
-    );
-    const sections = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-menu-category]")
-    );
-
-    const syncMenuNavHeight = () => {
-      if (!menuNav) return;
-      document.documentElement.style.setProperty(
-        "--menu-nav-height",
-        `${menuNav.offsetHeight}px`
-      );
-    };
-
-    const getStickyNavBottom = () => {
-      const headerHeight = siteHeader?.offsetHeight ?? 0;
-      const menuNavHeight = menuNav?.offsetHeight ?? 0;
-      return headerHeight + menuNavHeight;
-    };
-
-    syncMenuNavHeight();
-
-    if (navLinks.length && sections.length) {
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-
-      const setActive = (id: string) => {
-        navLinks.forEach((link) => {
-          const isActive = link.dataset.menuNavLink === id;
-          link.classList.toggle("is-active", isActive);
-          if (isActive) {
-            link.setAttribute("aria-current", "location");
-            link.scrollIntoView({ block: "nearest", inline: "nearest" });
-          } else {
-            link.removeAttribute("aria-current");
-          }
-        });
-      };
-
-      const scrollToCategory = (id: string, behavior?: ScrollBehavior) => {
-        syncMenuNavHeight();
-        const section = document.querySelector<HTMLElement>(
-          `[data-menu-category="${id}"]`
-        );
-        if (!section) return;
-        const stickyBottom = getStickyNavBottom();
-        const top =
-          section.getBoundingClientRect().top + window.scrollY - stickyBottom;
-        window.scrollTo({
-          top: Math.max(0, top),
-          behavior:
-            behavior ?? (prefersReducedMotion ? "auto" : "smooth"),
-        });
-        setActive(id);
-      };
-
-      navLinks.forEach((link) => {
-        link.addEventListener("click", (event) => {
-          const id = link.dataset.menuNavLink;
-          if (!id) return;
-          event.preventDefault();
-          scrollToCategory(id);
-          history.pushState(null, "", `#${id}`);
-        });
-      });
-
-      let scrollSpy: IntersectionObserver | null = null;
-
-      const bindScrollSpy = () => {
-        scrollSpy?.disconnect();
-        scrollSpy = new IntersectionObserver(
-          (entries) => {
-            const visible = entries
-              .filter((entry) => entry.isIntersecting)
-              .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-            const categoryId = (visible[0]?.target as HTMLElement | undefined)
-              ?.dataset.menuCategory;
-            if (categoryId) {
-              setActive(categoryId);
-            }
-          },
-          {
-            rootMargin: `-${getStickyNavBottom()}px 0px -55% 0px`,
-            threshold: [0, 0.25, 0.5, 0.75, 1],
-          }
-        );
-        sections.forEach((section) => scrollSpy!.observe(section));
-      };
-
-      bindScrollSpy();
-      window.addEventListener(
-        "resize",
-        () => {
-          syncMenuNavHeight();
-          bindScrollSpy();
-        },
-        { passive: true }
-      );
-
-      if (location.hash) {
-        if ("scrollRestoration" in history) {
-          history.scrollRestoration = "manual";
-        }
-
-        const id = location.hash.slice(1);
-        const { pathname, search } = location;
-        history.replaceState(null, "", `${pathname}${search}`);
-
-        const alignHash = () => {
-          window.scrollTo(0, 0);
-          scrollToCategory(id, "auto");
-          history.replaceState(null, "", `#${id}`);
-          requestAnimationFrame(() => scrollToCategory(id, "auto"));
-        };
-
-        const scheduleHashAlign = () => {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(alignHash);
-          });
-        };
-
-        if (document.fonts?.ready) {
-          document.fonts.ready.then(scheduleHashAlign);
-        } else {
-          scheduleHashAlign();
-        }
-      }
-    }
-  </script>
+  <script src="../scripts/menu-page.ts"></script>
 </BaseLayout>

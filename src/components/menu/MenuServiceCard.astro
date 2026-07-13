@@ -1,0 +1,57 @@
+---
+import type { MenuService } from "../../data/menu";
+
+interface Props {
+  service: MenuService;
+}
+
+const { service } = Astro.props;
+const metaParts = [service.priceDisplay, service.durationDisplay].filter(Boolean);
+---
+
+<article class="menu-service-card" data-menu-service-card>
+  <div class="menu-service-card__header">
+    <h3 class="menu-service-card__name">{service.name}</h3>
+    {
+      service.labels.length > 0 && (
+        <ul class="menu-service-card__labels" aria-label="Service notes">
+          {service.labels.map((label) => (
+            <li class="menu-service-card__label">{label}</li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+
+  {
+    metaParts.length > 0 && (
+      <p class="menu-service-card__meta">
+        {metaParts.join(" · ")}
+      </p>
+    )
+  }
+
+  {
+    service.descriptionBody && (
+      <p class="menu-service-card__description">{service.descriptionBody}</p>
+    )
+  }
+
+  {
+    service.qualifier && (
+      <p class="menu-service-card__qualifier">{service.qualifier}</p>
+    )
+  }
+
+  <a
+    class="menu-service-card__book"
+    href={service.bookingUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    data-booking-link
+    data-analytics-action="service-book"
+    data-analytics-service={service.name}
+  >
+    Book This Service
+  </a>
+</article>

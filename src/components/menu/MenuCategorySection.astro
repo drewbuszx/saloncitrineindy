@@ -1,0 +1,63 @@
+---
+import type { VisitorMenuCategory } from "../../data/menu";
+import MenuConsultationPanel from "./MenuConsultationPanel.astro";
+import MenuServiceCard from "./MenuServiceCard.astro";
+
+interface Props {
+  category: VisitorMenuCategory;
+}
+
+const { category } = Astro.props;
+const panelId = `${category.id}-panel`;
+const contentId = `${category.id}-content`;
+---
+
+<section
+  class="menu-category-section"
+  data-menu-category={category.id}
+  id={category.id}
+  aria-labelledby={`${category.id}-heading`}
+>
+  <div class="menu-category-section__header">
+    <button
+      type="button"
+      class="menu-category-section__toggle"
+      aria-expanded="true"
+      aria-controls={contentId}
+      id={panelId}
+      data-menu-accordion-toggle={category.id}
+      data-analytics-action="accordion-toggle"
+      data-analytics-category={category.id}
+    >
+      <span class="menu-category-section__toggle-text">
+        <span class="menu-category-section__title" id={`${category.id}-heading`}>
+          {category.name}
+        </span>
+        <span class="menu-category-section__count">
+          {category.services.length} services
+        </span>
+      </span>
+      <span class="menu-category-section__icon" aria-hidden="true">
+        <span class="menu-category-section__icon-bar"></span>
+        <span class="menu-category-section__icon-bar menu-category-section__icon-bar--vertical"></span>
+      </span>
+    </button>
+    <p class="menu-category-section__description">{category.description}</p>
+  </div>
+
+  <div
+    class="menu-category-section__content"
+    id={contentId}
+    role="region"
+    aria-labelledby={panelId}
+    data-menu-accordion-panel={category.id}
+  >
+    {category.showConsultationPanel && <MenuConsultationPanel />}
+
+    <div class="menu-category-section__grid">
+      {category.services.map((service) => (
+        <MenuServiceCard service={service} />
+      ))}
+    </div>
+  </div>
+</section>

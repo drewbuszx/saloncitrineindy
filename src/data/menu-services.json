@@ -5,52 +5,72 @@
       {
         "name": "NEW CLIENT HAIRCUT",
         "price": "$55+",
-        "description": "First time at Salon Citrine? Welcome! This is the service for you, as it gives your stylist more time to consult & familiarize themselves with your hair. Shampoo & blowout included."
+        "description": "First time at Salon Citrine? Welcome! This is the service for you, as it gives your stylist more time to consult & familiarize themselves with your hair. Shampoo & blowout included.",
+        "duration": 90,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-22361011-2615-4892-b5c8-3218e1b2b0f9"
       },
       {
         "name": "HAIRCUT",
         "price": "$55+",
-        "description": "For returning clients only! Your classic haircut to maintain your current shape. Shampoo & blowout included.\n*Not for new shapes requiring more than 4+ inches off*"
+        "description": "For returning clients only! Your classic haircut to maintain your current shape. Shampoo & blowout included.\n*Not for new shapes requiring more than 4+ inches off*",
+        "duration": 75,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-0dc9c7c9-4701-4b8a-a776-9d800f503309"
       },
       {
         "name": "TRANSFORMATIVE HAIRCUT",
         "price": "$65+",
-        "description": "Intended for big changes such as taking more than 3\" off and creating new shape. *GREAT for a  new Shag / Mullet / Bob or Pixie*"
+        "description": "Intended for big changes such as taking more than 3\" off and creating new shape. *GREAT for a  new Shag / Mullet / Bob or Pixie*",
+        "duration": 120,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-46f3af3a-b2d0-4c7b-8b23-fb369451fb13"
       },
       {
         "name": "CLIPPER CUT",
         "price": "$45+",
-        "description": "Maintaining your personalized tapered look, typically with clippers, but not limited to.\nShampoo & style included."
+        "description": "Maintaining your personalized tapered look, typically with clippers, but not limited to.\nShampoo & style included.",
+        "duration": 75,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-a0a1b6f8-378e-4975-8bc8-1c114115b7c5"
       },
       {
         "name": "DRY CUT",
         "price": "$60+",
-        "description": "Maintenance haircut with no shampoo, style, or product.  Come in with clean, dry hair down."
+        "description": "Maintenance haircut with no shampoo, style, or product.  Come in with clean, dry hair down.",
+        "duration": 45,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-9c214902-465d-4b03-9b8a-899aa52f9908"
       },
       {
         "name": "FRINGE / UNDERCUT MAINTENANCE",
         "price": "$30+",
-        "description": "This is the ideal freshen up between haircuts. *Good for Bang trims, undercut trims, & neckline cleanups*"
+        "description": "This is the ideal freshen up between haircuts. *Good for Bang trims, undercut trims, & neckline cleanups*",
+        "duration": 45,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-00b78c21-786f-47a8-842f-6a80b6f8111a"
       },
       {
         "name": "BABY'S FIRST HAIRCUT",
         "price": "$20+",
-        "description": "Is it time to get rid of the baby mullet, or simply get it out of their eyes? We're here for you. For 0-2 year olds."
+        "description": "Is it time to get rid of the baby mullet, or simply get it out of their eyes? We're here for you. For 0-2 year olds.",
+        "duration": 45,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-fa1daf7b-e1c9-43bc-a976-802396e3bdbb"
       },
       {
         "name": "LITTLE KID'S HAIRCUT",
         "price": "$35+",
-        "description": "2-5 year olds. *No shampoo experience included."
+        "description": "2-5 year olds. *No shampoo experience included.",
+        "duration": 60,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-07dd7e8c-2ca7-4f2f-888c-47a2a2fbc929"
       },
       {
         "name": "BIG KID'S HAIRCUT",
         "price": "$45+",
-        "description": "6-11 year olds, shampoo experience included if they want!"
+        "description": "6-11 year olds, shampoo experience included if they want!",
+        "duration": 60,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-ef19eea0-67a8-4f73-aefd-454f08e7b7ee"
       },
       {
         "name": "DETANGLE",
         "price": "$65+",
-        "description": "Need some help getting through mats or stubborn tangles, we got you!"
+        "description": "Need some help getting through mats or stubborn tangles, we got you!",
+        "duration": 60,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-0c57a3f1-0ed5-402c-b06c-58905d9909dc"
       }
     ]
   },
@@ -60,32 +80,44 @@
       {
         "name": "FULL DIMENSIONAL COLOR & BLOWOUT",
         "price": "$150+",
-        "description": "Full head of dimensional color. Plus a blowout! \n\n*Good for highlights/lowlights/balayage*"
+        "description": "Full head of dimensional color. Plus a blowout! \n\n*Good for highlights/lowlights/balayage*",
+        "duration": 240,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-3918af76-a2b9-4d4e-aae8-562eeaaa78b7"
       },
       {
         "name": "FULL DIMENSIONAL COLOR & CUT",
         "price": "$200+",
-        "description": "Full head of dimensional color. Plus a custom haircut! \n\n*Good for highlights/lowlights/balayage*"
+        "description": "Full head of dimensional color. Plus a custom haircut! \n\n*Good for highlights/lowlights/balayage*",
+        "duration": 270,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-d13c2061-437f-49ed-9c4d-4adb3e9b6af8"
       },
       {
         "name": "PARTIAL DIMENSIONAL COLOR & BLOWOUT",
         "price": "$90+",
-        "description": "Intended to freshen up existing dimensional hair. Plus a blowout.\n\n*Good for highlights/balayage*"
+        "description": "Intended to freshen up existing dimensional hair. Plus a blowout.\n\n*Good for highlights/balayage*",
+        "duration": 165,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-21d70dc5-c79f-42ae-845a-4439519a52ee"
       },
       {
         "name": "PARTIAL DIMENSIONAL COLOR & CUT",
         "price": "$140+",
-        "description": "Intended to freshen up existing dimensional hair.  Plus a custom haircut. \n\n*Good for highlights/balayage*"
+        "description": "Intended to freshen up existing dimensional hair.  Plus a custom haircut. \n\n*Good for highlights/balayage*",
+        "duration": 195,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-d5bf03db-af1e-4f2e-9838-ce646ebccb61"
       },
       {
         "name": "MINI LIGHTS & BLOWOUT",
         "price": "$80+",
-        "description": "Intended to brighten around the face or along the part. Plus a blowout.\n*Good for face framing highlights/money piece, or color blocking*"
+        "description": "Intended to brighten around the face or along the part. Plus a blowout.\n*Good for face framing highlights/money piece, or color blocking*",
+        "duration": 135,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-7e8a84e9-6b55-4c27-980f-f134a0818414"
       },
       {
         "name": "MINI LIGHTS & CUT",
         "price": "$130+",
-        "description": "Intended to brighten around the face or along the part. Plus a custom Haircut.\n*Good for face framing highlights/ \"Money piece\"*"
+        "description": "Intended to brighten around the face or along the part. Plus a custom Haircut.\n*Good for face framing highlights/ \"Money piece\"*",
+        "duration": 180,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-364fdb43-ddaa-435a-852c-2cccbe231632"
       }
     ]
   },
@@ -95,22 +127,30 @@
       {
         "name": "ALL OVER BLEACH AND TONE & BLOWOUT",
         "price": "$300+",
-        "description": "Solid blonde look, achieved by lightening from scalp to ends and toning to desired tone. Plus a blowout!"
+        "description": "Solid blonde look, achieved by lightening from scalp to ends and toning to desired tone. Plus a blowout!",
+        "duration": 210,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-972b170c-8a00-427a-8ef8-1b9c5372499c"
       },
       {
         "name": "ALL OVER BLEACH AND TONE & HAIRCUT",
         "price": "$375+",
-        "description": "Solid blonde look, achieved by lightening from scalp to ends and toning to desired tone. Plus a custom haircut!"
+        "description": "Solid blonde look, achieved by lightening from scalp to ends and toning to desired tone. Plus a custom haircut!",
+        "duration": 240,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-46bb9fe8-326c-4b19-9e77-3a677650babd"
       },
       {
         "name": "BLEACH ROOT TOUCH UP & BLOWOUT",
         "price": "$150+",
-        "description": "Intended to touch up the roots from previous bleach and toned hair. Plus a blowout!\n\n*ONLY for roots 1\" or under. If longer, book an All Over Bleach & Tone*"
+        "description": "Intended to touch up the roots from previous bleach and toned hair. Plus a blowout!\n\n*ONLY for roots 1\" or under. If longer, book an All Over Bleach & Tone*",
+        "duration": 180,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-be3f9b84-2a29-4c94-8563-ebb5e197394d"
       },
       {
         "name": "BLEACH ROOT TOUCH UP & HAIRCUT",
         "price": "$225+",
-        "description": "Intended to touch up the roots from previous bleach and toned hair. Plus a custom haircut!  \n\n*ONLY for roots 1\" or under. If longer, book an All Over Bleach & Tone*"
+        "description": "Intended to touch up the roots from previous bleach and toned hair. Plus a custom haircut!  \n\n*ONLY for roots 1\" or under. If longer, book an All Over Bleach & Tone*",
+        "duration": 180,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-1f4bfd60-47f5-495a-909f-74dfac687737"
       }
     ]
   },
@@ -120,32 +160,44 @@
       {
         "name": "ALL OVER COLOR WITH BLOWOUT",
         "price": "$100+",
-        "description": "One solid color from scalp to ends, typically darker. *NOT for dimensional color or going lighter* Plus a blowout!"
+        "description": "One solid color from scalp to ends, typically darker. *NOT for dimensional color or going lighter* Plus a blowout!",
+        "duration": 180,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-e25aeada-66a7-4d63-b1a2-522d10460f65"
       },
       {
         "name": "ALL OVER COLOR WITH HAIRCUT",
         "price": "$150+",
-        "description": "One solid color from scalp to ends, typically darker. *NOT for dimensional color or going lighter* Plus a custom haircut!"
+        "description": "One solid color from scalp to ends, typically darker. *NOT for dimensional color or going lighter* Plus a custom haircut!",
+        "duration": 180,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-6f58b18f-a39e-416c-ac37-6cd7f2d9b983"
       },
       {
         "name": "ROOT TOUCH UP WITH A BLOWOUT",
         "price": "$80+",
-        "description": "One solid color intended to touch up all over color. Plus a blowout! \n\n*NOT for highlights or dimensional lightening*"
+        "description": "One solid color intended to touch up all over color. Plus a blowout! \n\n*NOT for highlights or dimensional lightening*",
+        "duration": 135,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-270bcd01-eff5-4231-92a3-2b02811c30d2"
       },
       {
         "name": "ROOT TOUCH UP WITH A HAIRCUT",
         "price": "$130+",
-        "description": "One solid color intended to touch up all over color. Plus a Haircut!\n\n*NOT for highlights or dimensional lightening*"
+        "description": "One solid color intended to touch up all over color. Plus a Haircut!\n\n*NOT for highlights or dimensional lightening*",
+        "duration": 150,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-7757f48a-c34f-4078-89f7-9130ea584413"
       },
       {
         "name": "GLOSS WITH A BLOWOUT",
         "price": "$80+",
-        "description": "Semi permanent color, intended to slightly tint natural color or refresh the tone of previously lightened hair. Plus a blowout."
+        "description": "Semi permanent color, intended to slightly tint natural color or refresh the tone of previously lightened hair. Plus a blowout.",
+        "duration": 90,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-5e95d57f-14bd-4025-86ed-83fd9bd3c1d6"
       },
       {
         "name": "GLOSS WITH A HAIRCUT",
         "price": "$105+",
-        "description": "Semi permanent color, intended to slightly tint natural color or refresh the tone of previously lightened hair. Plus a custom haircut!"
+        "description": "Semi permanent color, intended to slightly tint natural color or refresh the tone of previously lightened hair. Plus a custom haircut!",
+        "duration": 120,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-87f98a08-1e75-46a4-8a02-06f264b8088c"
       }
     ]
   },
@@ -155,12 +207,16 @@
       {
         "name": "COLOR CONSULTATION",
         "price": "$20",
-        "description": "Not sure what service to schedule for? Curious if your hair goals are achievable? This is for you!\n\n*MUST BE SCHEDULED BEFORE BIG COLOR TRANSFORMATIONS*\n*Fee goes towards final service if scheduled at consultation*"
+        "description": "Not sure what service to schedule for? Curious if your hair goals are achievable? This is for you!\n\n*MUST BE SCHEDULED BEFORE BIG COLOR TRANSFORMATIONS*\n*Fee goes towards final service if scheduled at consultation*",
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-2d74cea5-63ac-4e30-b446-ca29da953679"
       },
       {
         "name": "VIVID TRANSFORMATION",
         "price": "$250+",
-        "description": "!! THIS SERVICE REQUIRES A COLOR CONSULTATION BEFORE SCHEDULING !!\n** Consults over text accepted as well as in person **\n*! Final price equals out to $100/hour.\nIntended for full transformation with vivids. Two step process where hair is lifted and then vivid color is applied."
+        "description": "!! THIS SERVICE REQUIRES A COLOR CONSULTATION BEFORE SCHEDULING !!\n** Consults over text accepted as well as in person **\n*! Final price equals out to $100/hour.\nIntended for full transformation with vivids. Two step process where hair is lifted and then vivid color is applied.",
+        "duration": 300,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-8ae997f9-a303-4269-bb6b-b99288ba3a23"
       }
     ]
   },
@@ -170,52 +226,72 @@
       {
         "name": "HOT TOWEL TREATMENT",
         "price": "$5",
-        "description": "*NOT A STANDALONE SERVICE.*\nAdd a hot towel & aromatherapy to your shampoo experience."
+        "description": "*NOT A STANDALONE SERVICE.*\nAdd a hot towel & aromatherapy to your shampoo experience.",
+        "duration": 10,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-1cdfd796-d7e9-4864-9c0d-e1e0e997607a"
       },
       {
         "name": "DEEP CONDITION",
         "price": "$20+",
-        "description": "*NOT A STANDALONE SERVICE.*\nDoes your hair need some extra moisture or strengthening? Book this for a custom deep condition and pampering moment!"
+        "description": "*NOT A STANDALONE SERVICE.*\nDoes your hair need some extra moisture or strengthening? Book this for a custom deep condition and pampering moment!",
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-0a9da2dd-0824-49f8-be43-da5f118c02b6"
       },
       {
         "name": "MALIBU TREATMENT",
         "price": "$30+",
-        "description": "Amazing treatments for pre-color, mineral & buildup removal, post swim or vacation, and more. \n*NOT A STANDALONE SERVICE.*"
+        "description": "Amazing treatments for pre-color, mineral & buildup removal, post swim or vacation, and more. \n*NOT A STANDALONE SERVICE.*",
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-61f15cbf-2afa-4de5-ae5c-49802fe23a15"
       },
       {
         "name": "SCALP REVITALIZING TREATMENT",
         "price": "$40+",
-        "description": "Feel rejuvenated with this scalp & hair treatment!\nFully unwind with a warm, weighted eye mask & cozy aromas. \n»Start off with a stimulating dry brushing. Remove buildup with a double cleanse & scalp scrub. Relax & re-energize with a Jade  comb & thorough massage. Finish with a balancing & hydrating deep condition with a hot towel!\n*Ear plugs available for ultimate relaxation*\n\n*NOT A STANDALONE SERVICE.*"
+        "description": "Feel rejuvenated with this scalp & hair treatment!\nFully unwind with a warm, weighted eye mask & cozy aromas. \n»Start off with a stimulating dry brushing. Remove buildup with a double cleanse & scalp scrub. Relax & re-energize with a Jade  comb & thorough massage. Finish with a balancing & hydrating deep condition with a hot towel!\n*Ear plugs available for ultimate relaxation*\n\n*NOT A STANDALONE SERVICE.*",
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-7410cb7a-ba09-4b81-9267-347c536aa384"
       },
       {
         "name": "K-18 TREATMENT",
         "price": "$40+",
-        "description": "Repair and protect. This can be done with a color service or as a stand alone treatment.\n*Must schedule blowout if scheduling a stand alone treatment*"
+        "description": "Repair and protect. This can be done with a color service or as a stand alone treatment.\n*Must schedule blowout if scheduling a stand alone treatment*",
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-757fa85d-9221-4df8-a198-412cb57e3d54"
       },
       {
         "name": "STYLING EDUCATION",
         "price": "$10+",
-        "description": "Some extra 1 on 1 styling education for you!\n*NOT A STANDALONE SERVICE.*"
+        "description": "Some extra 1 on 1 styling education for you!\n*NOT A STANDALONE SERVICE.*",
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-5269fe7d-8abc-4afb-9db9-13275b318a6e"
       },
       {
         "name": "HAIR TINSEL",
         "price": "$10+",
-        "description": "Make your hair sparkle! \nWe have a variety of colors and application methods available- *If you're wanting a specific color or application method, please leave a note or contact us before appt*\n*Price includes 1 application, additional applications are $5 each"
+        "description": "Make your hair sparkle! \nWe have a variety of colors and application methods available- *If you're wanting a specific color or application method, please leave a note or contact us before appt*\n*Price includes 1 application, additional applications are $5 each",
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-2d01bedf-caf6-4437-bc84-3211ad64825c"
       },
       {
         "name": "BLOWOUT",
         "price": "$50+",
-        "description": "Start with a relaxing shampoo and scalp massage and leave with a beautiful style!"
+        "description": "Start with a relaxing shampoo and scalp massage and leave with a beautiful style!",
+        "duration": 75,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-7f3d8a94-4de9-440c-a8b3-b6ac74d794fc"
       },
       {
         "name": "SILK PRESS",
         "price": "$100+",
-        "description": "Scalp cleanse, deep condition, blow dry & flat iron."
+        "description": "Scalp cleanse, deep condition, blow dry & flat iron.",
+        "duration": 150,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-665ad089-1d2d-40d3-b571-010cc654a158"
       },
       {
         "name": "KERATIN COMPLEX TREATMENT",
         "price": "$300+",
-        "description": "Transform and revitalize your hair with our Keratin Complex Treatment. This professional service nourishes, and smooths your hair, leaving it sleek, shiny, and frizz-free for weeks. Not sure if this is the service for you? Schedule a complimentary consultation!"
+        "description": "Transform and revitalize your hair with our Keratin Complex Treatment. This professional service nourishes, and smooths your hair, leaving it sleek, shiny, and frizz-free for weeks. Not sure if this is the service for you? Schedule a complimentary consultation!",
+        "duration": 120,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-aeb067b2-aa5e-4956-8fe1-8cf50e5d5261"
       }
     ]
   },
@@ -225,12 +301,16 @@
       {
         "name": "CONSULTATION FOR KERATIN COMPLEX",
         "price": "Complimentary",
-        "description": "Curious about getting a keratin treatment? Book this to learn more and see how we can help you!"
+        "description": "Curious about getting a keratin treatment? Book this to learn more and see how we can help you!",
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-981d62ff-e207-40f4-be9f-f327a7c9772b"
       },
       {
         "name": "EXTENSIONS CONSULTATION",
         "price": "Complimentary",
-        "description": "Curious if extensions are right for you? Book this to learn more!"
+        "description": "Curious if extensions are right for you? Book this to learn more!",
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-7447560d-9ec6-49d0-9be7-cac32ee67699"
       }
     ]
   },
@@ -240,112 +320,156 @@
       {
         "name": "NOSTRIL",
         "price": "$15+",
-        "description": "Get those pesky nose hairs taken care of!"
+        "description": "Get those pesky nose hairs taken care of!",
+        "duration": 10,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-1830b210-71bd-4916-a356-b6ff59a08a38"
       },
       {
         "name": "BACK WAX",
         "price": "$75",
-        "description": null
+        "description": null,
+        "duration": 45,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-18275dea-fefd-4f6b-911e-b5900124a5d7"
       },
       {
         "name": "BIKINI WAX",
         "price": "$45",
-        "description": null
+        "description": null,
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-89118257-a5fb-4ce6-8da8-db6b6bd72e11"
       },
       {
         "name": "BRAZILIAN WAX",
         "price": "$80",
-        "description": null
+        "description": null,
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-872872cd-6e59-4992-aa7e-5233423225f7"
       },
       {
         "name": "BROW MAINTENANCE",
         "price": "$15",
-        "description": "Quick clean up!"
+        "description": "Quick clean up!",
+        "duration": 10,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-f0ad17f2-a7a7-476d-9a50-fe219dd75ef7"
       },
       {
         "name": "BROW SHAPING",
         "price": "$20",
-        "description": "Brows needing a little more TLC, include some tweezing and trimming to get things together."
+        "description": "Brows needing a little more TLC, include some tweezing and trimming to get things together.",
+        "duration": 10,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-6684dd85-8142-420e-8b1d-f3e2cc9df01c"
       },
       {
         "name": "BUTTOCKS",
         "price": "$45",
-        "description": null
+        "description": null,
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-acfa5c1a-fe42-4eea-bc88-5f70dad5029a"
       },
       {
         "name": "CHEST WAX",
         "price": "$75",
-        "description": null
+        "description": null,
+        "duration": 45,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-3c51845b-d414-4d61-859c-7db2c5209a3d"
       },
       {
         "name": "CHIN",
         "price": "$15",
-        "description": null
+        "description": null,
+        "duration": 10,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-31291e77-e61c-40fa-9b54-f4a223d1b00e"
       },
       {
         "name": "EAR",
         "price": "$15",
-        "description": null
+        "description": null,
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-e3eddc12-7ad7-443a-9bd0-fbe31c002300"
       },
       {
         "name": "FULL ARM WAX",
         "price": "$75",
-        "description": null
+        "description": null,
+        "duration": 45,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-c985a5a9-1735-4814-9071-e6d9a95e8c87"
       },
       {
         "name": "FULL LEG WAX",
         "price": "$95",
-        "description": null
+        "description": null,
+        "duration": 60,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-b010dfa1-b209-4b1f-af36-7e27210d6ef4"
       },
       {
         "name": "HAIR REDUCTION ENZYME ADD ON",
         "price": "$25",
-        "description": "This enzyme treatment is specially developed for all skin types to help remove unwanted hair growth. The enzyme contains a natural fruit enzyme, papain, which has the ability to gently dissolve keratin (protein constituent of hair), stabilized in an anhydrous gel.\n\nThis can be added to any waxing service. This enzyme only works on areas that have been freshly waxed. We will apply the initial application in the treatment room, and you take the rest home to reapply for the next 36 hours. \n\nAlthough this blocks out 10 mins on the schedule, it doesn't actually add any additional time to your service."
+        "description": "This enzyme treatment is specially developed for all skin types to help remove unwanted hair growth. The enzyme contains a natural fruit enzyme, papain, which has the ability to gently dissolve keratin (protein constituent of hair), stabilized in an anhydrous gel.\n\nThis can be added to any waxing service. This enzyme only works on areas that have been freshly waxed. We will apply the initial application in the treatment room, and you take the rest home to reapply for the next 36 hours. \n\nAlthough this blocks out 10 mins on the schedule, it doesn't actually add any additional time to your service.",
+        "duration": 10,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-8d2e8a6f-cea3-42b9-a51a-9d518ff7e14a"
       },
       {
         "name": "HALF ARM WAX",
         "price": "$45",
-        "description": null
+        "description": null,
+        "duration": 20,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-c1ca8a08-6adc-4511-9b7c-5edce1d5ad5b"
       },
       {
         "name": "HALF LEG",
         "price": "$55",
-        "description": null
+        "description": null,
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-f52db2aa-c00b-41d2-b952-46fbdc8b1a0d"
       },
       {
         "name": "LIP",
         "price": "$12",
-        "description": null
+        "description": null,
+        "duration": 10,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-6ff9e919-ec35-43b8-91e6-debc92fb8ade"
       },
       {
         "name": "LIP AND CHIN",
         "price": "$20",
-        "description": null
+        "description": null,
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-fc3c729a-1147-4a70-b85a-fbd80bec52aa"
       },
       {
         "name": "UNDERARM WAX",
         "price": "$35",
-        "description": null
+        "description": null,
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-de15a469-20b8-4274-bc50-87b83874b8f7"
       },
       {
         "name": "FULL FACE WAX",
         "price": "$40",
-        "description": "A full face wax can include brow, lip, chin as well as the sides of the face, and under the jawline."
+        "description": "A full face wax can include brow, lip, chin as well as the sides of the face, and under the jawline.",
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-e0986f1c-28da-49ca-b698-60b62926ebc6"
       },
       {
         "name": "BROW TINT",
         "price": "$30",
-        "description": null
+        "description": null,
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-6346e575-f0b9-4653-a91f-2b62377c101f"
       },
       {
         "name": "LASH TINT",
         "price": "$30",
-        "description": null
+        "description": null,
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-73b21624-b51f-4e57-960b-0f5855eac8ff"
       },
       {
         "name": "BROW WAX & TINT",
         "price": "$45",
-        "description": null
+        "description": null,
+        "duration": 20,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-7d8ad700-d4a3-4bf3-9a33-22f465f76283"
       }
     ]
   },
@@ -355,77 +479,107 @@
       {
         "name": "BESPOKE KOREAN FACIAL- 60 MINUTES",
         "price": "$125",
-        "description": "Enjoy a personalized facial experience where every step is tailored to your unique skincare concerns and goals, ensuring that you get the most out of your visit with individualized protocols and targeted treatments."
+        "description": "Enjoy a personalized facial experience where every step is tailored to your unique skincare concerns and goals, ensuring that you get the most out of your visit with individualized protocols and targeted treatments.",
+        "duration": 60,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-2e585192-6beb-48b0-93dc-524b34c86f8f"
       },
       {
         "name": "ACNE FACIAL- INITIAL VISIT",
         "price": "$300",
-        "description": "Our Acne Facial combines advanced techniques and carefully chosen products to combat blemishes, breakouts, and congestion for clearer, healthier skin. With a focus on preserving the integrity of the epidermis, our Korean-inspired approach minimizes unnecessary stimulation to the skin's defense and immune systems.\nProper homecare is required to achieve the desired results, so cost of the first treatment includes professional product for use at home."
+        "description": "Our Acne Facial combines advanced techniques and carefully chosen products to combat blemishes, breakouts, and congestion for clearer, healthier skin. With a focus on preserving the integrity of the epidermis, our Korean-inspired approach minimizes unnecessary stimulation to the skin's defense and immune systems.\nProper homecare is required to achieve the desired results, so cost of the first treatment includes professional product for use at home.",
+        "duration": 90,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-c0252187-17c3-4139-b303-869e90e6fe89"
       },
       {
         "name": "ACNE FACIAL-RETURNING CLIENT",
         "price": "$175",
-        "description": "Our Acne Facial combines advanced techniques and carefully chosen products to combat blemishes, breakouts, and congestion for clearer, healthier skin. With a focus on preserving the integrity of the epidermis, our Korean-inspired approach minimizes unnecessary stimulation to the skin's defense and immune systems."
+        "description": "Our Acne Facial combines advanced techniques and carefully chosen products to combat blemishes, breakouts, and congestion for clearer, healthier skin. With a focus on preserving the integrity of the epidermis, our Korean-inspired approach minimizes unnecessary stimulation to the skin's defense and immune systems.",
+        "duration": 75,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-c0aab531-2be2-4f38-821a-dd216616eccc"
       },
       {
         "name": "BESPOKE KOREAN FACIAL- 30 MINUTES",
         "price": "$75",
-        "description": "Enjoy a personalized facial experience where every step is tailored to your unique skincare concerns and goals, ensuring that you get the most out of your visit with individualized protocols and targeted treatments. These facials can include one or more of the following treatments, depending on time"
+        "description": "Enjoy a personalized facial experience where every step is tailored to your unique skincare concerns and goals, ensuring that you get the most out of your visit with individualized protocols and targeted treatments. These facials can include one or more of the following treatments, depending on time",
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-8531cb81-b17d-4776-aff5-48e435e94e26"
       },
       {
         "name": "BESPOKE KOREAN FACIAL- 75 MINUTES",
         "price": "$175",
-        "description": "Enjoy a personalized facial experience where every step is tailored to your unique skincare concerns and goals, ensuring that you get the most out of your visit with individualized protocols and targeted treatments."
+        "description": "Enjoy a personalized facial experience where every step is tailored to your unique skincare concerns and goals, ensuring that you get the most out of your visit with individualized protocols and targeted treatments.",
+        "duration": 75,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow"
       },
       {
         "name": "MICRONEEDLING",
         "price": "$175+",
-        "description": "A collagen-stimulating treatment customized to your skin goals."
+        "description": "A collagen-stimulating treatment customized to your skin goals.",
+        "duration": null,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow"
       },
       {
         "name": "GLOW PEEL",
         "price": "$125",
-        "description": "This gentle brightening and rejuvenating peel leaves skin glowing, lightening hyperpigmentation, and working beneath the skin’s surface to repair free radical damage at the cellular level.  Glow Peel features a gently acidic 2.9pH profile, with 40% glycolic acid to exfoliate surface skin cells and reveal healthy, vibrant skin beneath. Often referred to as a “lunchtime peel,” Glow Peel requires no downtime, leaving skin softer, smoother, and brighter in under an hour."
+        "description": "This gentle brightening and rejuvenating peel leaves skin glowing, lightening hyperpigmentation, and working beneath the skin’s surface to repair free radical damage at the cellular level.  Glow Peel features a gently acidic 2.9pH profile, with 40% glycolic acid to exfoliate surface skin cells and reveal healthy, vibrant skin beneath. Often referred to as a “lunchtime peel,” Glow Peel requires no downtime, leaving skin softer, smoother, and brighter in under an hour.",
+        "duration": 45,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-982e5bc4-abb1-4aba-947f-ec786f5fff0b"
       },
       {
         "name": "GREEN SEA SPICULE PEEL-1ST PEEL",
         "price": "$250",
-        "description": "Spicule Peels are a resurfacing treatment that is natural, safe for all fitzpatricks, and safe during pregnancy. This is ideal for treating texture issues (particularly acne scarring) and hyperpigmentation. This peel works by driving spicules into the skin, which stimulates collagen, exfoliates, and pulls pigment, all while delivering a polypharmacy of vitamins and nutrients into the skin. \n\nThis peel requires 2 weeks of at home prep, and the cost of the service includes the required homecare products for both pre & post peel."
+        "description": "Spicule Peels are a resurfacing treatment that is natural, safe for all fitzpatricks, and safe during pregnancy. This is ideal for treating texture issues (particularly acne scarring) and hyperpigmentation. This peel works by driving spicules into the skin, which stimulates collagen, exfoliates, and pulls pigment, all while delivering a polypharmacy of vitamins and nutrients into the skin. \n\nThis peel requires 2 weeks of at home prep, and the cost of the service includes the required homecare products for both pre & post peel.",
+        "duration": 60,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-5409e910-3eb1-4dc8-a3ed-7bb6f0d5ba94"
       },
       {
         "name": "GREEN SEA PEEL-RETURNING CLIENT",
         "price": "$175",
-        "description": "Choose this for all additional GSP treatments after your initial Green Sea Peel."
+        "description": "Choose this for all additional GSP treatments after your initial Green Sea Peel.",
+        "duration": 45,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-ce2b8182-cdc2-4793-a7ef-fceef77170f8"
       },
       {
         "name": "ILLUMIN BIPHASIC CHEMICAL PEEL",
         "price": "$125",
-        "description": "The Illumin peel is best for treating acne, scar reduction, hyperpigmentation, and balancing overactive sebum. This is an advanced treatment, and cannot be done on your first visit."
+        "description": "The Illumin peel is best for treating acne, scar reduction, hyperpigmentation, and balancing overactive sebum. This is an advanced treatment, and cannot be done on your first visit.",
+        "duration": 45,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-a022cfaa-a282-47e1-ac59-1d093641e6d3"
       },
       {
         "name": "KOREAN NEEDLE-FREE FILLER FACIAL",
         "price": "$200",
-        "description": "This non-invasive, anti-aging skincare treatment softens fine lines & wrinkles by plumping the skin and adding volume back to the face & neck . Poly L-Lactic Acid is applied topically with a blend of other anti-aging ingredients and driven in with a patented delivery system. Collagen stimulation continues for 3 weeks after a single treatment, and up to 5 months after a series of 3-5 treatment done a week apart."
+        "description": "This non-invasive, anti-aging skincare treatment softens fine lines & wrinkles by plumping the skin and adding volume back to the face & neck . Poly L-Lactic Acid is applied topically with a blend of other anti-aging ingredients and driven in with a patented delivery system. Collagen stimulation continues for 3 weeks after a single treatment, and up to 5 months after a series of 3-5 treatment done a week apart.",
+        "duration": 75,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-8b7ee469-3bb5-4261-9bb0-d8207be0e16b"
       },
       {
         "name": "LAZER PEEL",
         "price": "$175",
-        "description": "The LaZer Peel is a medium-depth peel (pH 1.7). This peel is incredible for tackling stubborn hyperpigmentation including Melasma. \n\nThis is a strong peel that will require some downtime, and is only available to regular clients, due to the importance of following all pre and post peel care requirements for best results. This cannot be booked for your first visit."
+        "description": "The LaZer Peel is a medium-depth peel (pH 1.7). This peel is incredible for tackling stubborn hyperpigmentation including Melasma. \n\nThis is a strong peel that will require some downtime, and is only available to regular clients, due to the importance of following all pre and post peel care requirements for best results. This cannot be booked for your first visit.",
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-1d0c10ce-ad56-4e23-88bd-b89ebe10e8e8"
       },
       {
         "name": "SUNBURN RX EXPRESS",
         "price": "$75",
-        "description": "Get a quick and rejuvenating Sunburn RX Express treatment that uses Korean skincare products to soothe, hydrate, and heal sunburnt skin in just 30 minutes, leaving you with a refreshed complexion and relief from discomfort. Embrace the revitalizing effects and enjoy a renewed glow"
+        "description": "Get a quick and rejuvenating Sunburn RX Express treatment that uses Korean skincare products to soothe, hydrate, and heal sunburnt skin in just 30 minutes, leaving you with a refreshed complexion and relief from discomfort. Embrace the revitalizing effects and enjoy a renewed glow",
+        "duration": 30,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-d50f5517-47e1-4995-978d-a59c7bd6390a"
       },
       {
         "name": "CLEAR PEEL",
         "price": "$125",
-        "description": "This incredible formula helps treat acne and reduce inflammation.  This peel helps to calm redness, soothe irritation, and combat the oxidative stress that can contribute to acne and post-inflammatory hyperpigmentation."
+        "description": "This incredible formula helps treat acne and reduce inflammation.  This peel helps to calm redness, soothe irritation, and combat the oxidative stress that can contribute to acne and post-inflammatory hyperpigmentation.",
+        "duration": 60,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-2d312175-a9a4-43d9-ba32-7e0f15f3f3e7"
       },
       {
         "name": "SKINCARE CONSULTATION",
         "price": "Complimentary",
-        "description": "Don’t know where to start? Book a complimentary 15 minute skincare consultation!"
+        "description": "Don’t know where to start? Book a complimentary 15 minute skincare consultation!",
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-f2fdf0c2-97fe-415e-808e-befa3d615400"
       }
     ]
   },
@@ -435,27 +589,37 @@
       {
         "name": "MAKEUP APPLICATION (BEAUTY MAKEUP)",
         "price": "$125+",
-        "description": "Elevate your beauty experience! I specialize in creating personalized looks that celebrate your individuality!"
+        "description": "Elevate your beauty experience! I specialize in creating personalized looks that celebrate your individuality!",
+        "duration": 60,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-fc0c4247-caee-4810-976d-d9fee92f107f"
       },
       {
         "name": "FX/BODY PAINTING MAKEUP",
         "price": "$250+",
-        "description": "Every day is Halloween in Irvington! SFX and Body Painting Makeup Appointments are your ticket to a world of stunning transformations, from otherworldly creatures to realistic injury simulations. Whether you dream of becoming an alien, monster, or fantastical being, I can bring your vision to life! These appointments will require a (free) consultation, as well as additional cost for materials, depending on design. Application can be on or off site, depending on need."
+        "description": "Every day is Halloween in Irvington! SFX and Body Painting Makeup Appointments are your ticket to a world of stunning transformations, from otherworldly creatures to realistic injury simulations. Whether you dream of becoming an alien, monster, or fantastical being, I can bring your vision to life! These appointments will require a (free) consultation, as well as additional cost for materials, depending on design. Application can be on or off site, depending on need.",
+        "duration": 120,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-a57285f2-250c-4bf0-b6b0-952ad6e9a8ba"
       },
       {
         "name": "MAKEUP CONSULTATION",
         "price": "Complimentary",
-        "description": "Before diving into the good stuff, let's sit down for a Makeup Consultation! This consultation not only sets the stage for a personalized experience but also ensures you're confident in your service choice. This is required before booking any makeup application service."
+        "description": "Before diving into the good stuff, let's sit down for a Makeup Consultation! This consultation not only sets the stage for a personalized experience but also ensures you're confident in your service choice. This is required before booking any makeup application service.",
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-7ff9cfa2-8384-49d2-860a-22aee925536e"
       },
       {
         "name": "MAKEUP LESSON",
         "price": "$150+",
-        "description": "Want some help with your makeup game? Let's work together to level up! We can take a look at what you're already doing, what products you're using, what's working for you, what isn't and from that, we'll create a makeup routine that works for you. We can also discuss application and \"how-to\" at each step along the way! These lessons are for you, always 1 on 1, and we can address whatever you'd like."
+        "description": "Want some help with your makeup game? Let's work together to level up! We can take a look at what you're already doing, what products you're using, what's working for you, what isn't and from that, we'll create a makeup routine that works for you. We can also discuss application and \"how-to\" at each step along the way! These lessons are for you, always 1 on 1, and we can address whatever you'd like.",
+        "duration": 90,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-c814b382-67a3-4550-9544-45ee861cf16f"
       },
       {
         "name": "PERSONAL SHOPPING",
         "price": "$50+",
-        "description": null
+        "description": null,
+        "duration": 15,
+        "bookingUrl": "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-454406e5-89c3-4d8a-9e4a-bf0705e829a0"
       }
     ]
   }

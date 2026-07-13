@@ -1,0 +1,29 @@
+---
+import type { VisitorMenuCategory } from "../../data/menu";
+
+interface Props {
+  categories: VisitorMenuCategory[];
+}
+
+const { categories } = Astro.props;
+---
+
+<nav class="menu-category-nav" aria-label="Service categories" data-menu-category-nav>
+  <ul class="menu-category-nav__list">
+    {
+      categories.map((category) => (
+        <li class="menu-category-nav__item">
+          <a
+            class="menu-category-nav__link"
+            href={`#${category.id}`}
+            data-menu-nav-link={category.id}
+            data-analytics-action="category-nav"
+            data-analytics-category={category.id}
+          >
+            {category.name}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

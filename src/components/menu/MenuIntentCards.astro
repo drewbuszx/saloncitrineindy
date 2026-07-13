@@ -1,0 +1,27 @@
+---
+import { MENU_INTENT_CARDS } from "../../data/menu-config";
+---
+
+<div class="menu-intent" data-menu-intent>
+  {
+    MENU_INTENT_CARDS.map((card) => (
+      <article
+        class:list={[
+          "menu-intent__card",
+          card.compact && "menu-intent__card--compact",
+        ]}
+      >
+        <h2 class="menu-intent__title">{card.title}</h2>
+        <p class="menu-intent__description">{card.description}</p>
+        <a
+          class="menu-intent__cta"
+          href={`#${card.targetId}`}
+          data-menu-intent-link={card.targetId}
+          data-analytics-action={card.analyticsAction}
+        >
+          {card.cta}
+        </a>
+      </article>
+    ))
+  }
+</div>
