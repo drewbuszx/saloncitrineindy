@@ -734,6 +734,17 @@ button {
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
 }
 
+/*
+ * Below 380px, IRVINGTON's clamped minimum width is wider than the title's
+ * padded content box. That caps the kicker measurement and makes its fit-text
+ * search jump to an unusably large font size.
+ */
+@media (max-width: 379px) {
+  .hero__title-kicker {
+    display: none;
+  }
+}
+
 .hero__scroll {
   position: absolute;
   /* Sit just above the kicker + IRVINGTON stack (title is bottom-aligned). */
@@ -4101,12 +4112,22 @@ button {
 
   .site-header__nav--mobile {
     display: flex;
+    min-height: 0;
     justify-content: flex-start;
+    gap: 0;
     color: var(--color-text);
-    padding-top: clamp(3.25rem, 12vh, 5rem);
-    padding-bottom: clamp(2.5rem, 10vh, 4.75rem);
+    padding-top: 5.5rem;
+    padding-bottom: 1.5rem;
     padding-inline: max(1rem, env(safe-area-inset-right, 0px))
       max(1rem, env(safe-area-inset-left, 0px));
+  }
+
+  .site-header__mobile-links {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
   }
 
   .site-header__nav--mobile .site-header__link:hover,
@@ -4120,8 +4141,8 @@ button {
 
   .site-header__nav.is-open .site-header__menu-close {
     position: fixed;
-    top: calc(var(--header-height) + 0.5rem);
-    right: max(0.75rem, env(safe-area-inset-right, 0px));
+    top: calc(var(--header-height) + 1rem);
+    right: max(1rem, env(safe-area-inset-right, 0px));
     z-index: 106;
   }
 
@@ -4181,8 +4202,10 @@ button {
 
   .site-header__theme-toggle--mobile {
     display: inline-flex;
+    flex: 0 0 auto;
     width: 44px;
     height: 44px;
+    margin-top: auto;
   }
 
   .site-header__nav--mobile .site-header__link,

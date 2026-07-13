@@ -595,6 +595,7 @@ const pageDescription =
     const kicker = document.querySelector<HTMLElement>(".hero__title-kicker");
     const place = document.querySelector<HTMLElement>(".hero__title-place");
     if (!kicker || !place) return;
+    if (getComputedStyle(kicker).display === "none") return;
 
     // Clear a previous explicit width so measurements shrink-wrap to glyphs.
     kicker.style.width = "max-content";

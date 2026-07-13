@@ -121,18 +121,20 @@ const externalLinkAttrs = (external?: boolean) =>
       aria-hidden="true"
       data-mobile-nav
     >
-      {
-        mobileNavLinks.map((link) => (
-          <a
-            class="site-header__link"
-            href={link.href}
-            aria-label={link.external ? `${link.label} (opens in new tab)` : undefined}
-            {...externalLinkAttrs(link.external)}
-          >
-            {link.label}
-          </a>
-        ))
-      }
+      <div class="site-header__mobile-links">
+        {
+          mobileNavLinks.map((link) => (
+            <a
+              class="site-header__link"
+              href={link.href}
+              aria-label={link.external ? `${link.label} (opens in new tab)` : undefined}
+              {...externalLinkAttrs(link.external)}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
 
       <button
         class="site-header__theme-toggle site-header__theme-toggle--mobile"
