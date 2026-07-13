@@ -58,7 +58,29 @@ const ogImageUrl = new URL(ogImage, siteOrigin).href;
     <link rel="canonical" href={canonicalUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href={GOOGLE_FONTS_URL} />
+    <link
+      rel="stylesheet"
+      href={GOOGLE_FONTS_URL}
+      media="print"
+      data-google-fonts
+    />
+    <noscript>
+      <link rel="stylesheet" href={GOOGLE_FONTS_URL} />
+    </noscript>
+    <script is:inline>
+      (function () {
+        var link = document.querySelector("link[data-google-fonts]");
+        if (!link) return;
+        var activate = function () {
+          link.media = "all";
+        };
+        if (link.sheet) {
+          activate();
+        } else {
+          link.addEventListener("load", activate);
+        }
+      })();
+    </script>
     <link
       rel="preload"
       href="/fonts/BasicTitle.ttf"
@@ -149,18 +171,17 @@ const ogImageUrl = new URL(ogImage, siteOrigin).href;
         href={resolvedBookBarUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Book an appointment at ${site.name} (opens in new tab)`}
         data-booking-link
         data-booking-stylist={bookBarStylistSlug}
       >
-        Book Now
+        Book Now<span class="visually-hidden"> at {site.name} (opens in new tab)</span>
       </a>
     </aside>
     <script>
       const desktopMq = window.matchMedia("(min-width: 1101px)");
       const prefersDarkMq = window.matchMedia("(prefers-color-scheme: dark)");
-      const mobileThemeToggle = document.querySelector<HTMLButtonElement>(
-        ".site-header__theme-toggle--mobile[data-theme-toggle]",
+      const themeToggles = Array.from(
+        document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]"),
       );
       const storageKey = "theme";
 
@@ -183,7 +204,7 @@ const ogImageUrl = new URL(ogImage, siteOrigin).href;
       function updateToggleLabels(theme: "light" | "dark") {
         const label =
           theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
-        mobileThemeToggle?.setAttribute("aria-label", label);
+        themeToggles.forEach((toggle) => toggle.setAttribute("aria-label", label));
       }
 
       function applyTheme(theme: "light" | "dark") {
@@ -197,14 +218,16 @@ const ogImageUrl = new URL(ogImage, siteOrigin).href;
 
       syncTheme();
 
-      mobileThemeToggle?.addEventListener("click", () => {
-        const current =
-          document.documentElement.getAttribute("data-theme") === "dark"
-            ? "dark"
-            : "light";
-        const next = current === "dark" ? "light" : "dark";
-        localStorage.setItem(storageKey, next);
-        applyTheme(next);
+      themeToggles.forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+          const current =
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "dark"
+              : "light";
+          const next = current === "dark" ? "light" : "dark";
+          localStorage.setItem(storageKey, next);
+          applyTheme(next);
+        });
       });
 
       desktopMq.addEventListener("change", syncTheme);

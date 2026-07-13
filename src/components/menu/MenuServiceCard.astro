@@ -1,5 +1,6 @@
 ---
 import type { MenuService } from "../../data/menu";
+import { MENU_CONSULTATION_CTA } from "../../data/menu-config";
 
 interface Props {
   service: MenuService;
@@ -7,9 +8,25 @@ interface Props {
 
 const { service } = Astro.props;
 const metaParts = [service.priceDisplay, service.durationDisplay].filter(Boolean);
+
+/** Only consultation-specific actions stay on cards — not per-service "Book This Service". */
+const showConsultationCta =
+  !service.isAddon && (service.isConsultation || service.requiresConsultation);
+
+const consultationHref = service.isConsultation
+  ? service.bookingUrl
+  : "#consultations";
+
+const consultationIsBookingLink = service.isConsultation;
 ---
 
-<article class="menu-service-card" data-menu-service-card>
+<article
+  class:list={[
+    "menu-service-card",
+    showConsultationCta && "menu-service-card--actionable",
+  ]}
+  data-menu-service-card
+>
   <div class="menu-service-card__header">
     <h3 class="menu-service-card__name">{service.name}</h3>
     {
@@ -43,15 +60,27 @@ const metaParts = [service.priceDisplay, service.durationDisplay].filter(Boolean
     )
   }
 
-  <a
-    class="menu-service-card__book"
-    href={service.bookingUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    data-booking-link
-    data-analytics-action="service-book"
-    data-analytics-service={service.name}
-  >
-    Book This Service
-  </a>
+  {
+    showConsultationCta && (
+      <a
+        class="menu-service-card__consult"
+        href={consultationHref}
+        {...(consultationIsBookingLink
+          ? {
+              target: "_blank",
+              rel: "noopener noreferrer",
+              "data-booking-link": true,
+            }
+          : {
+              "data-menu-intent-link": "consultations",
+            })}
+        data-analytics-action={
+          service.isConsultation ? "consultation-service-book" : "consultation-required-cta"
+        }
+        data-analytics-service={service.name}
+      >
+        {MENU_CONSULTATION_CTA}
+      </a>
+    )
+  }
 </article>

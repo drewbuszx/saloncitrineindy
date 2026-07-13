@@ -1,5 +1,10 @@
 ---
 import type { VisitorMenuCategory } from "../../data/menu";
+import { BOOKING_URL } from "../../data/site";
+import {
+  MENU_BOOKING_CTA,
+  MENU_CONSULTATION_CTA,
+} from "../../data/menu-config";
 import MenuConsultationPanel from "./MenuConsultationPanel.astro";
 import MenuServiceCard from "./MenuServiceCard.astro";
 
@@ -10,6 +15,10 @@ interface Props {
 const { category } = Astro.props;
 const panelId = `${category.id}-panel`;
 const contentId = `${category.id}-content`;
+const isConsultationsCategory = category.id === "consultations";
+const categoryCtaLabel = isConsultationsCategory
+  ? MENU_CONSULTATION_CTA
+  : MENU_BOOKING_CTA;
 ---
 
 <section
@@ -58,6 +67,20 @@ const contentId = `${category.id}-content`;
       {category.services.map((service) => (
         <MenuServiceCard service={service} />
       ))}
+    </div>
+
+    <div class="menu-category-section__booking">
+      <a
+        class="menu-category-section__book-cta"
+        href={BOOKING_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-booking-link
+        data-analytics-action="category-book"
+        data-analytics-category={category.id}
+      >
+        {categoryCtaLabel}
+      </a>
     </div>
   </div>
 </section>

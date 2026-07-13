@@ -127,7 +127,7 @@ const pageDescription =
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
-  preloadImage="/images/background.png"
+  preloadImage="/images/background.webp"
 >
   <Header />
 
@@ -141,7 +141,7 @@ const pageDescription =
         >
           <img
             class="hero__image hero__image--slide"
-            src="/images/background.png"
+            src="/images/background.webp"
             alt=""
             width="1024"
             height="768"
@@ -151,20 +151,22 @@ const pageDescription =
           />
           <img
             class="hero__image hero__image--slide"
-            src="/images/irvington-slideshow-1.png"
+            src="/images/irvington-slideshow-1.webp"
             alt=""
             width="819"
             height="1024"
             loading="lazy"
+            decoding="async"
             aria-hidden="true"
           />
           <img
             class="hero__image hero__image--slide"
-            src="/images/irvington-slideshow-2.png"
+            src="/images/irvington-slideshow-2.webp"
             alt=""
-            width="1600"
-            height="1200"
+            width="820"
+            height="1024"
             loading="lazy"
+            decoding="async"
             aria-hidden="true"
           />
         </div>
@@ -283,7 +285,7 @@ const pageDescription =
         >
           <img
             class="about-image__photo about-image__photo--slide"
-            src="/images/services-slideshow-1.png"
+            src="/images/services-slideshow-1.webp"
             alt=""
             width="1024"
             height="509"
@@ -292,20 +294,22 @@ const pageDescription =
           />
           <img
             class="about-image__photo about-image__photo--slide"
-            src="/images/services-slideshow-2.png"
+            src="/images/services-slideshow-2.webp"
             alt=""
             width="1024"
             height="509"
             loading="lazy"
+            decoding="async"
             aria-hidden="true"
           />
           <img
             class="about-image__photo about-image__photo--slide"
-            src="/images/services-slideshow-3.png"
+            src="/images/services-slideshow-3.webp"
             alt=""
             width="1024"
             height="509"
             loading="lazy"
+            decoding="async"
             aria-hidden="true"
           />
         </div>
@@ -443,29 +447,32 @@ const pageDescription =
       >
         <img
           class="connect-image__photo connect-image__photo--slide"
-          src="/images/about-team.png"
+          src="/images/about-team.webp"
           alt=""
           width="1022"
           height="508"
           loading="lazy"
+          decoding="async"
           aria-hidden="true"
         />
         <img
           class="connect-image__photo connect-image__photo--slide"
-          src="/images/connect-slideshow-2.png"
+          src="/images/connect-slideshow-2.webp"
           alt=""
           width="1022"
           height="508"
           loading="lazy"
+          decoding="async"
           aria-hidden="true"
         />
         <img
           class="connect-image__photo connect-image__photo--slide"
-          src="/images/connect-slideshow-3.png"
+          src="/images/connect-slideshow-3.webp"
           alt=""
           width="1022"
           height="508"
           loading="lazy"
+          decoding="async"
           aria-hidden="true"
         />
       </div>
@@ -506,14 +513,14 @@ const pageDescription =
                 href={site.address.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Get directions to ${site.name}, ${site.address.street}, ${site.address.city}`}
               >
                 {site.address.street}<br />
                 {site.address.city}, {site.address.state} {site.address.zip}
+                <span class="visually-hidden"> (get directions, opens in new tab)</span>
               </a>
             </address>
 
-            <div class="connect-hours" aria-label="Salon hours">
+            <div class="connect-hours" role="group" aria-label="Salon hours">
               {
                 hoursGroups.map((group) => (
                   <p class="connect-hours__group">
@@ -533,16 +540,16 @@ const pageDescription =
               <a
                 class="connect-contact__link connect-contact__link--action"
                 href={site.phoneHref}
-                aria-label={`Call ${site.name} at ${site.phone}`}
               >
                 {site.phone}
+                <span class="visually-hidden"> (call {site.name})</span>
               </a>
               <a
                 class="connect-contact__link connect-contact__link--action"
                 href={`mailto:${site.email}`}
-                aria-label={`Email ${site.name} at ${site.email}`}
               >
                 {site.email}
+                <span class="visually-hidden"> (email {site.name})</span>
               </a>
               <a
                 class="connect-contact__link social-link"
@@ -559,6 +566,7 @@ const pageDescription =
                   decoding="async"
                 />
                 {socialDisplayHandle(site.instagram)}
+                <span class="visually-hidden"> on Instagram (opens in new tab)</span>
               </a>
             </div>
           </div>

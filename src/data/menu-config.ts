@@ -19,7 +19,19 @@ export type ServiceLabel =
   | "Major Transformation"
   | "Existing Clients"
   | "Price Varies"
-  | "Advanced Treatment";
+  | "Advanced Treatment"
+  | "Add-On Service";
+
+/** Primary CTA for main GlossGenius booking-flow links on the menu page. */
+export const MENU_BOOKING_CTA = "View Availability & Book";
+
+export const MENU_CONSULTATION_CTA = "Start With a Consultation";
+
+export const MENU_TOP_BOOKING_COPY =
+  "Ready to schedule? Choose a provider and service in online booking — starting prices here are a guide.";
+
+export const MENU_FOOTER_BOOKING_COPY =
+  "When you are ready, continue to online booking to choose a provider, pick a service, and find a time that works.";
 
 export interface MenuCategoryDefinition {
   id: MenuCategoryId;

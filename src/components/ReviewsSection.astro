@@ -77,7 +77,8 @@ function stars(rating: number | null) {
             reviews.map((review) => (
               <article class="review-card" data-review-card>
                 {review.rating && (
-                  <p class="review-card__rating" aria-label={`${review.rating} out of 5 stars`}>
+                  <p class="review-card__rating">
+                    <span class="visually-hidden">{review.rating} out of 5 stars</span>
                     <span aria-hidden="true">{stars(review.rating)}</span>
                   </p>
                 )}
@@ -96,8 +97,8 @@ function stars(rating: number | null) {
         </div>
       </div>
 
-      <div class="reviews-carousel__footer" data-reviews-footer hidden>
-        <div class="reviews-carousel__dots" data-reviews-dots role="tablist" aria-label="Review pages"></div>
+        <div class="reviews-carousel__footer" data-reviews-footer hidden>
+        <div class="reviews-carousel__dots" data-reviews-dots role="group" aria-label="Review pages"></div>
       </div>
     </div>
   </div>
@@ -154,9 +155,11 @@ function stars(rating: number | null) {
           const button = document.createElement("button");
           button.type = "button";
           button.className = "reviews-carousel__dot";
-          button.setAttribute("role", "tab");
-          button.setAttribute("aria-controls", "reviews-carousel-viewport");
-          button.setAttribute("aria-label", `Go to review page ${index + 1} of ${pageCount}`);
+          button.setAttribute(
+            "aria-label",
+            `Go to review page ${index + 1} of ${pageCount}`,
+          );
+          button.setAttribute("aria-current", index === currentPage ? "true" : "false");
           button.addEventListener("click", () => {
             goToPage(index);
             startAutoplay();
@@ -175,11 +178,11 @@ function stars(rating: number | null) {
       dotButtons.forEach((button, index) => {
         const isActive = index === currentPage;
         button.classList.toggle("is-active", isActive);
-        button.setAttribute("aria-selected", isActive ? "true" : "false");
+        button.setAttribute("aria-current", isActive ? "true" : "false");
       });
 
       const activeDot = dotButtons[currentPage];
-      if (activeDot) {
+      if (activeDot && !reducedMotion) {
         activeDot.classList.remove("is-active");
         void activeDot.offsetWidth;
         activeDot.classList.add("is-active");

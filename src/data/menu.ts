@@ -23,6 +23,9 @@ export interface MenuService extends RawMenuService {
   priceDisplay: string;
   durationDisplay: string | null;
   bookingUrl: string;
+  isAddon: boolean;
+  isConsultation: boolean;
+  requiresConsultation: boolean;
 }
 
 export interface VisitorMenuCategory {
@@ -91,15 +94,33 @@ function formatPriceDisplay(price: string): string {
   return price;
 }
 
+function isAddonService(name: string, description: string | null): boolean {
+  const text = `${name} ${description ?? ""}`.toLowerCase();
+  return (
+    /\badd[-\s]?ons?\b/.test(text) ||
+    /not a standalone/.test(text) ||
+    /\baddon\b/.test(text)
+  );
+}
+
+function isConsultationService(name: string, categoryId: MenuCategoryId): boolean {
+  return categoryId === "consultations" || /\bconsultation\b/i.test(name);
+}
+
 function deriveLabels(
   name: string,
   price: string,
   description: string | null,
   categoryId: MenuCategoryId,
+  isAddon: boolean,
 ): ServiceLabel[] {
   const upper = name.toUpperCase();
   const text = `${name} ${description ?? ""}`.toLowerCase();
   const labels: ServiceLabel[] = [];
+
+  if (isAddon) {
+    labels.push("Add-On Service");
+  }
 
   if (upper.includes("NEW CLIENT")) {
     labels.push("Best for New Clients");
@@ -153,17 +174,30 @@ function enrichService(
 ): MenuService {
   const { body, qualifier } = splitDescription(service.description);
   const displayName = titleCaseServiceName(service.name);
+  const isAddon = isAddonService(service.name, service.description);
+  const isConsultation = isConsultationService(service.name, categoryId);
+  const labels = deriveLabels(
+    service.name,
+    service.price,
+    service.description,
+    categoryId,
+    isAddon,
+  );
+  const requiresConsultation = labels.includes("Consultation Required");
 
   return {
     ...service,
     name: displayName,
     sourceCategory,
-    labels: deriveLabels(service.name, service.price, service.description, categoryId),
+    labels,
     descriptionBody: body,
     qualifier,
     priceDisplay: formatPriceDisplay(service.price),
     durationDisplay: formatDuration(service.duration),
     bookingUrl: service.bookingUrl ?? BOOKING_URL,
+    isAddon,
+    isConsultation,
+    requiresConsultation,
   };
 }
 
