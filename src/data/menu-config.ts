@@ -241,10 +241,7 @@ const ADVANCED_SKINCARE_NAMES = new Set([
 const MAKEUP_EXCLUDED_FROM_MAKEUP = new Set(["MAKEUP CONSULTATION"]);
 
 /** Compact presentation even when the parent category defaults to full cards. */
-export const COMPACT_SERVICE_NAMES = new Set([
-  "PERSONAL SHOPPING",
-  "SUNBURN RX EXPRESS",
-]);
+export const COMPACT_SERVICE_NAMES = new Set(["PERSONAL SHOPPING"]);
 
 export function resolveMenuCategoryId(
   sourceCategory: string,

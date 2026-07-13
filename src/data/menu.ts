@@ -381,11 +381,36 @@ const DISPLAY_OVERRIDES: Record<string, DisplayOverride> = {
   },
 };
 
-const COLOR_CONSULTATION_URL =
-  "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-2d74cea5-63ac-4e30-b446-ca29da953679";
+/** GlossGenius source names for consultation services used as booking deep-link targets. */
+const CONSULTATION_SOURCE_BY_KIND: Record<
+  Exclude<ConsultationKind, null | "general">,
+  string
+> = {
+  color: "COLOR CONSULTATION",
+  makeup: "MAKEUP CONSULTATION",
+};
 
-const MAKEUP_CONSULTATION_URL =
-  "https://saloncitrineindy.glossgenius.com/booking-flow?service_token=1000f-7ff9cfa2-8384-49d2-860a-22aee925536e";
+function bookingUrlHasServiceToken(url: string | undefined): boolean {
+  return Boolean(url && /[?&]service_token=/.test(url));
+}
+
+function findRawServiceBookingUrl(sourceName: string): string | undefined {
+  const upper = sourceName.toUpperCase();
+  for (const category of menuCategories) {
+    const match = category.services.find(
+      (service) => service.name.toUpperCase() === upper,
+    );
+    if (match?.bookingUrl) return match.bookingUrl;
+  }
+  return undefined;
+}
+
+/** Resolve a consultation booking URL from menu-services.json (tokenized when available). */
+function consultationBookingUrlFromSource(sourceName: string): string {
+  const url = findRawServiceBookingUrl(sourceName);
+  if (bookingUrlHasServiceToken(url)) return url!;
+  return BOOKING_URL;
+}
 
 function slugifyServiceName(name: string): string {
   return name
@@ -511,7 +536,11 @@ function resolveConsultationKind(
   isConsultation: boolean,
 ): ConsultationKind {
   const upper = name.toUpperCase();
-  if (isConsultation) return "general";
+  if (isConsultation) {
+    if (/makeup/i.test(upper)) return "makeup";
+    if (/color/i.test(upper)) return "color";
+    return "general";
+  }
   if (!requiresConsultation) return null;
   if (/makeup|fx\/body|beauty makeup/i.test(upper)) return "makeup";
   if (/vivid|color|bleach|blond/i.test(upper)) return "color";
@@ -645,7 +674,9 @@ function enrichService(
       override?.qualifier !== undefined ? override.qualifier : split.qualifier,
     priceDisplay: formatPriceDisplay(service.price),
     durationDisplay: formatDuration(service.duration),
-    bookingUrl: service.bookingUrl ?? BOOKING_URL,
+    bookingUrl: bookingUrlHasServiceToken(service.bookingUrl)
+      ? service.bookingUrl!
+      : (findRawServiceBookingUrl(sourceName) ?? service.bookingUrl ?? BOOKING_URL),
     isAddon,
     isConsultation,
     requiresConsultation,
@@ -698,9 +729,29 @@ function buildSubgroups(
 }
 
 export function getConsultationBookingUrl(kind: ConsultationKind): string {
-  if (kind === "color") return COLOR_CONSULTATION_URL;
-  if (kind === "makeup") return MAKEUP_CONSULTATION_URL;
+  if (kind === "color" || kind === "makeup") {
+    return consultationBookingUrlFromSource(CONSULTATION_SOURCE_BY_KIND[kind]);
+  }
   return BOOKING_URL;
+}
+
+/** Booking href for a menu consultation CTA — always prefers a tokenized GlossGenius URL. */
+export function getConsultationCtaHref(
+  service: Pick<
+    MenuService,
+    "isConsultation" | "consultationKind" | "bookingUrl" | "sourceName"
+  >,
+): string {
+  if (service.isConsultation) {
+    if (bookingUrlHasServiceToken(service.bookingUrl)) {
+      return service.bookingUrl;
+    }
+    const fromSource = findRawServiceBookingUrl(service.sourceName);
+    if (bookingUrlHasServiceToken(fromSource)) return fromSource!;
+    return service.bookingUrl || BOOKING_URL;
+  }
+
+  return getConsultationBookingUrl(service.consultationKind);
 }
 
 export function getConsultationCtaLabel(

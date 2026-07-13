@@ -1,7 +1,7 @@
 ---
 import type { MenuService } from "../../data/menu";
 import {
-  getConsultationBookingUrl,
+  getConsultationCtaHref,
   getConsultationCtaLabel,
 } from "../../data/menu";
 
@@ -17,10 +17,7 @@ const metaParts = [service.priceDisplay, service.durationDisplay].filter(Boolean
 const showConsultationCta =
   !service.isAddon && (service.isConsultation || service.requiresConsultation);
 
-const consultationHref = service.isConsultation
-  ? service.bookingUrl
-  : getConsultationBookingUrl(service.consultationKind);
-
+const consultationHref = getConsultationCtaHref(service);
 const consultationLabel = getConsultationCtaLabel(service);
 const consultationIsBookingLink = true;
 ---
