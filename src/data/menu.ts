@@ -127,7 +127,7 @@ function deriveLabels(
   }
 
   if (
-    /consultation required|must be scheduled before|requires a color consultation|required before booking/i.test(
+    /consultation required|must be scheduled before|requires? a (?:\(?free\)? |color )?consultation|required before booking|will require a \(?free\)? ?consultation/i.test(
       text,
     )
   ) {
