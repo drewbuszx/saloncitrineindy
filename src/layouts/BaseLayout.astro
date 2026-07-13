@@ -18,6 +18,8 @@ interface Props {
   bookBarUrl?: string;
   /** Stylist slug for the book bar (e.g. andra-kramer triggers the existing-client gate). */
   bookBarStylistSlug?: string;
+  /** Optional robots directive (e.g. "noindex, follow" on the 404 page). */
+  robots?: string;
 }
 
 const GOOGLE_FONTS_URL =
@@ -31,12 +33,14 @@ const {
   preloadImage,
   bookBarUrl,
   bookBarStylistSlug,
+  robots,
 } = Astro.props;
 
 const resolvedBookBarUrl = bookBarUrl ?? BOOKING_URL;
 
-const canonicalUrl = `https://${site.domain}${path}`;
-const ogImageUrl = `https://${site.domain}${ogImage}`;
+const siteOrigin = Astro.site?.origin ?? `https://${site.domain}`;
+const canonicalUrl = new URL(path, siteOrigin).href;
+const ogImageUrl = new URL(ogImage, siteOrigin).href;
 ---
 
 <!doctype html>
@@ -45,6 +49,7 @@ const ogImageUrl = `https://${site.domain}${ogImage}`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
     <meta name="generator" content={Astro.generator} />
     {/* ?v=2 busts sticky browser favicon cache after switching from crystal → SC logo */}
     <link rel="icon" href="/favicon.ico?v=2" sizes="48x48" />

@@ -3,5 +3,8 @@
 /privacy /privacy/ 301
 /team/:slug /team/:slug/ 301
 
+# Host canonicalization for www / pages.dev is handled in functions/_middleware.js
+# (Cloudflare Pages _redirects cannot match on Host). Prefer apex: https://saloncitrineindy.com
+
 # Optional booking shortcut (see README)
 /book https://saloncitrineindy.glossgenius.com/booking-flow 302

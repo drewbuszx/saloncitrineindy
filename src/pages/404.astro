@@ -8,7 +8,12 @@ const pageTitle = `Page Not Found | ${site.name}`;
 const pageDescription = "The page you're looking for doesn't exist.";
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} path="/404/">
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  path="/404/"
+  robots="noindex, follow"
+>
   <Header />
 
   <main id="main" class="not-found-page">

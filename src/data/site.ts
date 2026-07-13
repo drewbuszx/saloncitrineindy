@@ -179,7 +179,7 @@ export function localBusinessJsonLd() {
     name: site.name,
     description: site.tagline,
     url: siteUrl,
-    telephone: site.phone,
+    telephone: site.phoneHref.replace(/^tel:/, ""),
     email: site.email,
     image: `${siteOrigin}/images/salon-citrine-logo.png`,
     priceRange: "$$",
