@@ -1,9 +1,11 @@
 ---
 import type { MenuService } from "../../data/menu";
 import {
-  getConsultationCtaHref,
-  getConsultationCtaLabel,
-} from "../../data/menu";
+  MENU_CONSULTATIONS_ANCHOR,
+  MENU_CONSULTATION_REQUIRED_CTA,
+  MENU_CONSULTATION_REQUIRED_NOTE_BODY,
+  MENU_CONSULTATION_REQUIRED_NOTE_LEAD,
+} from "../../data/menu-config";
 
 interface Props {
   service: MenuService;
@@ -14,19 +16,16 @@ const { service, presentation = service.presentation } = Astro.props;
 const isCompact = presentation === "compact";
 const metaParts = [service.priceDisplay, service.durationDisplay].filter(Boolean);
 
-const showConsultationCta =
-  !service.isAddon && (service.isConsultation || service.requiresConsultation);
-
-const consultationHref = getConsultationCtaHref(service);
-const consultationLabel = getConsultationCtaLabel(service);
-const consultationIsBookingLink = true;
+/** Consultation services are informational only — no per-row booking. */
+const showConsultationRequiredNote =
+  !service.isAddon && service.requiresConsultation && !service.isConsultation;
 ---
 
 <article
   class:list={[
     "menu-service",
     isCompact ? "menu-service--compact" : "menu-service--full",
-    showConsultationCta && "menu-service--actionable",
+    showConsultationRequiredNote && "menu-service--actionable",
   ]}
   data-menu-service-card
   id={service.anchorId}
@@ -65,24 +64,23 @@ const consultationIsBookingLink = true;
   }
 
   {
-    showConsultationCta && (
-      <a
-        class="menu-service__consult"
-        href={consultationHref}
-        {...(consultationIsBookingLink
-          ? {
-              target: "_blank",
-              rel: "noopener noreferrer",
-              "data-booking-link": true,
-            }
-          : {})}
-        data-analytics-action={
-          service.isConsultation ? "consultation-service-book" : "consultation-required-cta"
-        }
-        data-analytics-service={service.name}
-      >
-        {consultationLabel}
-      </a>
+    showConsultationRequiredNote && (
+      <div class="menu-service__consult-note">
+        <p class="menu-service__consult-copy">
+          <strong>{MENU_CONSULTATION_REQUIRED_NOTE_LEAD}</strong>
+          {" "}
+          {MENU_CONSULTATION_REQUIRED_NOTE_BODY}
+        </p>
+        <a
+          class="menu-service__consult"
+          href={`#${MENU_CONSULTATIONS_ANCHOR}`}
+          data-menu-intent-link={MENU_CONSULTATIONS_ANCHOR}
+          data-analytics-action="consultation-required-cta"
+          data-analytics-service={service.name}
+        >
+          {MENU_CONSULTATION_REQUIRED_CTA}
+        </a>
+      </div>
     )
   }
 </article>

@@ -1,5 +1,11 @@
 ---
 import type { VisitorMenuCategory } from "../../data/menu";
+import { BOOKING_URL } from "../../data/site";
+import {
+  MENU_BOOKING_CTA,
+  MENU_CONSULTATIONS_CONTINUE_COPY,
+  MENU_CONSULTATIONS_CONTINUE_LEAD,
+} from "../../data/menu-config";
 import MenuConsultationPanel from "./MenuConsultationPanel.astro";
 import MenuServiceCard from "./MenuServiceCard.astro";
 
@@ -8,8 +14,7 @@ interface Props {
 }
 
 const { category } = Astro.props;
-const panelId = `${category.id}-panel`;
-const contentId = `${category.id}-content`;
+const isConsultations = category.id === "consultations";
 ---
 
 <section
@@ -17,41 +22,21 @@ const contentId = `${category.id}-content`;
   data-menu-category={category.id}
   id={category.id}
   aria-labelledby={`${category.id}-heading`}
+  tabindex={isConsultations ? -1 : undefined}
 >
-  <div class="menu-category-section__header">
-    <button
-      type="button"
-      class="menu-category-section__toggle"
-      aria-expanded="true"
-      aria-controls={contentId}
-      id={panelId}
-      data-menu-accordion-toggle={category.id}
-      data-analytics-action="accordion-toggle"
-      data-analytics-category={category.id}
-    >
-      <span class="menu-category-section__toggle-text">
-        <span class="menu-category-section__title" id={`${category.id}-heading`}>
-          {category.name}
-        </span>
-        <span class="menu-category-section__count">
-          {category.services.length} services
-        </span>
+  <header class="menu-category-section__header">
+    <div class="menu-category-section__heading-row">
+      <h2 class="menu-category-section__title" id={`${category.id}-heading`}>
+        {category.name}
+      </h2>
+      <span class="menu-category-section__count">
+        {category.services.length} services
       </span>
-      <span class="menu-category-section__icon" aria-hidden="true">
-        <span class="menu-category-section__icon-bar"></span>
-        <span class="menu-category-section__icon-bar menu-category-section__icon-bar--vertical"></span>
-      </span>
-    </button>
+    </div>
     <p class="menu-category-section__description">{category.description}</p>
-  </div>
+  </header>
 
-  <div
-    class="menu-category-section__content"
-    id={contentId}
-    role="region"
-    aria-labelledby={panelId}
-    data-menu-accordion-panel={category.id}
-  >
+  <div class="menu-category-section__content">
     {category.showConsultationPanel && <MenuConsultationPanel />}
 
     {
@@ -94,6 +79,28 @@ const contentId = `${category.id}-content`;
               presentation={service.presentation}
             />
           ))}
+        </div>
+      )
+    }
+
+    {
+      isConsultations && (
+        <div class="menu-consultations-continue" data-menu-consultations-continue>
+          <p class="menu-consultations-continue__text">
+            <strong>{MENU_CONSULTATIONS_CONTINUE_LEAD}</strong>
+            {" "}
+            {MENU_CONSULTATIONS_CONTINUE_COPY}
+          </p>
+          <a
+            class="menu-page__book-cta"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-booking-link
+            data-analytics-action="consultations-section-book"
+          >
+            {MENU_BOOKING_CTA}
+          </a>
         </div>
       )
     }

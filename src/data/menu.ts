@@ -72,29 +72,34 @@ const DISPLAY_OVERRIDES: Record<string, DisplayOverride> = {
   },
   HAIRCUT: {
     name: "Haircut",
-    body: "For returning clients — your classic haircut to maintain your current shape. Shampoo and blowout included.",
-    qualifier: "Not for new shapes requiring more than 4+ inches off.",
+    body: "For returning clients maintaining an existing shape. Not intended for a new shape or removing more than 3 inches. Choose Transformative Haircut for larger changes.",
+    qualifier: null,
     labels: ["Existing Clients"],
   },
   "TRANSFORMATIVE HAIRCUT": {
     name: "Transformative Haircut",
-    body: "For big changes such as taking more than 3\" off and creating a new shape. Great for a new shag, mullet, bob, or pixie.",
+    body: "For a new shape, removing more than 3 inches, or making a significant style change.",
+    qualifier: null,
   },
   "CLIPPER CUT": {
     name: "Clipper Cut",
     body: "Maintaining your personalized tapered look, typically with clippers. Shampoo and style included.",
+    qualifier: null,
   },
   "DRY CUT": {
     name: "Dry Cut",
     body: "Maintenance haircut with no shampoo, style, or product. Come in with clean, dry hair down.",
+    qualifier: null,
   },
   "FRINGE / UNDERCUT MAINTENANCE": {
     name: "Fringe / Undercut Maintenance",
     body: "A quick freshen-up between haircuts — good for bang trims, undercut trims, and neckline cleanups.",
+    qualifier: null,
   },
   "BABY'S FIRST HAIRCUT": {
     name: "Baby's First Haircut",
     body: "Ready to tidy a baby mullet or get hair out of their eyes? For ages 0–2.",
+    qualifier: null,
   },
   "LITTLE KID'S HAIRCUT": {
     name: "Little Kid's Haircut",
@@ -104,52 +109,62 @@ const DISPLAY_OVERRIDES: Record<string, DisplayOverride> = {
   "BIG KID'S HAIRCUT": {
     name: "Big Kid's Haircut",
     body: "For ages 6–11. Shampoo included if they want it!",
+    qualifier: null,
   },
   DETANGLE: {
     name: "Detangle",
     body: "Need help with mats or stubborn tangles? We've got you.",
+    qualifier: null,
   },
   "FULL DIMENSIONAL COLOR & BLOWOUT": {
     name: "Full Dimensional Color & Blowout",
-    body: "Full head of dimensional color, plus a blowout. Good for highlights, lowlights, or balayage.",
+    body: "Full head of dimensional color, plus a blowout.",
+    qualifier: null,
   },
   "FULL DIMENSIONAL COLOR & CUT": {
     name: "Full Dimensional Color & Cut",
-    body: "Full head of dimensional color, plus a custom haircut. Good for highlights, lowlights, or balayage.",
+    body: "Full head of dimensional color, plus a custom haircut.",
+    qualifier: null,
   },
   "PARTIAL DIMENSIONAL COLOR & BLOWOUT": {
     name: "Partial Dimensional Color & Blowout",
-    body: "Freshen up existing dimensional hair, plus a blowout. Good for highlights or balayage.",
+    body: "Freshen up existing dimensional hair, plus a blowout.",
+    qualifier: null,
   },
   "PARTIAL DIMENSIONAL COLOR & CUT": {
     name: "Partial Dimensional Color & Cut",
-    body: "Freshen up existing dimensional hair, plus a custom haircut. Good for highlights or balayage.",
+    body: "Freshen up existing dimensional hair, plus a custom haircut.",
+    qualifier: null,
   },
   "MINI LIGHTS & BLOWOUT": {
     name: "Mini Lights & Blowout",
-    body: "Brighten around the face or along the part, plus a blowout. Good for face-framing highlights, a money piece, or color blocking.",
+    body: "Brighten around the face or along the part, plus a blowout.",
+    qualifier: null,
   },
   "MINI LIGHTS & CUT": {
     name: "Mini Lights & Cut",
-    body: "Brighten around the face or along the part, plus a custom haircut. Good for face-framing highlights or a money piece.",
+    body: "Brighten around the face or along the part, plus a custom haircut.",
+    qualifier: null,
   },
   "ALL OVER BLEACH AND TONE & BLOWOUT": {
-    name: "All-Over Bleach and Tone & Blowout",
+    name: "All-Over Bleach and Tone with Blowout",
     body: "A solid blonde look by lightening from scalp to ends and toning to your desired tone, plus a blowout.",
+    qualifier: null,
   },
   "ALL OVER BLEACH AND TONE & HAIRCUT": {
-    name: "All-Over Bleach and Tone & Haircut",
+    name: "All-Over Bleach and Tone with Haircut",
     body: "A solid blonde look by lightening from scalp to ends and toning to your desired tone, plus a custom haircut.",
+    qualifier: null,
   },
   "BLEACH ROOT TOUCH UP & BLOWOUT": {
-    name: "Bleach Root Touch-Up & Blowout",
+    name: "Bleach Root Touch-Up with Blowout",
     body: "Touch up roots from previous bleach-and-tone hair, plus a blowout.",
-    qualifier: "Only for roots 1\" or under. If longer, book an All-Over Bleach & Tone.",
+    qualifier: "Only for roots 1\" or under. If longer, book an All-Over Bleach and Tone.",
   },
   "BLEACH ROOT TOUCH UP & HAIRCUT": {
-    name: "Bleach Root Touch-Up & Haircut",
+    name: "Bleach Root Touch-Up with Haircut",
     body: "Touch up roots from previous bleach-and-tone hair, plus a custom haircut.",
-    qualifier: "Only for roots 1\" or under. If longer, book an All-Over Bleach & Tone.",
+    qualifier: "Only for roots 1\" or under. If longer, book an All-Over Bleach and Tone.",
   },
   "ALL OVER COLOR WITH BLOWOUT": {
     name: "All-Over Color with Blowout",
@@ -174,22 +189,33 @@ const DISPLAY_OVERRIDES: Record<string, DisplayOverride> = {
   "GLOSS WITH A BLOWOUT": {
     name: "Gloss with a Blowout",
     body: "Semi-permanent color to lightly tint natural hair or refresh previously lightened tone, plus a blowout.",
+    qualifier: null,
   },
   "GLOSS WITH A HAIRCUT": {
     name: "Gloss with a Haircut",
     body: "Semi-permanent color to lightly tint natural hair or refresh previously lightened tone, plus a custom haircut.",
+    qualifier: null,
   },
   "COLOR CONSULTATION": {
     name: "Color Consultation",
     body: "Not sure what to schedule, or curious whether your hair goals are achievable? This is for you.",
     qualifier:
       "Must be scheduled before big color transformations. The fee goes toward your final service if booked at the consultation.",
+    labels: [],
   },
+  // GG has used both names; keep both keys so display overrides still apply after sync.
   "VIVID TRANSFORM": {
-    name: "Vivid Transform",
-    body: "Full vivid transformation — a two-step process where hair is lifted, then vivid color is applied. Final price equals about $100/hour.",
+    name: "Vivid Transformation",
+    body: "Full vivid transformation — a two-step process where hair is lifted, then vivid color is applied.",
     qualifier:
-      "A color consultation is required before scheduling. Consults over text or in person are accepted.",
+      "Consultations may be completed in person or by text. Final pricing is based on an hourly rate of $100.",
+    labels: ["Consultation Required"],
+  },
+  "VIVID TRANSFORMATION": {
+    name: "Vivid Transformation",
+    body: "Full vivid transformation — a two-step process where hair is lifted, then vivid color is applied.",
+    qualifier:
+      "Consultations may be completed in person or by text. Final pricing is based on an hourly rate of $100.",
     labels: ["Consultation Required"],
   },
   "HOT TOWEL TREATMENT": {
@@ -271,7 +297,7 @@ const DISPLAY_OVERRIDES: Record<string, DisplayOverride> = {
     body: "Can include brow, lip, and chin, plus the sides of the face and under the jawline.",
   },
   "HAIR REDUCTION ENZYME ADD ON": {
-    name: "Hair Reduction Enzyme Add-On",
+    name: "Hair Reduction Enzyme",
     body: "A papain enzyme treatment that helps reduce unwanted hair growth on freshly waxed skin. We apply the first application in-salon; you take the rest home for the next 36 hours.",
     qualifier:
       "Can be added to any waxing service. Blocks 10 minutes on the schedule but does not add time to your service.",
@@ -358,19 +384,19 @@ const DISPLAY_OVERRIDES: Record<string, DisplayOverride> = {
     name: "Makeup Application (Beauty Makeup)",
     body: "Personalized looks that celebrate your individuality.",
     labels: ["Consultation Required"],
-    qualifier: "A makeup consultation is required before booking.",
+    qualifier: null,
   },
   "FX/BODY PAINTING MAKEUP": {
     name: "FX / Body Painting Makeup",
     body: "SFX and body painting for stunning transformations — from fantastical creatures to realistic effects. Application can be on or off site depending on need.",
-    qualifier:
-      "Requires a free consultation, plus additional material cost depending on design.",
+    qualifier: "Additional material cost depending on design.",
     labels: ["Consultation Required"],
   },
   "MAKEUP CONSULTATION": {
     name: "Makeup Consultation",
     body: "Sets the stage for a personalized experience and helps you feel confident in your service choice.",
     qualifier: "Required before booking any makeup application service.",
+    labels: [],
   },
   "MAKEUP LESSON": {
     name: "Makeup Lesson",
@@ -565,6 +591,7 @@ function deriveLabels(
   description: string | null,
   categoryId: MenuCategoryId,
   isAddon: boolean,
+  isConsultation: boolean,
   overrideLabels?: ServiceLabel[],
 ): ServiceLabel[] {
   if (overrideLabels) {
@@ -583,7 +610,9 @@ function deriveLabels(
     labels.push("New Clients");
   }
 
+  // Consultation services themselves should not carry a "Consultation Required" badge.
   if (
+    !isConsultation &&
     /consultation required|must be scheduled before|requires? a (?:\(?free\)? |color |makeup )?consultation|required before booking|will require a \(?free\)? ?consultation/i.test(
       text,
     )
@@ -647,6 +676,7 @@ function enrichService(
     service.description,
     categoryId,
     isAddon,
+    isConsultation,
     override?.labels,
   );
   const requiresConsultation = labels.includes("Consultation Required");
@@ -663,15 +693,25 @@ function enrichService(
     isConsultation,
   );
 
+  // When a body override is present, suppress raw GlossGenius qualifier lines
+  // unless the override sets qualifier explicitly (including null).
+  const descriptionBody =
+    override?.body !== undefined ? override.body : split.body;
+  const qualifier =
+    override?.qualifier !== undefined
+      ? override.qualifier
+      : override?.body !== undefined
+        ? null
+        : split.qualifier;
+
   return {
     ...service,
     sourceName,
     name: displayName,
     sourceCategory,
     labels,
-    descriptionBody: override?.body !== undefined ? override.body : split.body,
-    qualifier:
-      override?.qualifier !== undefined ? override.qualifier : split.qualifier,
+    descriptionBody,
+    qualifier,
     priceDisplay: formatPriceDisplay(service.price),
     durationDisplay: formatDuration(service.duration),
     bookingUrl: bookingUrlHasServiceToken(service.bookingUrl)
@@ -728,39 +768,16 @@ function buildSubgroups(
   return subgroups;
 }
 
+/**
+ * Tokenized consultation booking URLs remain available in service data.
+ * Menu UI no longer deep-links or preselects consultations — visitors pick
+ * the right consultation inside general online booking.
+ */
 export function getConsultationBookingUrl(kind: ConsultationKind): string {
   if (kind === "color" || kind === "makeup") {
     return consultationBookingUrlFromSource(CONSULTATION_SOURCE_BY_KIND[kind]);
   }
   return BOOKING_URL;
-}
-
-/** Booking href for a menu consultation CTA — always prefers a tokenized GlossGenius URL. */
-export function getConsultationCtaHref(
-  service: Pick<
-    MenuService,
-    "isConsultation" | "consultationKind" | "bookingUrl" | "sourceName"
-  >,
-): string {
-  if (service.isConsultation) {
-    if (bookingUrlHasServiceToken(service.bookingUrl)) {
-      return service.bookingUrl;
-    }
-    const fromSource = findRawServiceBookingUrl(service.sourceName);
-    if (bookingUrlHasServiceToken(fromSource)) return fromSource!;
-    return service.bookingUrl || BOOKING_URL;
-  }
-
-  return getConsultationBookingUrl(service.consultationKind);
-}
-
-export function getConsultationCtaLabel(
-  service: Pick<MenuService, "isConsultation" | "consultationKind">,
-): string {
-  if (service.isConsultation) return "Book Consultation";
-  if (service.consultationKind === "color") return "Book a Color Consultation";
-  if (service.consultationKind === "makeup") return "Book a Makeup Consultation";
-  return "Book a Consultation";
 }
 
 export function buildVisitorMenuCategories(): VisitorMenuCategory[] {

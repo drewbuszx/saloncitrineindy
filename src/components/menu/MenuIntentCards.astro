@@ -1,6 +1,7 @@
 ---
 import {
   MENU_INTENT_CARDS,
+  MENU_CONSULTATIONS_ANCHOR,
   MENU_CONSULTATION_HELP_LEAD,
   MENU_CONSULTATION_HELP_COPY,
   MENU_CONSULTATION_HELP_CTA,
@@ -34,8 +35,8 @@ import {
   </p>
   <a
     class="menu-consult-help__cta"
-    href="#consultations"
-    data-menu-intent-link="consultations"
+    href={`#${MENU_CONSULTATIONS_ANCHOR}`}
+    data-menu-intent-link={MENU_CONSULTATIONS_ANCHOR}
     data-analytics-action="intent-consultation"
   >
     {MENU_CONSULTATION_HELP_CTA}

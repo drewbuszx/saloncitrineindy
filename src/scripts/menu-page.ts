@@ -12,9 +12,6 @@ const anchorLinks = Array.from(
 const sections = Array.from(
   document.querySelectorAll<HTMLElement>("[data-menu-category]"),
 );
-const accordionToggles = Array.from(
-  document.querySelectorAll<HTMLButtonElement>("[data-menu-accordion-toggle]"),
-);
 
 const MOBILE_MQ = window.matchMedia("(max-width: 767px)");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -52,20 +49,6 @@ function setActiveCategory(id: string) {
   });
 }
 
-function openAccordionCategory(id: string) {
-  if (!MOBILE_MQ.matches) return;
-
-  accordionToggles.forEach((toggle) => {
-    const toggleId = toggle.dataset.menuAccordionToggle;
-    const isTarget = toggleId === id;
-    toggle.setAttribute("aria-expanded", String(isTarget));
-    toggle.closest(".menu-category-section")?.classList.toggle(
-      "is-collapsed",
-      !isTarget,
-    );
-  });
-}
-
 function findCategoryForAnchor(id: string): string | null {
   const category = document.querySelector<HTMLElement>(
     `[data-menu-category="${id}"]`,
@@ -82,7 +65,6 @@ function scrollToTarget(id: string, behavior?: ScrollBehavior) {
 
   const categoryId = findCategoryForAnchor(id);
   if (categoryId) {
-    openAccordionCategory(categoryId);
     setActiveCategory(categoryId);
   }
 
@@ -98,6 +80,13 @@ function scrollToTarget(id: string, behavior?: ScrollBehavior) {
     top: Math.max(0, top),
     behavior: behavior ?? scrollBehavior(),
   });
+
+  if (target instanceof HTMLElement) {
+    if (!target.hasAttribute("tabindex")) {
+      target.setAttribute("tabindex", "-1");
+    }
+    target.focus({ preventScroll: true });
+  }
 }
 
 function bindAnchorNavigation(
@@ -149,61 +138,14 @@ function bindScrollSpy() {
 
 bindScrollSpy();
 
-accordionToggles.forEach((toggle) => {
-  toggle.addEventListener("click", () => {
-    if (!MOBILE_MQ.matches) return;
-
-    const id = toggle.dataset.menuAccordionToggle;
-    if (!id) return;
-
-    const isExpanded = toggle.getAttribute("aria-expanded") === "true";
-    if (isExpanded) {
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.closest(".menu-category-section")?.classList.add("is-collapsed");
-      return;
-    }
-
-    openAccordionCategory(id);
-    scrollToTarget(id, scrollBehavior());
-    history.pushState(null, "", `#${id}`);
-  });
-});
-
-function syncAccordionMode(openId?: string) {
-  const isMobile = MOBILE_MQ.matches;
-
-  accordionToggles.forEach((toggle, index) => {
-    const id = toggle.dataset.menuAccordionToggle;
-    const section = toggle.closest(".menu-category-section");
-    if (!isMobile) {
-      toggle.setAttribute("aria-expanded", "true");
-      section?.classList.remove("is-collapsed");
-      return;
-    }
-
-    const resolvedOpenId = openId
-      ? (findCategoryForAnchor(openId) ?? openId)
-      : undefined;
-    const shouldOpen = resolvedOpenId ? id === resolvedOpenId : index === 0;
-    toggle.setAttribute("aria-expanded", String(shouldOpen));
-    section?.classList.toggle("is-collapsed", !shouldOpen);
-  });
-}
-
-const initialHash = location.hash ? location.hash.slice(1) : undefined;
-syncAccordionMode(initialHash);
-
 window.addEventListener(
   "resize",
   () => {
     syncNavHeight();
     bindScrollSpy();
-    syncAccordionMode();
   },
   { passive: true },
 );
-
-MOBILE_MQ.addEventListener("change", () => syncAccordionMode());
 
 if (location.hash) {
   if ("scrollRestoration" in history) {

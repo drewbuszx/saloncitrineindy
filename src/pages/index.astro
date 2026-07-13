@@ -407,25 +407,6 @@ const pageDescription =
       </div>
     </section>
 
-    <section class="section section--editorial" aria-labelledby="policies-heading">
-      <div class="section__inner section__inner--wide">
-        <span id="policies" class="scroll-target"></span>
-        <header class="editorial-section__header">
-          <h2 class="editorial-section__title" id="policies-heading">policies</h2>
-        </header>
-        <div class="editorial-columns policies-columns">
-          {
-            policies.map((policy) => (
-              <article class="editorial-column">
-                <h3 class="editorial-column__header">{policy.title}</h3>
-                <p class="editorial-column__text">{policy.text}</p>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
     <section class="section section--origin" aria-labelledby="origin-heading">
       <div class="section__inner section__inner--wide">
         <header class="editorial-section__header">
@@ -580,6 +561,25 @@ const pageDescription =
     <div class="page-dark-zone">
       <span id="reviews" class="scroll-target"></span>
       <ReviewsSection />
+
+      <section class="section section--editorial section--policies" aria-labelledby="policies-heading">
+        <div class="section__inner section__inner--wide">
+          <span id="policies" class="scroll-target"></span>
+          <header class="editorial-section__header">
+            <h2 class="editorial-section__title" id="policies-heading">policies</h2>
+          </header>
+          <div class="editorial-columns policies-columns">
+            {
+              policies.map((policy) => (
+                <article class="editorial-column">
+                  <h3 class="editorial-column__header">{policy.title}</h3>
+                  <p class="editorial-column__text">{policy.text}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
 
       <SiteFooter />
     </div>

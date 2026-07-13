@@ -27,6 +27,9 @@ export const MENU_BOOKING_CTA = "Book Online";
 export const MENU_FOOTER_BOOKING_COPY =
   "Choose your provider, pick a service, and find a time that works.";
 
+/** Stable fragment for the Consultations category section. */
+export const MENU_CONSULTATIONS_ANCHOR = "consultations";
+
 export const MENU_CONSULTATION_HELP_LEAD = "Not sure what to book?";
 
 export const MENU_CONSULTATION_HELP_COPY =
@@ -37,9 +40,19 @@ export const MENU_CONSULTATION_HELP_CTA = "Explore Consultations";
 export const MENU_COLOR_CONSULTATION_PANEL_COPY =
   "Planning a major color change? Vivid color, corrective work, all-over bleach, and significant blonding transformations may require a consultation before booking.";
 
-export const MENU_COLOR_CONSULTATION_PANEL_CTA = "View Color Consultations";
+export const MENU_COLOR_CONSULTATION_PANEL_CTA = "View Consultations";
 
-export const MENU_COLOR_CONSULTATION_ANCHOR = "color-consultation";
+export const MENU_CONSULTATION_REQUIRED_NOTE_LEAD = "Consultation required.";
+
+export const MENU_CONSULTATION_REQUIRED_NOTE_BODY =
+  "Review the consultation options below before continuing to online booking.";
+
+export const MENU_CONSULTATION_REQUIRED_CTA = "View Consultation Options";
+
+export const MENU_CONSULTATIONS_CONTINUE_LEAD = "Ready to continue?";
+
+export const MENU_CONSULTATIONS_CONTINUE_COPY =
+  "Open online booking and select the consultation that best matches your needs.";
 
 export interface MenuCategoryDefinition {
   id: MenuCategoryId;
@@ -322,6 +335,3 @@ export const MENU_INTENT_CARDS = [
 
 export const MENU_PRICING_NOTE =
   "Prices vary by provider, service time, hair needs, and product required. Starting prices are shown here, and your selected provider’s current pricing will be shown during booking.";
-
-export const MENU_INTRO_COPY =
-  "Explore hair, skincare, waxing, and makeup services at Salon Citrine.";

@@ -8,7 +8,6 @@ import MenuCategorySection from "../components/menu/MenuCategorySection.astro";
 import MenuPricingNote from "../components/menu/MenuPricingNote.astro";
 import { site, BOOKING_URL } from "../data/site";
 import {
-  MENU_INTRO_COPY,
   MENU_BOOKING_CTA,
   MENU_FOOTER_BOOKING_COPY,
 } from "../data/menu-config";
@@ -30,7 +29,6 @@ const pageDescription =
         <header class="menu-page__header">
           <a class="menu-page__back" href="/#services">← Services overview</a>
           <h1 class="editorial-section__title" id="menu-heading">Full Service Menu</h1>
-          <p class="menu-page__intro">{MENU_INTRO_COPY}</p>
         </header>
 
         <MenuPricingNote variant="top" />

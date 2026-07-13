@@ -1418,7 +1418,7 @@ button {
 .section:has(#services) .section__inner,
 .section:has(#team) .section__inner,
 .section--origin .section__inner,
-.section:has(#policies-heading) .section__inner {
+.section--policies .section__inner {
   max-width: min(72rem, 100%);
 }
 
@@ -1700,16 +1700,6 @@ button {
   opacity: 0.55;
 }
 
-.menu-page__intro {
-  max-width: 42rem;
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: var(--text-body);
-  line-height: var(--leading-body);
-  color: var(--color-gray);
-  text-wrap: pretty;
-}
-
 .menu-pricing-note {
   margin: clamp(1rem, 2.5vw, 1.5rem) 0;
   padding: clamp(0.85rem, 2vw, 1.1rem) clamp(1rem, 2.5vw, 1.35rem);
@@ -1922,41 +1912,31 @@ button {
 }
 
 .menu-category-section {
-  margin-bottom: clamp(2rem, 5vw, 3.5rem);
-  padding-top: clamp(1.25rem, 3vw, 2rem);
+  margin-bottom: clamp(2.25rem, 5.5vw, 3.75rem);
+  padding-top: clamp(1.5rem, 3.5vw, 2.25rem);
   border-top: 1px solid var(--color-border);
   scroll-margin-top: calc(var(--header-height) + var(--menu-nav-height) + 0.5rem);
 }
 
-.menu-category-section__header {
-  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
-}
-
-.menu-category-section__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  margin: 0 0 0.65rem;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.menu-category-section__toggle:focus-visible {
+.menu-category-section[tabindex="-1"]:focus {
   outline: 2px solid var(--color-citrine);
   outline-offset: 4px;
 }
 
-.menu-category-section__toggle-text {
+.menu-category-section:last-child {
+  margin-bottom: 0;
+}
+
+.menu-category-section__header {
+  margin-bottom: clamp(0.85rem, 2vw, 1.25rem);
+}
+
+.menu-category-section__heading-row {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem 0.85rem;
+  margin: 0 0 0.65rem;
 }
 
 .menu-category-section__title {
@@ -1998,43 +1978,8 @@ button {
   text-wrap: pretty;
 }
 
-.menu-category-section__icon {
-  position: relative;
-  flex: 0 0 1.25rem;
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.menu-category-section__icon-bar {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--color-text);
-  transform: translateY(-50%);
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.menu-category-section__icon-bar--vertical {
-  transform: translateY(-50%) rotate(90deg);
-}
-
-.menu-category-section.is-collapsed .menu-category-section__icon-bar--vertical {
-  transform: translateY(-50%) rotate(0deg);
-}
-
-.menu-category-section__content {
-  overflow: hidden;
-  transition: opacity 0.2s ease;
-}
-
-.menu-category-section.is-collapsed .menu-category-section__content {
-  display: none;
-}
-
 .menu-category-section__subgroup {
-  margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .menu-category-section__subgroup:last-child {
@@ -2054,7 +1999,7 @@ button {
 .menu-category-section__list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1rem, 2.5vw, 1.35rem);
+  gap: clamp(0.85rem, 2vw, 1.15rem);
 }
 
 .menu-category-section__list--compact {
@@ -2226,9 +2171,34 @@ button {
   color: var(--color-charcoal-muted);
 }
 
+.menu-service__consult-note {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin-top: 0.15rem;
+}
+
+.menu-service--full .menu-service__consult-note {
+  margin-top: auto;
+}
+
+.menu-service__consult-copy {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(0.92rem, 1.5vw, 1rem);
+  line-height: 1.45;
+  color: var(--color-gray);
+  text-wrap: pretty;
+}
+
+.menu-service__consult-copy strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
 .menu-service__consult {
   align-self: flex-start;
-  margin-top: 0.15rem;
   min-height: 2.35rem;
   padding: 0.45rem 0.85rem;
   border: 1px solid var(--color-text);
@@ -2243,7 +2213,6 @@ button {
 }
 
 .menu-service--full .menu-service__consult {
-  margin-top: auto;
   min-height: 2.5rem;
   padding: 0.55rem 0.95rem;
 }
@@ -2257,6 +2226,31 @@ button {
 .menu-service__consult:focus-visible {
   outline: 2px solid var(--color-citrine);
   outline-offset: 2px;
+}
+
+.menu-consultations-continue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-top: clamp(1rem, 2.5vw, 1.35rem);
+  padding-top: clamp(0.85rem, 2vw, 1.1rem);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.menu-consultations-continue__text {
+  margin: 0;
+  max-width: 36rem;
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-gray);
+  text-wrap: pretty;
+}
+
+.menu-consultations-continue__text strong {
+  color: var(--color-text);
+  font-weight: 600;
 }
 
 .menu-page__book-cta {
@@ -2320,6 +2314,12 @@ button {
 }
 
 @media (max-width: 767px) {
+  .menu-category-nav {
+    /* Single-row horizontal scroll stays compact enough to sticky under the header. */
+    position: sticky;
+    top: var(--header-height);
+  }
+
   .menu-category-nav__list {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -2336,6 +2336,10 @@ button {
   .menu-category-section__count {
     display: inline;
   }
+
+  .menu-category-section__list--compact .menu-service--compact {
+    padding-block: 0.7rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -2349,22 +2353,13 @@ button {
     row-gap: 0.55rem;
   }
 
-  .menu-category-section__toggle {
-    pointer-events: none;
-    cursor: default;
-  }
-
-  .menu-category-section__icon {
-    display: none;
-  }
-
   .menu-category-section__count {
     display: none;
   }
 
   .menu-category-section__list--full {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(1rem, 2.5vw, 1.35rem) clamp(1.25rem, 3vw, 1.75rem);
+    gap: clamp(0.85rem, 2vw, 1.15rem) clamp(1.25rem, 3vw, 1.75rem);
   }
 
   .menu-category-section__list--compact {
@@ -2384,8 +2379,6 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .menu-category-section__content,
-  .menu-category-section__icon-bar,
   .menu-intent__card,
   .menu-service,
   .menu-consult-help__cta {
@@ -3413,7 +3406,7 @@ button {
 
 .reviews-section__header {
   margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
-  text-align: center;
+  text-align: left;
 }
 
 .reviews-section__title {
@@ -3720,7 +3713,7 @@ button {
 .connect-image {
   margin-top: 0;
 }
-/* Charcoal zone — reviews through footer (both themes) */
+/* Charcoal zone — reviews, policies, footer (both themes) */
 .page-dark-zone {
   position: relative;
   z-index: 2;
@@ -3740,6 +3733,19 @@ button {
 }
 
 .page-dark-zone .reviews-section__title {
+  color: var(--color-white);
+}
+
+/* Policies in charcoal zone — match reviews bg / text colors */
+.page-dark-zone .section--policies {
+  background: var(--color-charcoal);
+  color: var(--color-white);
+  border-top: 1px solid var(--color-charcoal-border-subtle);
+}
+
+.page-dark-zone .section--policies .editorial-section__title,
+.page-dark-zone .section--policies .editorial-column__header,
+.page-dark-zone .section--policies .editorial-column__text {
   color: var(--color-white);
 }
 
