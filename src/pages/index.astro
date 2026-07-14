@@ -172,7 +172,7 @@ const pageDescription =
         </div>
         <div class="hero__overlay" aria-hidden="true"></div>
         <h1 class="hero__title">
-          <span class="hero__title-kicker">An inclusive salon in historic</span>
+          <span class="hero__title-kicker" aria-hidden="true">An inclusive salon in historic</span>
           <span class="hero__title-place">Irvington</span>
         </h1>
         <a href="#about" class="hero__scroll" aria-label="Scroll to about Salon Citrine">
@@ -587,25 +587,53 @@ const pageDescription =
 </BaseLayout>
 
 <script>
-  // Scale the kicker so its rendered width matches IRVINGTON, then lock both
-  // to the same centered box. Prefer element getBoundingClientRect over Range:
-  // Range under-counts width when letter-spacing is applied (trailing tracking
-  // is omitted), which made the kicker settle too large and overhang IRVINGTON.
+  const KICKER_MAX_FONT_SIZE = 52;
+  const KICKER_MAX_VIEWPORT_RATIO = 0.04;
+  const KICKER_MIN_SAFE_MAX = 20;
+
+  function hideHeroKicker(kicker: HTMLElement) {
+    kicker.classList.remove("is-measuring", "is-fitted");
+    kicker.classList.add("is-hidden");
+    kicker.style.removeProperty("font-size");
+    kicker.style.removeProperty("max-width");
+    kicker.style.removeProperty("width");
+  }
+
+  // Match the kicker to IRVINGTON only when both can fit the title's padded
+  // content box and the result remains within the intended display scale.
   function fitHeroKicker() {
     const kicker = document.querySelector<HTMLElement>(".hero__title-kicker");
     const place = document.querySelector<HTMLElement>(".hero__title-place");
-    if (!kicker || !place) return;
-    if (getComputedStyle(kicker).display === "none") return;
+    const title = document.querySelector<HTMLElement>(".hero__title");
+    if (!kicker || !place || !title) return;
 
-    // Clear a previous explicit width so measurements shrink-wrap to glyphs.
+    kicker.classList.remove("is-hidden", "is-fitted");
+    kicker.classList.add("is-measuring");
+    kicker.style.removeProperty("font-size");
     kicker.style.width = "max-content";
+    // The old max-width cap made every oversized candidate report the same
+    // width, causing the search to converge on a gigantic font size.
+    kicker.style.maxWidth = "none";
 
     const targetWidth = place.getBoundingClientRect().width;
-    if (targetWidth <= 0) return;
+    const titleStyles = getComputedStyle(title);
+    const availableWidth =
+      title.clientWidth -
+      Number.parseFloat(titleStyles.paddingLeft) -
+      Number.parseFloat(titleStyles.paddingRight);
 
-    // Binary search font-size until kicker width matches place within 1px.
+    if (
+      targetWidth <= 0 ||
+      availableWidth <= 0 ||
+      targetWidth > availableWidth + 0.5
+    ) {
+      hideHeroKicker(kicker);
+      return;
+    }
+
+    // Measure the natural, uncapped text width at each candidate size.
     let lo = 4;
-    let hi = Math.max(targetWidth, 8);
+    let hi = KICKER_MAX_FONT_SIZE;
 
     for (let i = 0; i < 24; i++) {
       const mid = (lo + hi) / 2;
@@ -620,16 +648,32 @@ const pageDescription =
       if (hi - lo < 0.05) break;
     }
 
-    kicker.style.fontSize = `${lo}px`;
-    // Pin the box to IRVINGTON's width so edges align and flex centering matches.
+    const fittedSize = lo;
+    const maxSafeSize = Math.min(
+      KICKER_MAX_FONT_SIZE,
+      Math.max(
+        KICKER_MIN_SAFE_MAX,
+        window.innerWidth * KICKER_MAX_VIEWPORT_RATIO
+      )
+    );
+
+    if (fittedSize > maxSafeSize + 0.5) {
+      hideHeroKicker(kicker);
+      return;
+    }
+
+    kicker.style.fontSize = `${fittedSize}px`;
     kicker.style.width = `${targetWidth}px`;
+    kicker.style.maxWidth = "100%";
+    kicker.classList.remove("is-measuring", "is-hidden");
+    kicker.classList.add("is-fitted");
   }
 
+  let fitFrame = 0;
   function scheduleFitHeroKicker() {
-    requestAnimationFrame(() => {
+    cancelAnimationFrame(fitFrame);
+    fitFrame = requestAnimationFrame(() => {
       fitHeroKicker();
-      // Second pass after layout/fonts settle (stroke, clamp, webfont swap).
-      requestAnimationFrame(fitHeroKicker);
     });
   }
 
@@ -640,8 +684,8 @@ const pageDescription =
   });
   document.fonts?.ready.then(scheduleFitHeroKicker);
 
-  const heroTitle = document.querySelector(".hero__title");
-  if (heroTitle) {
-    new ResizeObserver(scheduleFitHeroKicker).observe(heroTitle);
+  const heroPlace = document.querySelector(".hero__title-place");
+  if (heroPlace) {
+    new ResizeObserver(scheduleFitHeroKicker).observe(heroPlace);
   }
 </script>

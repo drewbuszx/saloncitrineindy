@@ -1,4 +1,4 @@
-export const BOOKING_URL = "https://saloncitrineindy.glossgenius.com/booking-flow";
+export const BOOKING_URL = "https://saloncitrineindy.glossgenius.com/services";
 export const FULL_MENU_PATH = "/menu/";
 export const PRIVACY_PATH = "/privacy/";
 /** Shopify store — not linked from nav until launch. */
@@ -6,8 +6,7 @@ export const PRIVACY_PATH = "/privacy/";
 export const SHOP_COMING_SOON = true;
 export const GIFT_CARDS_URL =
   "https://saloncitrineindy.glossgenius.com/shop/gift-cards";
-export const GLOSSGENIUS_SERVICES_URL =
-  "https://saloncitrineindy.glossgenius.com/services";
+export const GLOSSGENIUS_SERVICES_URL = BOOKING_URL;
 
 export function memberBookingUrl(teamMemberToken: string): string {
   return `${GLOSSGENIUS_SERVICES_URL}?team_member_token=${teamMemberToken}`;

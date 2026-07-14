@@ -711,7 +711,12 @@ button {
 }
 
 .hero__title-kicker {
-  display: block;
+  /*
+   * Keep the decorative kicker out of the first paint. JS reveals it only
+   * after measuring an uncapped text width and confirming that the fitted
+   * result is safe for the available title box.
+   */
+  display: none;
   /* Shrink-wrap to text so getBoundingClientRect reflects glyph width, not
      the full hero title column. JS then sets an explicit width to match
      IRVINGTON after the font-size fit. */
@@ -734,14 +739,26 @@ button {
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
 }
 
+.hero__title-kicker.is-measuring {
+  display: block !important;
+  visibility: hidden !important;
+}
+
+.hero__title-kicker.is-fitted {
+  display: block;
+}
+
+.hero__title-kicker.is-hidden {
+  display: none !important;
+}
+
 /*
- * Below 380px, IRVINGTON's clamped minimum width is wider than the title's
- * padded content box. That caps the kicker measurement and makes its fit-text
- * search jump to an unusably large font size.
+ * Safe no-JS / pre-JS fallback at the known minimum-font failure range.
+ * The measured JS guard is authoritative above this width.
  */
 @media (max-width: 379px) {
   .hero__title-kicker {
-    display: none;
+    display: none !important;
   }
 }
 
