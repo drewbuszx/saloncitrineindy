@@ -1,12 +1,10 @@
 ---
-import { policies, parseCancellationPolicyParts } from "../data/site";
-
-const cancellationPolicy = policies.find(
-  (policy) => policy.title === "CANCELLATION POLICY",
-)!;
-const { heading: policyHeading, body: policyBody } = parseCancellationPolicyParts(
-  cancellationPolicy.text,
-);
+const policyHeading = "Cancellation policy";
+const policyBodyParagraphs = [
+  "Your appointment time is reserved especially for you. As a small salon with limited availability, late cancellations and missed appointments can be difficult for both our team and guests waiting for an opening.",
+  "Please make changes at least 48 hours before your appointment. Cancellations within 48 hours will be charged 50% of the scheduled service, while no-shows will be charged 100%. Arriving more than 15 minutes late without contacting us may also be considered a no-show.",
+  "When possible, fees may be waived if we can reschedule your appointment within the same week.",
+];
 
 const andraGateHeading = "Existing Clients Only";
 const andraGateBody =
@@ -67,7 +65,13 @@ const andraGateBody =
     data-booking-modal-dialog
   >
     <h2 id="booking-modal-title" class="booking-modal__title">{policyHeading}</h2>
-    <p id="booking-modal-description" class="booking-modal__text">{policyBody}</p>
+    <div id="booking-modal-description" class="booking-modal__body">
+      {
+        policyBodyParagraphs.map((paragraph) => (
+          <p class="booking-modal__text">{paragraph}</p>
+        ))
+      }
+    </div>
     <div class="booking-modal__actions">
       <button
         class="booking-modal__btn booking-modal__btn--secondary"

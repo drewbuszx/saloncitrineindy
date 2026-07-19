@@ -4338,6 +4338,10 @@ body.mobile-menu-open {
   text-transform: uppercase;
 }
 
+.booking-modal__body {
+  margin: 0 0 clamp(1.5rem, 3vw, 2rem);
+}
+
 .booking-modal__text {
   margin: 0 0 clamp(1.5rem, 3vw, 2rem);
   font-family: var(--font-serif);
@@ -4346,6 +4350,14 @@ body.mobile-menu-open {
   line-height: 1.65;
   color: var(--color-text);
   text-align: left;
+}
+
+.booking-modal__body .booking-modal__text {
+  margin: 0 0 1em;
+}
+
+.booking-modal__body .booking-modal__text:last-child {
+  margin-bottom: 0;
 }
 
 .booking-modal__actions {
