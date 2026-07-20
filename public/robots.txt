@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://saloncitrineindy.com/sitemap-index.xml
+Sitemap: https://saloncitrineindy.com/sitemap.xml
