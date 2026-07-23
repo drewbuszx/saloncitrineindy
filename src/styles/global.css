@@ -38,7 +38,8 @@
   --font-sans: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
   --font-serif: "Cormorant Garamond", "Times New Roman", serif;
   --font-basic-title: "Basic Title", var(--font-sans);
-  --header-logo-height: clamp(4.7rem, 12vw, 6.4rem);
+  /* ~20% shorter than prior clamp(4.7rem, 12vw, 6.4rem); logo fills this height */
+  --header-logo-height: clamp(3.75rem, 9.6vw, 5.12rem);
   --header-logo-padding-bottom: 0.225rem;
   --header-logo-nav-gap: clamp(4.5rem, 9vw, 6.75rem);
   --header-nav-tab-gap: clamp(1.25rem, 2.5vw, 2rem);
