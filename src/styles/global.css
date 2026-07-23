@@ -43,8 +43,13 @@
   --header-logo-nav-gap: clamp(4.5rem, 9vw, 6.75rem);
   --header-nav-tab-gap: clamp(1.25rem, 2.5vw, 2rem);
   --header-height: calc(var(--header-logo-height) + var(--header-logo-padding-bottom));
+  /* Fixed rem/px content height — never driven by vh/dvh/svh */
+  --book-bar-content-height: 76px;
+  /* Safe-area applied once (on the clickable anchor). Used only for layout clearance. */
   --book-bar-safe-bottom: env(safe-area-inset-bottom, 0px);
-  --book-bar-height: calc(56px + var(--book-bar-safe-bottom));
+  --book-bar-height: calc(
+    var(--book-bar-content-height) + var(--book-bar-safe-bottom)
+  );
   --max-width: 1200px;
   --section-padding: clamp(2rem, 5.5vw, 4rem);
   --section-padding-adjacent: calc(var(--section-padding) * 0.55);
@@ -509,21 +514,30 @@ button {
   display: block;
 }
 
-/* Hero */
+/*
+ * Hero shell: viewport min-height with chrome reserved via padding.
+ * Media is absolutely inset between header and book bar using the same
+ * once-counted --book-bar-height (not a second safe-area). CTA height itself
+ * never uses vh/dvh/svh — only this clearance does.
+ */
 .hero {
   position: relative;
+  box-sizing: border-box;
   min-height: 100vh;
   min-height: 100svh;
   padding-top: var(--header-height);
+  padding-bottom: var(--book-bar-height);
   margin-bottom: 0;
 }
 
 .hero__media {
   position: absolute;
-  inset: 0;
   top: var(--header-height);
+  right: 0;
   bottom: var(--book-bar-height);
+  left: 0;
   overflow: hidden;
+  pointer-events: auto;
 }
 
 .hero__slideshow {
@@ -649,6 +663,11 @@ button {
     rgba(0, 0, 0, 0.2) 28%,
     rgba(0, 0, 0, 0.04) 100%
   );
+  pointer-events: none;
+}
+
+.hero__slideshow,
+.hero__slideshow .hero__image--slide {
   pointer-events: none;
 }
 
@@ -862,45 +881,63 @@ button {
     1px 0 0 var(--color-gray);
 }
 
-/* Book bar */
+/*
+ * Book bar
+ * Root cause of Instagram Android “double height / half clickable” bug:
+ * safe-area was added to --book-bar-height AND again as padding-bottom on
+ * .book-bar, while .book-bar__link only filled height:100% of the content box
+ * (the upper portion). The lower padded strip painted the bar color but was
+ * not part of the <a>, so taps there did nothing.
+ *
+ * Fix: the clickable anchor IS the full visible bar. Safe-area padding is
+ * applied once, on that anchor, so the inset region stays clickable.
+ */
 .book-bar {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 200;
-  box-sizing: border-box;
-  height: var(--book-bar-height);
-  padding-bottom: var(--book-bar-safe-bottom);
-  background: var(--color-book-bar-bg);
-  transition: background 0.2s ease;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  pointer-events: none;
 }
 
 .book-bar__link {
+  position: relative;
+  z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  box-sizing: border-box;
+  /* border-box: min-height includes padding-bottom → content area stays 76px */
+  min-height: calc(
+    var(--book-bar-content-height) + var(--book-bar-safe-bottom)
+  );
+  padding: 0 1.25rem;
+  padding-bottom: var(--book-bar-safe-bottom);
+  background: var(--color-book-bar-bg);
   color: var(--color-book-bar-text);
   font-family: var(--font-basic-title);
   font-size: clamp(1.3rem, 2.5vw, 1.4rem);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  text-decoration: none;
+  touch-action: manipulation;
+  pointer-events: auto;
   transition:
     color 0.25s ease,
+    background 0.2s ease,
     letter-spacing 0.25s ease,
     transform 0.2s ease;
 }
 
-.book-bar:has(.book-bar__link:hover),
-.book-bar:has(.book-bar__link:focus-visible) {
-  background: var(--color-book-bar-hover-bg);
-}
-
 .book-bar__link:hover,
 .book-bar__link:focus-visible {
+  background: var(--color-book-bar-hover-bg);
   color: var(--color-book-bar-hover-text);
   letter-spacing: 0.14em;
 }
@@ -912,6 +949,11 @@ button {
 .book-bar__link:focus-visible {
   outline: 2px solid var(--color-book-bar-hover-text);
   outline-offset: -4px;
+}
+
+.book-bar__link::before,
+.book-bar__link::after {
+  pointer-events: none;
 }
 
 /* Sections */

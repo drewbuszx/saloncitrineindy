@@ -165,7 +165,7 @@ const ogImageUrl = new URL(ogImage, siteOrigin).href;
     <a class="skip-link" href="#main">Skip to Content</a>
     <slot />
     <BookingModal />
-    <aside class="book-bar">
+    <aside class="book-bar" aria-label="Book an appointment">
       <a
         class="book-bar__link"
         href={resolvedBookBarUrl}
@@ -174,7 +174,8 @@ const ogImageUrl = new URL(ogImage, siteOrigin).href;
         data-booking-link
         data-booking-stylist={bookBarStylistSlug}
       >
-        Book Now<span class="visually-hidden"> at {site.name} (opens in new tab)</span>
+        <span class="book-bar__label">Book Now</span>
+        <span class="visually-hidden"> at {site.name} (opens in new tab)</span>
       </a>
     </aside>
     <script>
