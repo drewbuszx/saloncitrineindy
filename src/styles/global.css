@@ -4102,6 +4102,8 @@ button {
   .site-header__menu-toggle {
     display: block;
     flex: 0 0 auto;
+    /* Nudge down to optically align with SALON / CITRINE (crystal sits above the type) */
+    transform: translateY(0.4rem);
   }
 
   .site-header__controls {
