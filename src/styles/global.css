@@ -4056,11 +4056,8 @@ button {
   [data-theme="light"],
   [data-theme="dark"] {
     --header-logo-height: clamp(4rem, 12vw, 4.5rem);
-    --header-logo-padding-bottom: 0.125rem;
-    --header-height: max(
-      calc(var(--header-logo-height) + var(--header-logo-padding-bottom)),
-      2.75rem
-    );
+    --header-logo-padding-bottom: 0;
+    --header-height: max(var(--header-logo-height), 2.75rem);
   }
 
   .site-header__inner {
@@ -4075,16 +4072,27 @@ button {
   .site-header__logo {
     position: absolute;
     left: 50%;
+    top: 0;
+    bottom: 0;
     transform: translateX(-50%);
     justify-content: center;
+    align-items: center;
+    align-self: stretch;
     flex: none;
+    height: 100%;
     margin-left: 0;
     min-width: 0;
+    padding-bottom: 0;
     z-index: 0;
   }
 
   .site-header__logo-image {
-    max-width: min(762px, calc(100vw - 3.75rem));
+    width: auto;
+    height: 100%;
+    max-height: 100%;
+    max-width: calc(100vw - 3.75rem);
+    object-fit: contain;
+    object-position: center;
   }
 
   .site-header__theme-toggle--desktop {
