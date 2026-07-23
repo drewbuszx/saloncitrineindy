@@ -4259,7 +4259,8 @@ button {
     height: var(--header-logo-height);
     align-items: flex-end;
     padding-top: 0;
-    padding-bottom: calc(var(--header-logo-height) * 0.22);
+    /* Sit with SALON / CITRINE (crystal extends above the wordmark) */
+    padding-bottom: calc(var(--header-logo-height) * 0.36);
   }
 
   .site-header__nav--left > *,
