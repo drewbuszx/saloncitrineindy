@@ -935,7 +935,14 @@ button {
 }
 
 .section:has(#services) {
+  box-sizing: border-box;
   padding-top: var(--section-padding-after-bleed);
+  /*
+   * Fill down past the fixed book bar when jumping to #services so the
+   * following team band (sage / dusty rose) cannot peek through as a strip.
+   */
+  min-height: calc(100vh - var(--header-height));
+  min-height: calc(100svh - var(--header-height));
 }
 
 .section--light {
