@@ -4060,14 +4060,22 @@ button {
 /* Mobile nav — hamburger + slide-out menu at max-width 1100px */
 @media (max-width: 1100px) {
   /*
-   * Instagram Android WebView reports a large safe-area-inset-bottom even
-   * though the page is already laid out above the system nav. That value
-   * feeds --book-bar-safe-bottom (used for .book-bar height + padding-bottom),
-   * creating ~80–100px of empty black space under BOOK NOW. Zero only that
-   * variable on the homepage — leave other pages / Chrome / desktop alone.
+   * Instagram in-app browsers report a large safe-area-inset-bottom even
+   * though the page already sits above the system nav. --book-bar-height is
+   * resolved on :root with that inset baked in, so overriding only the
+   * child --book-bar-safe-bottom is not enough — reset both on <html> and
+   * pin .book-bar to the normal 56px content height. Homepage + Instagram
+   * mobile only; Chrome / desktop / other pages unchanged.
    */
-  html.instagram-android body.home {
+  html.instagram-inapp.home {
     --book-bar-safe-bottom: 0px;
+    --book-bar-height: 56px;
+  }
+
+  html.instagram-inapp.home .book-bar {
+    height: 56px;
+    max-height: 56px;
+    padding-bottom: 0;
   }
 
   :root,
