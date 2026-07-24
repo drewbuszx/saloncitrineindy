@@ -179,7 +179,7 @@ button {
 .site-header__nav--left {
   grid-column: 1;
   justify-content: flex-end;
-  align-self: flex-start;
+  align-self: center;
   gap: var(--header-nav-tab-gap);
   padding-right: var(--header-logo-nav-gap);
 }
@@ -187,7 +187,7 @@ button {
 .site-header__nav--right {
   grid-column: 3;
   justify-content: flex-start;
-  align-self: flex-start;
+  align-self: center;
   gap: var(--header-nav-tab-gap);
   padding-left: var(--header-logo-nav-gap);
 }
@@ -197,7 +197,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  align-self: flex-start;
+  align-self: center;
   padding-bottom: var(--header-logo-padding-bottom);
   line-height: 0;
   justify-self: center;
@@ -4128,8 +4128,6 @@ button {
   .site-header__menu-toggle {
     display: block;
     flex: 0 0 auto;
-    /* Nudge down to optically align with SALON / CITRINE (crystal sits above the type) */
-    transform: translateY(0.4rem);
   }
 
   .site-header__controls {
@@ -4282,21 +4280,20 @@ button {
 @media (min-width: 1101px) {
   .site-header__nav--left,
   .site-header__nav--right {
-    height: var(--header-logo-height);
-    align-items: flex-end;
+    height: 100%;
+    align-items: center;
     padding-top: 0;
-    /* Sit with SALON / CITRINE (crystal extends above the wordmark) */
-    padding-bottom: calc(var(--header-logo-height) * 0.36);
+    padding-bottom: 0;
   }
 
   .site-header__nav--left > *,
   .site-header__nav--right > * {
-    align-self: flex-end;
+    align-self: center;
   }
 
   .site-header__dropdown {
     display: inline-flex;
-    align-items: flex-end;
+    align-items: center;
   }
 
   .site-header__link,
