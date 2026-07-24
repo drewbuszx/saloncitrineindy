@@ -4064,15 +4064,16 @@ button {
    * though the page already sits above the system nav. --book-bar-height is
    * resolved on :root with that inset baked in, so overriding only the
    * child --book-bar-safe-bottom is not enough — reset both on <html> and
-   * pin .book-bar to the normal 56px content height. Homepage + Instagram
-   * mobile only; Chrome / desktop / other pages unchanged.
+   * pin .book-bar to the normal 56px content height. Applies on all pages
+   * in Instagram mobile (home, menu, team profiles, etc.); Chrome / desktop
+   * unchanged.
    */
-  html.instagram-inapp.home {
+  html.instagram-inapp {
     --book-bar-safe-bottom: 0px;
     --book-bar-height: 56px;
   }
 
-  html.instagram-inapp.home .book-bar {
+  html.instagram-inapp .book-bar {
     height: 56px;
     max-height: 56px;
     padding-bottom: 0;
