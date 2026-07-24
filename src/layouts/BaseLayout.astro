@@ -41,12 +41,24 @@ const resolvedBookBarUrl = bookBarUrl ?? BOOKING_URL;
 const siteOrigin = Astro.site?.origin ?? `https://${site.domain}`;
 const canonicalUrl = new URL(path, siteOrigin).href;
 const ogImageUrl = new URL(ogImage, siteOrigin).href;
+const isHomePage =
+  Astro.url.pathname === "/" || Astro.url.pathname === "";
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      (function () {
+        var userAgent = navigator.userAgent || "";
+        var isInstagramAndroid =
+          /Instagram/i.test(userAgent) && /Android/i.test(userAgent);
+        if (isInstagramAndroid) {
+          document.documentElement.classList.add("instagram-android");
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
     {robots && <meta name="robots" content={robots} />}
@@ -161,7 +173,7 @@ const ogImageUrl = new URL(ogImage, siteOrigin).href;
       })();
     </script>
   </head>
-  <body>
+  <body class:list={[isHomePage && "home"]}>
     <a class="skip-link" href="#main">Skip to Content</a>
     <slot />
     <BookingModal />
