@@ -1,5 +1,6 @@
 ---
 import reviewsData from "../data/reviews.json";
+import { site } from "../data/site";
 
 export type Review = {
   name: string;
@@ -101,6 +102,18 @@ function stars(rating: number | null) {
         <div class="reviews-carousel__dots" data-reviews-dots role="group" aria-label="Review pages"></div>
       </div>
     </div>
+
+    <p class="reviews-section__cta">
+      <a
+        class="reviews-section__cta-link"
+        href={site.googleReviewUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Show us some love — leave a Google review
+        <span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+    </p>
   </div>
 </section>
 

@@ -44,6 +44,7 @@ export const site = {
   phoneHref: "tel:+13174765375",
   email: "sayhello@saloncitrineindy.com",
   instagram: "https://www.instagram.com/Saloncitrineindy",
+  googleReviewUrl: "https://g.page/r/CerBWYG4Y3OJEBM/review",
   address: {
     street: "203 S. Audubon Rd",
     city: "Indianapolis",
